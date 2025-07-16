@@ -220,70 +220,56 @@ def get_disposable_email():
             username = ''.join(random.choices(string.ascii_lowercase + string.digits, k=10))
             return f"{username}@example.com"
 
-def check_for_email_with_m3u(max_wait_time=1200):
-    """Check the disposable email for Tivimate M3U link"""
-    print("[+] Checking disposable email for Tivimate M3U link...")
+
+def check_for_email_with_m3u(email_url, max_wait_time=1200):  # 20 minutes timeout
+    """Directly monitor the disposablemail.com URL for M3U link"""
+    print(f"[+] Monitoring email at: {email_url}")
     
-    # Switch to the disposablemail.com tab
+    # Open the direct email URL in a new tab
     driver.switch_to.window(driver.window_handles[1])
+    driver.get(email_url)
     
     start_time = time.time()
+    last_refresh = start_time
     
     while time.time() - start_time < max_wait_time:
         try:
-            # Refresh the inbox periodically
-            if int(time.time() - start_time) % 30 == 0:  # Refresh every 30 seconds
-                refresh_button = WebDriverWait(driver, 10).until(
-                    EC.element_to_be_clickable((By.ID, "refresh"))
-                )
-                refresh_button.click()
-                print("[+] Refreshed inbox")
-                time.sleep(2)
+            # Refresh every 60 seconds
+            if time.time() - last_refresh > 60:
+                driver.refresh()
+                last_refresh = time.time()
+                print("[+] Refreshed email page")
+                time.sleep(2)  # Wait for refresh to complete
             
-            # Check for emails
-            emails = driver.find_elements(By.CSS_SELECTOR, ".email-item, .mail-item, tr[onclick]")
+            # Check email content
+            email_content = driver.find_element(By.TAG_NAME, "body").text
             
-            if emails:
-                print(f"[+] Found {len(emails)} email(s), checking for Tivimate M3U link...")
-                
-                # Click on the first/latest email
-                emails[0].click()
-                time.sleep(3)  # Wait for email to load
-                
-                # Get email content
-                email_content = driver.find_element(By.CSS_SELECTOR, "div.email-content, #email-content, div.mail-content")
-                content_text = email_content.text
-                content_html = email_content.get_attribute("innerHTML")
-                
-                # Specific pattern for Tivimate M3U URL
-                tivimate_pattern = r"For Tivimate.*?🎛 M3U:\s*(https?://[^\s]+\.m3u[^\s]*)"
-                
-                # First try the specific Tivimate section
-                tivimate_match = re.search(tivimate_pattern, content_text, re.DOTALL)
-                if tivimate_match:
-                    m3u_url = tivimate_match.group(1).strip()
-                    print(f"[+] Found Tivimate M3U URL: {m3u_url}")
-                    return m3u_url
-                
-                # Fallback to any M3U link if specific Tivimate one not found
-                m3u_matches = re.findall(r"https?://[^\s]+\.m3u[^\s]*", content_text)
-                if m3u_matches:
-                    m3u_url = m3u_matches[0].strip()
-                    print(f"[+] Found generic M3U URL: {m3u_url}")
-                    return m3u_url
-                
-                print("[!] No M3U link found in this email")
+            # Specific pattern for Tivimate M3U URL
+            tivimate_pattern = r"For Tivimate.*?🎛 M3U:\s*(https?://[^\s]+\.m3u[^\s]*)"
+            tivimate_match = re.search(tivimate_pattern, email_content, re.DOTALL)
+            
+            if tivimate_match:
+                m3u_url = tivimate_match.group(1).strip()
+                print(f"[+] Found Tivimate M3U URL: {m3u_url}")
+                return m3u_url
+            
+            # Fallback to any M3U link
+            m3u_matches = re.findall(r"https?://[^\s]+\.m3u[^\s]*", email_content)
+            if m3u_matches:
+                m3u_url = m3u_matches[0].strip()
+                print(f"[+] Found generic M3U URL: {m3u_url}")
+                return m3u_url
             
             elapsed = int(time.time() - start_time)
             remaining = max_wait_time - elapsed
-            print(f"[+] No emails yet, waiting... ({elapsed}s elapsed, {remaining}s remaining)")
+            print(f"[+] No M3U found yet ({elapsed}s elapsed, {remaining}s remaining)")
             time.sleep(10)
             
         except Exception as e:
             print(f"[!] Error checking email: {e}")
-            time.sleep(5)
+            time.sleep(10)
     
-    print("[!] Timeout waiting for email with M3U link")
+    print("[!] Timeout waiting for M3U link")
     return None
 
 try:
@@ -502,39 +488,43 @@ try:
     ))
     submit_button.click()
     print("[+] Step 3 complete - Form submitted!")
+
+    # After submitting the form, wait 20 minutes before checking
+    print("[+] Waiting 20 minutes for email to arrive...")
+    time.sleep(1200)  # 20 minute wait
     
-    # Now check the disposable email for the M3U link
-    m3u_url = check_for_email_with_m3u(max_wait_time=1200)  # Wait up to 5 minutes
+     # Now check the known email URL
+    email_url = "https://www.disposablemail.com/window/id/2"
+    print(f"[+] Checking email at: {email_url}")
     
-    if m3u_url:
+    # Switch to email tab and refresh
+    driver.switch_to.window(driver.window_handles[1])
+    driver.get(email_url)
+    time.sleep(5)  # Wait for page to load
+    
+    # Get email content
+    email_content = driver.find_element(By.TAG_NAME, "body").text
+    
+    # Look for Tivimate M3U URL
+    tivimate_pattern = r"For Tivimate.*?🎛 M3U:\s*(https?://[^\s]+\.m3u[^\s]*)"
+    tivimate_match = re.search(tivimate_pattern, email_content, re.DOTALL)
+    
+    if tivimate_match:
+        m3u_url = tivimate_match.group(1).strip()
+        print(f"[+] Found Tivimate M3U URL: {m3u_url}")
+        
         # Download the file
-        print(f"[+] Downloading M3U file from: {m3u_url}")
+        print(f"[+] Downloading M3U file...")
         try:
             r = requests.get(m3u_url)
-            r.raise_for_status()  # Raise an exception for bad status codes
+            r.raise_for_status()
             with open(SAVE_FILE, "wb") as f:
                 f.write(r.content)
             print(f"✅ IPTV playlist saved to {SAVE_FILE}")
         except Exception as e:
-            print(f"[!] Error downloading file: {e}")
-            # Try to download with browser session
-            try:
-                print("[+] Trying to download with browser session...")
-                cookies = driver.get_cookies()
-                session = requests.Session()
-                for cookie in cookies:
-                    session.cookies.set(cookie['name'], cookie['value'])
-                
-                r = session.get(m3u_url)
-                r.raise_for_status()
-                with open(SAVE_FILE, "wb") as f:
-                    f.write(r.content)
-                print(f"✅ IPTV playlist saved to {SAVE_FILE}")
-            except Exception as e2:
-                print(f"[!] Error downloading with session: {e2}")
-                raise
+            print(f"[!] Error downloading: {e}")
     else:
-        print("[!] Could not find M3U link in email")
+        print("[!] No M3U link found in email")
 
 finally:
     driver.quit()
