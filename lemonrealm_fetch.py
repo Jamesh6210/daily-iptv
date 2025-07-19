@@ -1,530 +1,635 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait, Select
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
-import time
-import random
-import string
-import os
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
+import time, re, random, string, os
 import requests
-import re
 
 # === Settings ===
-SAVE_FILE = r"C:\Users\James\Documents\daily-iptv\iptv_daily_update.m3u"  # Change path if needed
+SAVE_FILE = r"C:\Users\James\Documents\daily-iptv\iptv_daily\iptv_daily_update.m3u"
+DRIVER_PATH = r"C:\Users\James\Downloads\chromedriver-win64\chromedriver-win64\chromedriver.exe"
 
-# === Setup headless Chrome ===
+# === Chrome Options ===
 options = webdriver.ChromeOptions()
-# options.add_argument("--headless")
+# options.add_argument("--headless")  # Enable headless
 options.add_argument("--disable-gpu")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
-
-# Add adblock extension and other privacy settings
-options.add_argument("--disable-notifications")
-options.add_argument("--disable-popup-blocking")
-options.add_argument("--blink-settings=imagesEnabled=false")
-options.add_argument("--disable-javascript")
-
-
-# Disable automation flags that trigger bot detection
+options.add_argument("--disable-blink-features=AutomationControlled")
 options.add_experimental_option("excludeSwitches", ["enable-automation"])
-options.add_experimental_option('useAutomationExtension', False)
-options.add_argument('--disable-blink-features=AutomationControlled')
+options.add_experimental_option("useAutomationExtension", False)
+
+driver = webdriver.Chrome(service=Service(DRIVER_PATH), options=options)
+wait = WebDriverWait(driver, 20)
 
 
-# Path to chromedriver.exe (update if needed)
-driver_path = r"C:\Users\James\Downloads\chromedriver-win64\chromedriver-win64\chromedriver.exe"  # <-- PUT YOUR PATH HERE
-service = Service(driver_path)
+start_time = time.time()
 
-# Start WebDriver
-driver = webdriver.Chrome(service=service, options=options)
+def elapsed_time():
+    """Return HH:MM:SS since start"""
+    elapsed = int(time.time() - start_time)
+    hrs, rem = divmod(elapsed, 3600)
+    mins, secs = divmod(rem, 60)
+    return f"{hrs:02}:{mins:02}:{secs:02}"
 
-def handle_popups(driver):
-    try:
-        # Try to close any popups
-        driver.execute_script("""
-            var popups = [
-                'div[class*="popup"]',
-                'div[class*="modal"]',
-                'div[class*="overlay"]',
-                'div[id*="cookie"]',
-                'div[class*="cookie"]'
-            ];
-            popups.forEach(function(selector) {
-                var elements = document.querySelectorAll(selector);
-                elements.forEach(function(el) {
-                    el.style.display = 'none';
-                    el.remove();
-                });
-            });
-            document.body.style.overflow = 'auto';
-        """)
-    except Exception as e:
-        print(f"Popup handling error: {e}")
 
-def accept_cookies_aggressively():
-    """Try multiple methods to accept cookies/privacy consent"""
-    print("[+] Attempting to handle consent popup...")
-    try:
-        # Try to find and click the consent button using multiple strategies
-        consent_selectors = [
-            ('css', "button.fc-cta-consent"),  # Common consent managers
-            ('css', "button#onetrust-accept-btn-handler"),
-            ('css', "button#cmpbntyestxt"),
-            ('css', "button.sp_choice_type_11"),
-            ('xpath', "//button[contains(., 'Accept')]"),
-            ('xpath', "//button[contains(., 'AGREE')]"),
-            ('xpath', "//button[contains(., 'Consent')]"),
-            ('xpath', "//button[contains(., 'OK')]"),
-            ('xpath', "//div[contains(@class,'cookie')]//button")
-        ]
-        
-        for strategy, selector in consent_selectors:
-            try:
-                if strategy == 'css':
-                    button = WebDriverWait(driver, 5).until(
-                        EC.element_to_be_clickable((By.CSS_SELECTOR, selector)))
-                else:
-                    button = WebDriverWait(driver, 5).until(
-                        EC.element_to_be_clickable((By.XPATH, selector)))
-                
-                # Scroll into view and click with JavaScript
-                driver.execute_script("arguments[0].scrollIntoView(true);", button)
-                driver.execute_script("arguments[0].click();", button)
-                print(f"[+] Clicked consent button using {strategy}: {selector}")
-                time.sleep(1)  # Allow time for the popup to disappear
-                return True
-            except:
-                continue
-        
-        print("[-] No consent button found with standard methods, trying fallbacks...")
-        
-        # Fallback 1: Try to accept via iframe
+# === Utility Functions ===
+def js_click(elem):
+    driver.execute_script("arguments[0].click();", elem)
+
+
+def try_find_click(selectors, timeout=5):
+    """Try multiple selectors to find and click an element"""
+    for by, selector in selectors:
         try:
-            frames = driver.find_elements(By.TAG_NAME, "iframe")
-            for frame in frames:
-                try:
-                    driver.switch_to.frame(frame)
-                    button = driver.find_element(By.XPATH, "//button[contains(., 'Accept')]")
-                    button.click()
-                    driver.switch_to.default_content()
-                    print("[+] Clicked consent button in iframe")
-                    return True
-                except:
-                    driver.switch_to.default_content()
-                    continue
-        except:
-            pass
-        
-        # Fallback 2: Try to remove the popup element
-        try:
-            driver.execute_script("""
-                var elements = document.querySelectorAll('div[class*="cookie"], div[id*="cookie"], div[class*="consent"], div[id*="consent"]');
-                elements.forEach(function(el) {
-                    el.parentNode.removeChild(el);
-                });
-                document.body.style.overflow = 'auto';
-            """)
-            print("[+] Removed consent elements with JavaScript")
+            elem = WebDriverWait(driver, timeout).until(
+                EC.element_to_be_clickable((by, selector)))
+            js_click(elem)
             return True
-        except:
-            pass
-        
-        print("[-] Could not handle consent popup")
-        return False
-        
+        except TimeoutException:
+            continue
+    return False
+
+
+def try_find_element(selectors, timeout=10):
+    """Try multiple selectors to find an element"""
+    for by, selector in selectors:
+        try:
+            elem = WebDriverWait(driver, timeout).until(
+                EC.presence_of_element_located((by, selector)))
+            return elem
+        except TimeoutException:
+            continue
+    return None
+
+
+def handle_cookies_and_popups():
+    """Try to accept cookies or close modals"""
+    print("[+] Handling cookies/popups...")
+    selectors = [
+        (By.XPATH, "//button[contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'),'accept')]"),
+        (By.XPATH, "//button[contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'),'agree')]"),
+        (By.XPATH, "//button[contains(text(),'OK')]"),
+        (By.CSS_SELECTOR, "button#onetrust-accept-btn-handler"),
+    ]
+    try_find_click(selectors)
+    driver.execute_script("""
+        document.querySelectorAll('div[class*="cookie"],div[class*="modal"],div[class*="overlay"]').forEach(e => e.remove());
+        document.body.style.overflow = 'auto';
+    """)
+
+
+def debug_page_state():
+    """Debug function to inspect current page state"""
+    print("[DEBUG] Current URL:", driver.current_url)
+    print("[DEBUG] Page title:", driver.title)
+    # Look for any elements that might be language-related
+    try:
+        elements = driver.find_elements(By.XPATH, "//*[contains(text(), 'English') or contains(text(), 'language') or contains(text(), 'Language')]")
+        print(f"[DEBUG] Found {len(elements)} language-related elements:")
+        for i, elem in enumerate(elements[:5]):  # Show first 5
+            print(f"  {i+1}. Tag: {elem.tag_name}, Text: '{elem.text}', Visible: {elem.is_displayed()}")
     except Exception as e:
-        print(f"[!] Error handling consent: {e}")
-        return False
+        print(f"[DEBUG] Error finding language elements: {e}")
 
 
 def get_disposable_email():
-    """Get a disposable email from disposablemail.com"""
-    print("[+] Getting disposable email address...")
+    """Fetch a disposable email address"""
+    print("[+] Fetching disposable email...")
+    # Open disposable email in a new tab
+    driver.execute_script("window.open('https://www.disposablemail.com/', '_blank');")
+    driver.switch_to.window(driver.window_handles[1])  # Switch to new tab
     
-    # Open disposablemail.com in a new tab
-    driver.execute_script("window.open('');")
-    driver.switch_to.window(driver.window_handles[1])
-    driver.get("https://www.disposablemail.com/")
-    time.sleep(2)  # Allow page to load
-    accept_cookies_aggressively()
-    handle_popups(driver)
-    
+    handle_cookies_and_popups()
     try:
-        # Handle consent popup if it exists
-        try:
-            WebDriverWait(driver, 10).until(
-                EC.frame_to_be_available_and_switch_to_it((By.ID, "sp-cc-iframe")))
-            consent_button = WebDriverWait(driver, 5).until(
-                EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Accept')]")))
-            consent_button.click()
-            driver.switch_to.default_content()
-            print("[+] Clicked consent button")
-        except:
-            print("[-] No consent popup found")
-            pass
+        email_elem = wait.until(EC.visibility_of_element_located((By.ID, "email")))
+        email = email_elem.get_attribute("value") or email_elem.text
+        if not email or "@" not in email:
+            raise Exception("Email not found")
+        print(f"[+] Disposable email acquired: {email}")
         
-        # Wait for email to load - try multiple selectors
-        email_selectors = [
-            (By.ID, "email"),  # Primary selector
-            (By.CSS_SELECTOR, ".email-address"),  # Alternative class
-            (By.CSS_SELECTOR, "#email-address"),  # Another possible ID
-            (By.XPATH, "//div[contains(@class, 'email') and contains(text(), '@')]")  # Generic fallback
-        ]
-        
-        disposable_email = None
-        for selector in email_selectors:
-            try:
-                email_element = WebDriverWait(driver, 10).until(
-                    EC.visibility_of_element_located(selector)
-                )
-                disposable_email = email_element.get_attribute("value") or email_element.text
-                if "@" in disposable_email:  # Basic validation
-                    break
-            except:
-                continue
-        
-        if not disposable_email or "@" not in disposable_email:
-            # Try to extract from page text as last resort
-            page_text = driver.page_source
-            email_pattern = r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
-            email_matches = re.findall(email_pattern, page_text)
-            if email_matches:
-                disposable_email = email_matches[0]
-        
-        if not disposable_email or "@" not in disposable_email:
-            raise Exception("Could not extract valid email address")
-        
-        print(f"[+] Using disposable email: {disposable_email}")
-        return disposable_email.strip()
-        
-    except Exception as e:
-        print(f"[!] Error getting disposable email: {e}")
-        # Fallback to temporary-mail.io as alternative
-        try:
-            print("[+] Trying temporary-mail.io as fallback...")
-            driver.get("https://temp-mail.io/")
-            email_element = WebDriverWait(driver, 10).until(
-                EC.visibility_of_element_located((By.ID, "mail"))
-            )
-            disposable_email = email_element.get_attribute("value")
-            if not disposable_email:
-                disposable_email = email_element.text
-            print(f"[+] Got fallback email: {disposable_email}")
-            return disposable_email.strip()
-        except Exception as fallback_e:
-            print(f"[!] Fallback failed: {fallback_e}")
-            username = ''.join(random.choices(string.ascii_lowercase + string.digits, k=10))
-            return f"{username}@example.com"
+        # Switch back to main tab
+        driver.switch_to.window(driver.window_handles[0])
+        return email.strip()
+    except Exception:
+        # Fallback random email
+        fallback_email = f"{''.join(random.choices(string.ascii_lowercase, k=10))}@example.com"
+        print(f"[!] Using fallback email: {fallback_email}")
+        # Switch back to main tab
+        driver.switch_to.window(driver.window_handles[0])
+        return fallback_email
 
 
-def check_for_email_with_m3u(email_url, max_wait_time=1200):  # 20 minutes timeout
-    """Directly monitor the disposablemail.com URL for M3U link"""
-    print(f"[+] Monitoring email at: {email_url}")
-    
-    # Open the direct email URL in a new tab
+def wait_for_email_link(max_wait=3600):
+    """Poll mailbox for M3U link - handles both iframe and direct content"""
+    print("[+] Waiting for M3U email...")
+    # Switch to email tab (should be tab 1)
     driver.switch_to.window(driver.window_handles[1])
-    driver.get(email_url)
     
-    start_time = time.time()
-    last_refresh = start_time
-    
-    while time.time() - start_time < max_wait_time:
+    start = time.time()
+    while time.time() - start < max_wait:
         try:
-            # Refresh every 60 seconds
-            if time.time() - last_refresh > 60:
-                driver.refresh()
-                last_refresh = time.time()
-                print("[+] Refreshed email page")
-                time.sleep(2)  # Wait for refresh to complete
+            # Navigate to the email page
+            driver.get("https://www.disposablemail.com/email/id/2")
             
-            # Check email content
-            email_content = driver.find_element(By.TAG_NAME, "body").text
+            # Handle any consent popups on the email page
+            try:
+                consent_selectors = [
+                    (By.XPATH, "//button[contains(text(), 'Accept') or contains(text(), 'OK') or contains(text(), 'Agree') or contains(text(), 'Continue')]"),
+                    (By.XPATH, "//button[contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'accept')]"),
+                    (By.XPATH, "//button[contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'consent')]"),
+                    (By.CSS_SELECTOR, "button[class*='consent']"),
+                    (By.CSS_SELECTOR, "button[class*='accept']"),
+                ]
+                for by, selector in consent_selectors:
+                    try:
+                        consent_btn = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((by, selector)))
+                        js_click(consent_btn)
+                        print("[+] Clicked consent/accept button")
+                        time.sleep(1)
+                        break
+                    except TimeoutException:
+                        continue
+            except Exception:
+                pass
+
+            print(f"[{elapsed_time()}] Searching for M3U links on page...")
             
-            # Specific pattern for Tivimate M3U URL
-            tivimate_pattern = r"For Tivimate.*?🎛 M3U:\s*(https?://[^\s]+\.m3u[^\s]*)"
-            tivimate_match = re.search(tivimate_pattern, email_content, re.DOTALL)
-            
-            if tivimate_match:
-                m3u_url = tivimate_match.group(1).strip()
-                print(f"[+] Found Tivimate M3U URL: {m3u_url}")
+            # First, try to find M3U links directly on the page (without iframe)
+            m3u_url = search_for_m3u_links()
+            if m3u_url:
                 return m3u_url
             
-            # Fallback to any M3U link
-            m3u_matches = re.findall(r"https?://[^\s]+\.m3u[^\s]*", email_content)
-            if m3u_matches:
-                m3u_url = m3u_matches[0].strip()
-                print(f"[+] Found generic M3U URL: {m3u_url}")
-                return m3u_url
+            # If no direct links found, try iframe approach
+            print(f"[{elapsed_time()}] No direct links found, looking for iframe...")
+            iframe_elem = None
+            iframe_selectors = [
+                (By.TAG_NAME, "iframe"),
+                (By.CSS_SELECTOR, "iframe[src*='email']"),
+                (By.XPATH, "//iframe"),
+                (By.CSS_SELECTOR, "iframe[id*='email']"),
+                (By.CSS_SELECTOR, "iframe[class*='email']"),
+            ]
             
-            elapsed = int(time.time() - start_time)
-            remaining = max_wait_time - elapsed
-            print(f"[+] No M3U found yet ({elapsed}s elapsed, {remaining}s remaining)")
-            time.sleep(10)
+            for by, selector in iframe_selectors:
+                try:
+                    iframe_elem = WebDriverWait(driver, 5).until(
+                        EC.presence_of_element_located((by, selector))
+                    )
+                    print(f"[{elapsed_time()}] Found iframe with selector: {selector}")
+                    break
+                except TimeoutException:
+                    continue
             
+            if iframe_elem:
+                print(f"[{elapsed_time()}] Found iframe, switching to it...")
+                driver.switch_to.frame(iframe_elem)
+                time.sleep(2)
+                
+                # Search for M3U links within the iframe
+                m3u_url = search_for_m3u_links()
+                
+                # Switch back to default content
+                driver.switch_to.default_content()
+                
+                if m3u_url:
+                    return m3u_url
+            else:
+                print(f"[{elapsed_time()}] No iframe found on page")
+                
+                # Debug: Print page source snippet to see what's actually there
+                try:
+                    page_source = driver.page_source
+                    print(f"[{elapsed_time()}] Page source length: {len(page_source)}")
+                    
+                    # Look for any M3U patterns in the full page source
+                    m3u_patterns = [
+                        r'https?://[^\s<>"\']+\.m3u[^\s<>"\']*',
+                        r'https?://[^\s<>"\']+get\.php[^\s<>"\']*type=m3u[^\s<>"\']*',
+                        r'href=["\']([^"\']*(?:\.m3u|type=m3u)[^"\']*)["\']',
+                    ]
+                    
+                    for pattern in m3u_patterns:
+                        matches = re.findall(pattern, page_source, re.IGNORECASE)
+                        for match in matches:
+                            url = match if isinstance(match, str) else match[0] if match else ""
+                            if url and ("m3u" in url.lower() or "get.php" in url.lower()):
+                                print(f"[{elapsed_time()}] M3U URL found in page source: {url}")
+                                return url
+                    
+                    # Show a sample of the page content for debugging
+                    if "lemonrealm" in page_source.lower() or "m3u" in page_source.lower():
+                        print(f"[{elapsed_time()}] Page contains LemonRealm content")
+                        # Find the email content section
+                        body_start = page_source.find("<body")
+                        if body_start != -1:
+                            body_content = page_source[body_start:body_start+2000]
+                            print(f"[{elapsed_time()}] Body content sample: {body_content[:500]}...")
+                    else:
+                        print(f"[{elapsed_time()}] Page doesn't seem to contain expected email content")
+                        
+                except Exception as e:
+                    print(f"[{elapsed_time()}] Error analyzing page source: {e}")
+
+            print(f"[{elapsed_time()}] No M3U link found, retrying in 30s...")
+            time.sleep(30)
+
         except Exception as e:
-            print(f"[!] Error checking email: {e}")
-            time.sleep(10)
-    
-    print("[!] Timeout waiting for M3U link")
+            print(f"[{elapsed_time()}] Error checking email: {e}")
+            import traceback
+            traceback.print_exc()
+            # Make sure we're back to default content
+            try:
+                driver.switch_to.default_content()
+            except:
+                pass
+            time.sleep(30)
+
+    print(f"[{elapsed_time()}] Timed out waiting for M3U link")
     return None
 
+
+def search_for_m3u_links():
+    """Search for M3U links in current context (page or iframe)"""
+    try:
+        # Method 1: Look for direct M3U links
+        m3u_selectors = [
+            (By.XPATH, "//a[contains(@href, '.m3u')]"),
+            (By.XPATH, "//a[contains(@href, 'get.php') and contains(@href, 'type=m3u')]"),
+            (By.XPATH, "//a[contains(text(), '.m3u')]"),
+            (By.XPATH, "//a[contains(@href, 'http') and contains(@href, 'm3u')]"),
+            (By.CSS_SELECTOR, "a[href*='.m3u']"),
+            (By.CSS_SELECTOR, "a[href*='get.php'][href*='type=m3u']"),
+        ]
+        
+        for by, selector in m3u_selectors:
+            try:
+                m3u_elements = driver.find_elements(by, selector)
+                for elem in m3u_elements:
+                    href = elem.get_attribute("href")
+                    if href and ("m3u" in href.lower() or "get.php" in href.lower()):
+                        print(f"[{elapsed_time()}] M3U link found via selector: {href}")
+                        return href
+            except Exception:
+                continue
+        
+        # Method 2: Look for text that looks like M3U URLs
+        try:
+            page_text = driver.find_element(By.TAG_NAME, "body").text
+            page_html = driver.find_element(By.TAG_NAME, "body").get_attribute("innerHTML")
+            
+            print(f"[{elapsed_time()}] Body text length: {len(page_text)}")
+            print(f"[{elapsed_time()}] Body HTML length: {len(page_html)}")
+            
+            # Search for M3U URLs in the content
+            m3u_patterns = [
+                r'https?://[^\s<>"\']+get\.php[^\s<>"\']*type=m3u_plus[^\s<>"\']*',
+                r'https?://[^\s<>"\']+\.m3u[^\s<>"\']*',
+                r'https?://[^\s<>"\']+get\.php[^\s<>"\']*type=m3u[^\s<>"\']*',
+                r'href=["\']([^"\']*(?:get\.php[^"\']*type=m3u|\.m3u)[^"\']*)["\']',
+            ]
+            
+            combined_content = page_html + " " + page_text
+            
+            for pattern in m3u_patterns:
+                matches = re.findall(pattern, combined_content, re.IGNORECASE)
+                for match in matches:
+                    url = match if isinstance(match, str) else match[0] if match else ""
+                    if url and ("m3u" in url.lower() or "get.php" in url.lower()):
+                        # Clean up the URL (remove HTML entities, etc.)
+                        url = url.replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">")
+                        print(f"[{elapsed_time()}] M3U URL found via regex: {url}")
+                        return url
+            
+            # Debug: Show sample content if it contains relevant keywords
+            if any(keyword in combined_content.lower() for keyword in ["lemonrealm", "m3u", "get.php", "username", "password"]):
+                print(f"[{elapsed_time()}] Content contains relevant keywords")
+                # Find lines that might contain M3U info
+                lines = page_text.split('\n')
+                for i, line in enumerate(lines):
+                    if any(keyword in line.lower() for keyword in ["m3u", "get.php", "http"]):
+                        print(f"[{elapsed_time()}] Relevant line {i}: {line.strip()[:100]}...")
+                        
+        except Exception as e:
+            print(f"[{elapsed_time()}] Error reading page content: {e}")
+        
+        return None
+        
+    except Exception as e:
+        print(f"[{elapsed_time()}] Error in search_for_m3u_links: {e}")
+        return None
+
+
+def download_m3u_file(m3u_url, save_path, max_retries=3):
+    """Download M3U file with proper headers and retry logic"""
+    
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        'Accept': 'text/plain, application/x-mpegURL, */*',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Accept-Encoding': 'gzip, deflate',
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1',
+    }
+    
+    for attempt in range(max_retries):
+        try:
+            print(f"[{elapsed_time()}] Download attempt {attempt + 1} of {max_retries}")
+            print(f"[{elapsed_time()}] URL: {m3u_url}")
+            
+            # Create session for better connection handling
+            session = requests.Session()
+            session.headers.update(headers)
+            
+            # Set timeouts
+            response = session.get(
+                m3u_url, 
+                timeout=(10, 30),  # (connection_timeout, read_timeout)
+                allow_redirects=True,
+                stream=True  # Stream download for large files
+            )
+            
+            # Check if request was successful
+            response.raise_for_status()
+            
+            print(f"[{elapsed_time()}] Response status: {response.status_code}")
+            print(f"[{elapsed_time()}] Content-Type: {response.headers.get('Content-Type', 'Unknown')}")
+            print(f"[{elapsed_time()}] Content-Length: {response.headers.get('Content-Length', 'Unknown')}")
+            
+            # Check if response looks like an M3U file
+            content_type = response.headers.get('Content-Type', '').lower()
+            if 'text' not in content_type and 'mpegurl' not in content_type and 'octet-stream' not in content_type:
+                print(f"[!] Warning: Unexpected content type: {content_type}")
+            
+            # Write file in chunks
+            total_size = 0
+            with open(save_path, 'wb') as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    if chunk:  # Filter out keep-alive chunks
+                        f.write(chunk)
+                        total_size += len(chunk)
+            
+            print(f"[{elapsed_time()}] Downloaded {total_size} bytes successfully")
+            
+            # Verify the file was created and has content
+            if os.path.exists(save_path):
+                file_size = os.path.getsize(save_path)
+                print(f"[{elapsed_time()}] File saved: {save_path} ({file_size} bytes)")
+                
+                # Quick check if it looks like an M3U file
+                try:
+                    with open(save_path, 'r', encoding='utf-8', errors='ignore') as f:
+                        first_lines = f.read(500)
+                        if '#EXTM3U' in first_lines or '#EXTINF' in first_lines or 'http' in first_lines:
+                            print(f"[✓] File appears to be a valid M3U playlist")
+                            return True
+                        else:
+                            print(f"[!] Warning: File doesn't look like an M3U playlist")
+                            print(f"[!] First 200 chars: {first_lines[:200]}")
+                except Exception as e:
+                    print(f"[!] Could not verify file content: {e}")
+                
+                return True
+            else:
+                print(f"[!] File was not created successfully")
+                return False
+                
+        except requests.exceptions.ConnectionError as e:
+            print(f"[!] Connection error on attempt {attempt + 1}: {e}")
+            if attempt < max_retries - 1:
+                wait_time = (attempt + 1) * 5  # Progressive backoff
+                print(f"[{elapsed_time()}] Waiting {wait_time} seconds before retry...")
+                time.sleep(wait_time)
+            
+        except requests.exceptions.Timeout as e:
+            print(f"[!] Timeout error on attempt {attempt + 1}: {e}")
+            if attempt < max_retries - 1:
+                wait_time = (attempt + 1) * 3
+                print(f"[{elapsed_time()}] Waiting {wait_time} seconds before retry...")
+                time.sleep(wait_time)
+                
+        except requests.exceptions.HTTPError as e:
+            print(f"[!] HTTP error on attempt {attempt + 1}: {e}")
+            print(f"[!] Response status code: {e.response.status_code if e.response else 'Unknown'}")
+            if e.response:
+                print(f"[!] Response headers: {dict(e.response.headers)}")
+                print(f"[!] Response content: {e.response.text[:500]}")
+            
+            # Don't retry on client errors (4xx), but retry on server errors (5xx)
+            if e.response and e.response.status_code < 500:
+                print(f"[!] Client error - not retrying")
+                break
+            elif attempt < max_retries - 1:
+                wait_time = (attempt + 1) * 5
+                print(f"[{elapsed_time()}] Server error - waiting {wait_time} seconds before retry...")
+                time.sleep(wait_time)
+                
+        except Exception as e:
+            print(f"[!] Unexpected error on attempt {attempt + 1}: {e}")
+            import traceback
+            traceback.print_exc()
+            if attempt < max_retries - 1:
+                wait_time = (attempt + 1) * 5
+                print(f"[{elapsed_time()}] Waiting {wait_time} seconds before retry...")
+                time.sleep(wait_time)
+    
+    print(f"[!] Failed to download after {max_retries} attempts")
+    return False
+
+
+# Updated main download logic to use in your script
+def download_and_save_m3u(m3u_url, save_path):
+    """Main download function that tries multiple methods"""
+    print(f"[+] Downloading M3U from: {m3u_url}")
+    print(f"[+] Saving to: {save_path}")
+    
+    # Method 1: Try with requests
+    if download_m3u_file(m3u_url, save_path):
+        print("[✓] M3U downloaded successfully with requests")
+        return True
+    
+    print("[!] All download methods failed")
+    return False
+
+
+
+# === Main Workflow ===
 try:
-    # Get disposable email first
-    disposable_email = get_disposable_email()
-    
-    # Switch back to the main lemonrealm tab
-    driver.switch_to.window(driver.window_handles[0])
-    
-    print("[+] Opening lemonrealm...")
+    email = get_disposable_email()
+
+    # Go to lemonrealm and fill out form
     driver.get("https://lemonrealm.com/24-hours/")
-
-    wait = WebDriverWait(driver, 10)
-
-    # Step 1: Enter disposable email and next
-    email_input = wait.until(EC.presence_of_element_located((By.NAME, "email-1-2")))
-    email_input.send_keys(disposable_email)
-    driver.find_element(By.XPATH, "//button[contains(text(),'Next')]").click()
-    print("[+] Step 1 complete")
-
-    # Step 2: Set language and turn adult content OFF
-    dropdown_trigger = wait.until(EC.element_to_be_clickable(
-        (By.CSS_SELECTOR, "div[role='combobox'][aria-label='Dropdown']")
-    ))
-    dropdown_trigger.click()
-
-    # Small delay to ensure dropdown is fully open
-    time.sleep(0.5)
-
-    # Find and click the English option
-    english_option = wait.until(EC.element_to_be_clickable(
-        (By.XPATH, "//span[@class='opt-lbl' and normalize-space()='English']")
-    ))
-    english_option.click()
-
-    # Wait a moment for the dropdown to close
-    time.sleep(0.5)
-
-    # Adult content toggle - try multiple approaches
-    print("[+] Setting adult content to OFF...")
+    handle_cookies_and_popups()
     
-    # Method 1: Direct click with JavaScript
-    off_radio = wait.until(EC.presence_of_element_located(
-        (By.CSS_SELECTOR, "input[value='Off'][name='radio-1-4']")
-    ))
-    driver.execute_script("""
-        arguments[0].click();
-        arguments[0].dispatchEvent(new Event('change'));
-        arguments[0].dispatchEvent(new Event('input'));
-    """, off_radio)
+    # Wait a bit for page to fully load
+    time.sleep(3)
+
+    print("[+] Filling out form...")
+    # Step 1: Email input
+    email_input = wait.until(EC.presence_of_element_located((By.XPATH, "//*[@id='b1-2-1']")))
+    email_input.clear()
+    email_input.send_keys(email)
     
-    # Additional wait and verification
+    # Wait a moment for the email to be processed
     time.sleep(1)
     
-    # Verify the radio button is actually selected
-    if off_radio.is_selected():
-        print("[+] Adult content set to OFF successfully")
-    else:
-        print("[!] Retrying adult content selection...")
-        # Try clicking the label instead
-        off_label = driver.find_element(By.XPATH, "//label[contains(@for, 'radio-1-4') and contains(text(), 'Off')]")
-        driver.execute_script("arguments[0].click();", off_label)
-        time.sleep(0.5)
-
-    # Now try multiple strategies to click the Next button
-    print("[+] Attempting to click Next button...")
+    # Click Next button using exact XPath - FIXED: removed duplicate line
+    print("[+] Clicking Next button for Step 1...")
+    next_button = wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[2]/div/div/div/div/div/form/div/div[2]/div[2]/div[1]/div[2]/div/button[2]")))
+    js_click(next_button)
     
-    # Strategy 1: Wait for element to be clickable
+    # Wait longer for next step to load and verify we moved to step 2
+    print("[+] Waiting for Step 2 to load...")
+    time.sleep(5)
+    
+    # Try to verify we're on step 2 by looking for the language dropdown
     try:
-        next_button = WebDriverWait(driver, 5).until(
-            EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Next')]"))
+        language_dropdown = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "/html/body/div[1]/div/div[2]/div/div/div/div/div/form/div/div[2]/div[2]/div[2]/div[1]/div[1]/div/div[2]/div[1]/div/div[1]"))
         )
-        next_button.click()
-        print("[+] Step 2 complete - Next button clicked (Strategy 1)")
-    except:
-        print("[!] Strategy 1 failed, trying Strategy 2...")
+        print("[+] Step 2 loaded successfully!")
+    except TimeoutException:
+        print("[!] Step 2 did not load - checking for validation errors...")
+        # Check if there are any validation error messages
+        try:
+            error_elements = driver.find_elements(By.XPATH, "//*[contains(@class, 'error') or contains(@class, 'invalid') or contains(text(), 'required') or contains(text(), 'invalid')]")
+            if error_elements:
+                print(f"[!] Found {len(error_elements)} potential error messages:")
+                for error in error_elements:
+                    if error.is_displayed():
+                        print(f"  Error: {error.text}")
+            else:
+                print("[!] No obvious error messages found")
+        except Exception as e:
+            print(f"[!] Error checking for validation messages: {e}")
         
-        # Strategy 2: Force click with JavaScript
-        try:
-            next_button = driver.find_element(By.XPATH, "//button[contains(text(), 'Next')]")
-            driver.execute_script("arguments[0].click();", next_button)
-            print("[+] Step 2 complete - Next button clicked (Strategy 2)")
-        except:
-            print("[!] Strategy 2 failed, trying Strategy 3...")
-            
-            # Strategy 3: Try different selectors
-            try:
-                # Look for button by type
-                next_button = driver.find_element(By.XPATH, "//button[@type='button' and contains(text(), 'Next')]")
-                driver.execute_script("arguments[0].click();", next_button)
-                print("[+] Step 2 complete - Next button clicked (Strategy 3)")
-            except:
-                print("[!] Strategy 3 failed, trying Strategy 4...")
-                
-                # Strategy 4: ActionChains click
-                try:
-                    next_button = driver.find_element(By.XPATH, "//button[contains(text(), 'Next')]")
-                    ActionChains(driver).move_to_element(next_button).click().perform()
-                    print("[+] Step 2 complete - Next button clicked (Strategy 4)")
-                except:
-                    print("[!] Strategy 4 failed, trying Strategy 5...")
-                    
-                    # Strategy 5: Send Enter key to the form
-                    try:
-                        form = driver.find_element(By.TAG_NAME, "form")
-                        form.send_keys(Keys.ENTER)
-                        print("[+] Step 2 complete - Form submitted with Enter key (Strategy 5)")
-                    except:
-                        print("[!] All strategies failed. Waiting longer and trying once more...")
-                        time.sleep(3)
-                        next_button = driver.find_element(By.XPATH, "//button[contains(text(), 'Next')]")
-                        driver.execute_script("arguments[0].click();", next_button)
+        raise Exception("Failed to proceed to Step 2")
 
-    # Wait a moment before proceeding to Step 3
-    time.sleep(2)
-
-    # Step 3: Set devices to 4 and submit
-    print("[+] Moving to Step 3...")
-    
-    # Debug: Print all available dropdowns
-    try:
-        dropdowns = driver.find_elements(By.CSS_SELECTOR, "div[role='combobox']")
-        print(f"[DEBUG] Found {len(dropdowns)} dropdown(s)")
-        for i, dropdown in enumerate(dropdowns):
-            print(f"[DEBUG] Dropdown {i}: {dropdown.get_attribute('outerHTML')[:200]}...")
-    except Exception as e:
-        print(f"[DEBUG] Error finding dropdowns: {e}")
-    
-    # Try multiple approaches to find the devices dropdown
-    devices_dropdown_trigger = None
-    
-    # Method 1: Look for the second dropdown (first was language)
-    try:
-        dropdowns = driver.find_elements(By.CSS_SELECTOR, "div[role='combobox']")
-        if len(dropdowns) >= 2:
-            devices_dropdown_trigger = dropdowns[1]  # Second dropdown should be devices
-            print("[+] Found devices dropdown using index method")
-    except:
-        pass
-    
-    # Method 2: Look for dropdown near "devices" text or form field
-    if not devices_dropdown_trigger:
-        try:
-            # Try to find by nearby text or container
-            devices_dropdown_trigger = driver.find_element(By.XPATH, 
-                "//div[contains(@class, 'form') or contains(@class, 'field')]//div[@role='combobox']")
-            print("[+] Found devices dropdown using form field method")
-        except:
-            pass
-    
-    # Method 3: Look for any remaining dropdown with aria-label
-    if not devices_dropdown_trigger:
-        try:
-            devices_dropdown_trigger = driver.find_element(By.CSS_SELECTOR, 
-                "div[role='combobox'][aria-label='Dropdown']:not([style*='display: none'])")
-            print("[+] Found devices dropdown using visible dropdown method")
-        except:
-            pass
-    
-    # Method 4: Try a more generic approach
-    if not devices_dropdown_trigger:
-        try:
-            # Wait a bit longer and try again
-            time.sleep(2)
-            devices_dropdown_trigger = WebDriverWait(driver, 5).until(
-                EC.element_to_be_clickable((By.CSS_SELECTOR, "div[role='combobox']"))
-            )
-            print("[+] Found devices dropdown using generic method")
-        except:
-            pass
-    
-    if not devices_dropdown_trigger:
-        print("[!] Could not find devices dropdown, trying alternative approach...")
-        # Try to find by looking for the actual select element or input
-        try:
-            # Look for any select or input related to devices
-            device_input = driver.find_element(By.XPATH, "//input[contains(@name, 'device') or contains(@id, 'device')]")
-            device_input.click()
-            print("[+] Found device input field")
-        except:
-            print("[!] No device input found either")
-            raise Exception("Could not find devices dropdown or input")
-    else:
-        # Click the dropdown trigger
-        devices_dropdown_trigger.click()
-        print("[+] Clicked devices dropdown")
+    # Step 2: Set language and adult content
+    print("[+] Clicking language dropdown...")
+    # Click language dropdown
+    language_dropdown = wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[2]/div/div/div/div/div/form/div/div[2]/div[2]/div[2]/div[1]/div[1]/div/div[2]/div[1]/div/div[1]")))
+    js_click(language_dropdown)
     
     # Wait for dropdown to open
-    time.sleep(1)
+    time.sleep(2)
     
-    # Try to click on "4 Simultaneously" option
+    # Click English option
+    print("[+] Selecting English...")
+    english_option = wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[2]/div/div/div/div/div/form/div/div[2]/div[2]/div[2]/div[1]/div[1]/div/div[2]/div[1]/div/div[2]/div/ul[2]/li[6]")))
+    js_click(english_option)
+    
+    # Click adult content OFF button (radio button)
+    print("[+] Setting adult content to OFF...")
     try:
-        four_devices_option = wait.until(EC.element_to_be_clickable(
-            (By.XPATH, "//span[@class='opt-lbl' and normalize-space()='4 Simultaneously']")
-        ))
-        four_devices_option.click()
-        print("[+] Selected '4 Simultaneously'")
-    except:
-        # Try alternative text variations
-        try:
-            four_devices_option = driver.find_element(By.XPATH, "//span[contains(text(), '4 Simultaneously')]")
-            four_devices_option.click()
-            print("[+] Selected '4 Simultaneously' (alternative method)")
-        except:
-            # Try just looking for "4"
-            four_devices_option = driver.find_element(By.XPATH, "//span[contains(text(), '4')]")
-            four_devices_option.click()
-            print("[+] Selected option containing '4'")
-    
-    # Wait for dropdown to close
-    time.sleep(0.5)
-    
-    # Click Submit button
-    submit_button = wait.until(EC.element_to_be_clickable(
-        (By.XPATH, "//button[contains(text(),'Submit')]")
-    ))
-    submit_button.click()
-    print("[+] Step 3 complete - Form submitted!")
-
-    # After submitting the form, wait 20 minutes before checking
-    print("[+] Waiting 20 minutes for email to arrive...")
-    time.sleep(1200)  # 20 minute wait
-    
-     # Now check the known email URL
-    email_url = "https://www.disposablemail.com/window/id/2"
-    print(f"[+] Checking email at: {email_url}")
-    
-    # Switch to email tab and refresh
-    driver.switch_to.window(driver.window_handles[1])
-    driver.get(email_url)
-    time.sleep(5)  # Wait for page to load
-    
-    # Get email content
-    email_content = driver.find_element(By.TAG_NAME, "body").text
-    
-    # Look for Tivimate M3U URL
-    tivimate_pattern = r"For Tivimate.*?🎛 M3U:\s*(https?://[^\s]+\.m3u[^\s]*)"
-    tivimate_match = re.search(tivimate_pattern, email_content, re.DOTALL)
-    
-    if tivimate_match:
-        m3u_url = tivimate_match.group(1).strip()
-        print(f"[+] Found Tivimate M3U URL: {m3u_url}")
+        # Primary method: Click the label associated with the radio button
+        adult_off_label = wait.until(EC.element_to_be_clickable((By.XPATH, "//label[@for='b1-4-1-chk-1']")))
+        js_click(adult_off_label)
+        print("[+] Clicked OFF label")
         
-        # Download the file
-        print(f"[+] Downloading M3U file...")
+        # Give it a moment to register the selection
+        time.sleep(1)
+        
+        # Verify it's selected (optional debug)
         try:
-            r = requests.get(m3u_url)
-            r.raise_for_status()
-            with open(SAVE_FILE, "wb") as f:
-                f.write(r.content)
-            print(f"✅ IPTV playlist saved to {SAVE_FILE}")
-        except Exception as e:
-            print(f"[!] Error downloading: {e}")
-    else:
-        print("[!] No M3U link found in email")
+            adult_off_button = driver.find_element(By.XPATH, "//*[@id='b1-4-1-chk-1']")
+            if adult_off_button.is_selected():
+                print("[+] OFF option confirmed selected")
+            else:
+                print("[!] OFF option may not be selected, but continuing...")
+        except:
+            print("[+] Could not verify selection state, continuing...")
+            
+    except Exception as e:
+        print(f"[!] Error with adult content label selection: {e}")
+        # Fallback 1: Try clicking the radio button directly
+        try:
+            adult_off_button = driver.find_element(By.XPATH, "//*[@id='b1-4-1-chk-1']")
+            js_click(adult_off_button)
+            print("[+] Clicked OFF radio button as fallback")
+        except NoSuchElementException:
+            # Fallback 2: Try finding and clicking the parent container
+            try:
+                adult_off_container = driver.find_element(By.XPATH, "//*[@id='b1-4-1-chk-1']/parent::*")
+                js_click(adult_off_container)
+                print("[+] Clicked OFF container as fallback")
+            except NoSuchElementException:
+                # Last resort - look for text "Off" 
+                try:
+                    off_text_elem = driver.find_element(By.XPATH, "//*[contains(text(), 'Off')]")
+                    js_click(off_text_elem)
+                    print("[+] Clicked OFF text element as fallback")
+                except NoSuchElementException:
+                    print("[!] Could not find OFF option with any method, continuing...")
 
+    # Click Next button using exact XPath
+    print("[+] Clicking Next button for Step 2...")
+    next_button = wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[2]/div/div/div/div/div/form/div/div[2]/div[2]/div[2]/div[2]/div/button[2]")))
+    js_click(next_button)
+    
+    # Wait for next step
+    time.sleep(2)
+    print("[+] Step 2 completed, moving to Step 3...")
+
+    # Step 3: Set devices and submit
+    print("[+] Clicking devices dropdown...")
+    # Click devices dropdown
+    devices_dropdown = wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[2]/div/div/div/div/div/form/div/div[2]/div[2]/div[3]/div[1]/div[1]/div/div[2]/div[1]/div/div[1]")))
+    js_click(devices_dropdown)
+    
+    # Wait for dropdown to open
+    time.sleep(2)
+    
+    # Click 4 Simultaneously option
+    print("[+] Selecting 4 Simultaneously...")
+    four_devices_option = wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[2]/div/div/div/div/div/form/div/div[2]/div[2]/div[3]/div[1]/div[1]/div/div[2]/div[1]/div/div[2]/div/ul[2]/li[4]")))
+    js_click(four_devices_option)
+    
+    # Submit the form
+    print("[+] Submitting form...")
+    submit_button = wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[2]/div/div/div/div/div/form/div/div[2]/div[2]/div[3]/div[1]/div[2]/div/div/div/button")))
+    js_click(submit_button)
+    print("[+] Form submitted!")
+    
+    # Wait a moment to see if anything happens on the page
+    time.sleep(5)
+    
+    # Check current page state after submission
+    print(f"[+] Current URL after submission: {driver.current_url}")
+    print(f"[+] Page title after submission: {driver.title}")
+    
+    # Look for any success/confirmation messages
+    try:
+        success_elements = driver.find_elements(By.XPATH, "//*[contains(text(), 'success') or contains(text(), 'Success') or contains(text(), 'sent') or contains(text(), 'Sent') or contains(text(), 'email')]")
+        if success_elements:
+            print("[+] Found potential success messages:")
+            for elem in success_elements:
+                if elem.is_displayed() and elem.text.strip():
+                    print(f"  - {elem.text.strip()}")
+    except Exception as e:
+        print(f"[!] Error checking for success messages: {e}")
+
+
+    # Wait for email and download
+    m3u_url = wait_for_email_link()
+    if m3u_url:
+        if download_and_save_m3u(m3u_url, SAVE_FILE):
+            print("[✓] M3U saved successfully.")
+        else:
+            print("[!] Failed to download M3U file.")
+    else:
+        print("[!] Failed to retrieve M3U link.")
+
+        # Switch back to main tab to check the form page
+        driver.switch_to.window(driver.window_handles[0])
+        print(f"[DEBUG] Final form page URL: {driver.current_url}")
+        print(f"[DEBUG] Final form page title: {driver.title}")
+
+except Exception as e:
+    print(f"[!] Error occurred: {e}")
+    
 finally:
     driver.quit()
