@@ -10,13 +10,13 @@ import time, re, random, string, os
 import requests
 
 # === Settings ===
-# SAVE_FILE = "iptv_daily/iptvore_daily_update.m3u"
-# EPG_SAVE_FILE = "iptv_daily/iptvore_daily_update_epg.xml"
-# DRIVER_PATH = "/usr/bin/chromedriver"
+SAVE_FILE = "iptv_daily/iptvore_daily_update.m3u"
+EPG_SAVE_FILE = "iptv_daily/iptvore_daily_update_epg.xml"
+DRIVER_PATH = "/usr/bin/chromedriver"
 
-SAVE_FILE = r"C:\Users\James\Documents\daily-iptv\iptv_daily/iptvore_daily_update.m3u"
-EPG_SAVE_FILE = r"C:\Users\James\Documents\daily-iptv\iptv_daily/iptvore_daily_update_epg.xml"
-DRIVER_PATH = r"C:\Users\James\Downloads\chromedriver-win64\chromedriver-win64\chromedriver.exe"
+# SAVE_FILE = r"C:\Users\James\Documents\daily-iptv\iptv_daily/iptvore_daily_update.m3u"
+# EPG_SAVE_FILE = r"C:\Users\James\Documents\daily-iptv\iptv_daily/iptvore_daily_update_epg.xml"
+# DRIVER_PATH = r"C:\Users\James\Downloads\chromedriver-win64\chromedriver-win64\chromedriver.exe"
 
 # === Improved Chrome Options for Stability ===
 options = webdriver.ChromeOptions()
