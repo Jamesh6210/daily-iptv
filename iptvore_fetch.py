@@ -569,7 +569,7 @@ try:
             m3u_url, epg_url = result, None
         
         if download_and_save_m3u(m3u_url, SAVE_FILE):
-            truncate_m3u_file(SAVE_FILE, 284700)
+            truncate_m3u_file(SAVE_FILE, 92025)
             print("[✓] M3U saved successfully.")
         else:
             print("[!] Failed to download M3U file.")
