@@ -425,6 +425,33 @@ def wait_for_element(xpaths, wait_time=10, clickable=False):
             print(f"[!] Element not found/clickable for XPath: {xpath}, trying next...")
     raise Exception("[-] None of the XPaths worked for this element")
 
+
+def truncate_m3u_file(file_path, max_lines=284700):
+    """Truncate M3U file to specified number of lines"""
+    print(f"[+] Truncating {file_path} to {max_lines} lines...")
+    
+    # Create a temporary file
+    temp_path = file_path + ".tmp"
+    
+    try:
+        with open(file_path, 'r', encoding='utf-8') as infile:
+            with open(temp_path, 'w', encoding='utf-8') as outfile:
+                for i, line in enumerate(infile):
+                    if i >= max_lines:
+                        break
+                    outfile.write(line)
+        
+        # Replace original with truncated version
+        os.replace(temp_path, file_path)
+        print(f"[✓] File truncated to {max_lines} lines")
+        return True
+        
+    except Exception as e:
+        print(f"[!] Error truncating file: {e}")
+        if os.path.exists(temp_path):
+            os.remove(temp_path)
+        return False
+
 # === Main Workflow ===
 try:
     email = get_disposable_email()
@@ -542,6 +569,7 @@ try:
             m3u_url, epg_url = result, None
         
         if download_and_save_m3u(m3u_url, SAVE_FILE):
+            truncate_m3u_file(SAVE_FILE, 284700)
             print("[✓] M3U saved successfully.")
         else:
             print("[!] Failed to download M3U file.")
