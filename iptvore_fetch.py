@@ -350,51 +350,122 @@ def search_for_m3u_links(driver):
         print(f"[{elapsed_time()}] Error in search_for_m3u_links: {e}")
         return None
 
-def download_m3u_file(url, save_path, max_retries=2):  # Reduced retries
-    """Download file with optimized settings for VPS"""
+def download_m3u_file(url, save_path, max_retries=3, is_m3u=True):
+    """Download file with adaptive timeout based on file type"""
     headers = {
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'Accept': 'text/plain, application/x-mpegURL, */*',
         'Accept-Language': 'en-US,en;q=0.9',
         'Connection': 'keep-alive',
-        'Accept-Encoding': 'gzip, deflate',  # Enable compression
+        'Accept-Encoding': 'gzip, deflate',
     }
+    
+    # Adaptive timeout based on file type
+    if is_m3u:
+        connect_timeout = 10
+        read_timeout = 120  # Much longer for large M3U files
+        chunk_size = 8192   # Larger chunks for M3U
+        print(f"[{elapsed_time()}] Using extended timeout for M3U file (120s read timeout)")
+    else:
+        connect_timeout = 5
+        read_timeout = 30   # Shorter for EPG files
+        chunk_size = 4096
+        print(f"[{elapsed_time()}] Using standard timeout for EPG file (30s read timeout)")
     
     for attempt in range(max_retries):
         try:
-            print(f"[{elapsed_time()}] Download attempt {attempt + 1}")
+            print(f"[{elapsed_time()}] Download attempt {attempt + 1}/{max_retries}")
             
             with requests.Session() as session:
                 session.headers.update(headers)
                 
-                # Shorter timeouts for VPS
-                response = session.get(url, timeout=(5, 20), allow_redirects=True, stream=True)
+                # Start the request
+                response = session.get(
+                    url, 
+                    timeout=(connect_timeout, read_timeout), 
+                    allow_redirects=True, 
+                    stream=True
+                )
                 response.raise_for_status()
                 
                 print(f"[{elapsed_time()}] Response status: {response.status_code}")
                 
-                total_size = 0
+                # Get content length if available
+                content_length = response.headers.get('content-length')
+                if content_length:
+                    total_expected = int(content_length)
+                    print(f"[{elapsed_time()}] Expected file size: {total_expected:,} bytes")
+                else:
+                    total_expected = None
+                    print(f"[{elapsed_time()}] File size unknown, downloading...")
+                
+                total_downloaded = 0
+                last_progress_time = time.time()
+                
                 with open(save_path, 'wb') as f:
-                    for chunk in response.iter_content(chunk_size=4096):  # Smaller chunks
+                    for chunk in response.iter_content(chunk_size=chunk_size):
                         if chunk:
                             f.write(chunk)
-                            total_size += len(chunk)
+                            total_downloaded += len(chunk)
+                            
+                            # Progress reporting every 10 seconds for large files
+                            current_time = time.time()
+                            if current_time - last_progress_time >= 10:
+                                if total_expected:
+                                    progress = (total_downloaded / total_expected) * 100
+                                    print(f"[{elapsed_time()}] Progress: {total_downloaded:,}/{total_expected:,} bytes ({progress:.1f}%)")
+                                else:
+                                    print(f"[{elapsed_time()}] Downloaded: {total_downloaded:,} bytes")
+                                last_progress_time = current_time
                 
-                print(f"[{elapsed_time()}] Downloaded {total_size} bytes")
+                print(f"[{elapsed_time()}] Download completed: {total_downloaded:,} bytes")
                 
+                # Verify file was saved correctly
                 if os.path.exists(save_path) and os.path.getsize(save_path) > 0:
                     file_size = os.path.getsize(save_path)
-                    print(f"[{elapsed_time()}] File saved: {save_path} ({file_size} bytes)")
-                    return True
+                    print(f"[{elapsed_time()}] File saved successfully: {save_path} ({file_size:,} bytes)")
                     
+                    # Additional verification for M3U files
+                    if is_m3u:
+                        try:
+                            with open(save_path, 'r', encoding='utf-8') as f:
+                                first_line = f.readline().strip()
+                                if first_line.startswith('#EXTM3U'):
+                                    print(f"[{elapsed_time()}] M3U file format verified")
+                                else:
+                                    print(f"[{elapsed_time()}] Warning: File may not be valid M3U format")
+                        except Exception as e:
+                            print(f"[{elapsed_time()}] Warning: Could not verify M3U format: {e}")
+                    
+                    return True
+                else:
+                    raise Exception("File was not saved or is empty")
+                    
+        except requests.exceptions.ReadTimeout as e:
+            print(f"[!] Download attempt {attempt + 1} failed: Read timeout after {read_timeout}s")
+            if attempt < max_retries - 1:
+                wait_time = (attempt + 1) * 5
+                print(f"[{elapsed_time()}] Retrying in {wait_time} seconds...")
+                time.sleep(wait_time)
+            
+        except requests.exceptions.ConnectTimeout as e:
+            print(f"[!] Download attempt {attempt + 1} failed: Connection timeout")
+            if attempt < max_retries - 1:
+                wait_time = (attempt + 1) * 3
+                print(f"[{elapsed_time()}] Retrying in {wait_time} seconds...")
+                time.sleep(wait_time)
+                
         except Exception as e:
             print(f"[!] Download attempt {attempt + 1} failed: {e}")
             if attempt < max_retries - 1:
-                time.sleep((attempt + 1) * 2)  # Shorter retry delay
+                wait_time = (attempt + 1) * 3
+                print(f"[{elapsed_time()}] Retrying in {wait_time} seconds...")
+                time.sleep(wait_time)
         finally:
             # Cleanup
             memory_cleanup()
     
+    print(f"[!] All download attempts failed for {url}")
     return False
 
 def wait_for_element(driver, xpaths, wait_time=5, clickable=False):  # Reduced timeout
@@ -530,7 +601,8 @@ def main():
                 else:
                     m3u_url, epg_url = result, None
                 
-                if download_m3u_file(m3u_url, SAVE_FILE):
+                # Download M3U with extended timeout
+                if download_m3u_file(m3u_url, SAVE_FILE, max_retries=3, is_m3u=True):
                     truncate_m3u_file(SAVE_FILE, 92025)
                     print("[✓] M3U saved successfully.")
                 else:
@@ -539,7 +611,7 @@ def main():
                 # Download EPG if found
                 if epg_url:
                     epg_file = SAVE_FILE.replace('.m3u', '_epg.xml')
-                    if download_m3u_file(epg_url, epg_file):
+                    if download_m3u_file(epg_url, epg_file, max_retries=2, is_m3u=False):
                         print("[✓] EPG saved successfully.")
                     else:
                         print("[!] Failed to download EPG file.")
