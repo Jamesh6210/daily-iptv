@@ -331,6 +331,7 @@ def search_for_m3u_links(driver):
             m3u_patterns = [
                 r'https?://[^\s<>"\']+/get\.php\?username=[^&\s<>"\']+&password=[^&\s<>"\']+&type=m3u_plus[^\s<>"\']*',
                 r'https?://[^\s<>"\']+get\.php[^\s<>"\']*type=m3u[^\s<>"\']*',
+                r'https?://[^\s<>"\']+/playlist/[^\s<>"\']+/m3u_plus[^\s<>"\']*',  # NEW: KhabyHosting format
             ]
             
             for pattern in m3u_patterns:
