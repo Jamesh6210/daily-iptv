@@ -522,7 +522,7 @@ def main():
 
             # Step 3: Click Order button
             print("[+] Clicking Order button...")
-            js_click(driver, wait_for_element(driver, ['//*[@id="product5-order-button"]'], clickable=True))
+            js_click(driver, wait_for_element(driver, ['//*[@id="product1-order-button"]'], clickable=True))
             time.sleep(2)
 
             # Step 4: Click Checkout button
