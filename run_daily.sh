@@ -2,7 +2,7 @@
 cd /root/daily-iptv || exit 1
 
 echo "[+] Running Python script..."
-/usr/bin/python3 -u iptvore_fetch.py
+/usr/bin/python3 -u ottocean_fetch.py
 
 echo "[+] Staging files for commit..."
 git add iptv_daily/*
