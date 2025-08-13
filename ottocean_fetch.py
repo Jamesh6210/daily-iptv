@@ -536,6 +536,7 @@ def main():
             driver.find_element(By.XPATH, '//*[@id="inputFirstName"]').send_keys("John")
             driver.find_element(By.XPATH, '//*[@id="inputLastName"]').send_keys("Doe")
             driver.find_element(By.XPATH, '//*[@id="inputEmail"]').send_keys(email)
+            driver.find_element(By.XPATH, '//*[@id="inputPhone"]').send_keys("441234567890")
             driver.find_element(By.XPATH, '//*[@id="inputAddress1"]').send_keys("123 Main Street")
             driver.find_element(By.XPATH, '//*[@id="inputCity"]').send_keys("London")
 
@@ -547,7 +548,6 @@ def main():
                 driver.find_element(By.XPATH, '//*[@id="stateselect"]').send_keys("London")
 
             driver.find_element(By.XPATH, '//*[@id="inputPostcode"]').send_keys("W1A 1AA")
-            driver.find_element(By.XPATH, '//*[@id="inputPhone"]').send_keys("+441234567890")
             driver.find_element(By.XPATH, '//*[@id="inputNewPassword1"]').send_keys("StrongPassword123!")
             driver.find_element(By.XPATH, '//*[@id="inputNewPassword2"]').send_keys("StrongPassword123!")
 
