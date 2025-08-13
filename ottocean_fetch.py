@@ -509,14 +509,14 @@ def truncate_m3u_file(file_path, max_lines=92025):
 
 # === Main Workflow ===
 def main():
-    """Main execution function adapted for Ottocean"""
+    """Main execution function adapted for KhabyHosting"""
     try:
         with managed_driver() as driver:
             # Step 1: Get disposable email
             email = get_disposable_email(driver)
 
-            # Step 2: Go to Ottocean trial page
-            driver.get("https://ottocean.com/store/store/trial")
+            # Step 2: Go to KhabyHosting trial page
+            driver.get("https://khabyhosting.com/index.php/store/khaby-trial-plan")
             handle_cookies_and_popups(driver)
             time.sleep(2)
 
@@ -525,25 +525,20 @@ def main():
             js_click(driver, wait_for_element(driver, ['//*[@id="product5-order-button"]'], clickable=True))
             time.sleep(2)
 
-            # Step 4: Click Continue button
-            print("[+] Clicking Continue button...")
-            js_click(driver, wait_for_element(driver, ['//*[@id="btnCompleteProductConfig"]'], clickable=True))
-            time.sleep(2)
-
-            # Step 5: Click Checkout button
+            # Step 4: Click Checkout button
             print("[+] Clicking Checkout button...")
             js_click(driver, wait_for_element(driver, ['//*[@id="checkout"]'], clickable=True))
             time.sleep(2)
 
-            # Step 6: Fill out checkout form
+            # Step 5: Fill out checkout form
             print("[+] Filling checkout form...")
             driver.find_element(By.XPATH, '//*[@id="inputFirstName"]').send_keys("John")
             driver.find_element(By.XPATH, '//*[@id="inputLastName"]').send_keys("Doe")
             driver.find_element(By.XPATH, '//*[@id="inputEmail"]').send_keys(email)
             driver.find_element(By.XPATH, '//*[@id="inputAddress1"]').send_keys("123 Main Street")
             driver.find_element(By.XPATH, '//*[@id="inputCity"]').send_keys("London")
-            
-            # If it's a dropdown, select by visible text
+
+            # Handle state
             try:
                 from selenium.webdriver.support.ui import Select
                 Select(driver.find_element(By.XPATH, '//*[@id="stateselect"]')).select_by_visible_text("London")
@@ -551,15 +546,16 @@ def main():
                 driver.find_element(By.XPATH, '//*[@id="stateselect"]').send_keys("London")
 
             driver.find_element(By.XPATH, '//*[@id="inputPostcode"]').send_keys("W1A 1AA")
+            driver.find_element(By.XPATH, '//*[@id="inputPhone"]').send_keys("+441234567890")
             driver.find_element(By.XPATH, '//*[@id="inputNewPassword1"]').send_keys("StrongPassword123!")
             driver.find_element(By.XPATH, '//*[@id="inputNewPassword2"]').send_keys("StrongPassword123!")
 
-            # Step 7: Click Complete Order button
+            # Step 6: Click Complete Order button
             print("[+] Clicking Complete Order button...")
             js_click(driver, wait_for_element(driver, ['//*[@id="btnCompleteOrder"]'], clickable=True))
             time.sleep(3)
 
-            # Step 8: Wait for M3U email (updated ID path)
+            # Step 7: Wait for M3U email
             result = wait_for_email_link(driver, max_wait=1800)
             if result:
                 if isinstance(result, tuple):
@@ -567,14 +563,12 @@ def main():
                 else:
                     m3u_url, epg_url = result, None
 
-                # Download M3U
                 if download_m3u_file(m3u_url, SAVE_FILE, max_retries=3, is_m3u=True):
-                    truncate_m3u_file(SAVE_FILE, 92025)
+                    ## truncate_m3u_file(SAVE_FILE, 92025)
                     print("[✓] M3U saved successfully.")
                 else:
                     print("[!] Failed to download M3U file.")
 
-                # Download EPG
                 if epg_url:
                     epg_file = SAVE_FILE.replace('.m3u', '_epg.xml')
                     if download_m3u_file(epg_url, epg_file, max_retries=2, is_m3u=False):
@@ -589,6 +583,7 @@ def main():
     finally:
         memory_cleanup()
         print("[+] Script completed.")
+
 
 
 if __name__ == "__main__":
