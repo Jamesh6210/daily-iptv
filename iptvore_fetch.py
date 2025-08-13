@@ -516,7 +516,7 @@ def main():
             email = get_disposable_email(driver)
             
             # Navigate to IPTVore
-            driver.get("https://iptvore.net/iptv-free-trial-2025/")
+            driver.get("https://iptvore.com/free-iptv-trial/#apply")
             handle_cookies_and_popups(driver)
             time.sleep(2)  # Reduced wait
 
@@ -535,7 +535,7 @@ def main():
             for selector in email_selectors:
                 try:
                     wait = VPSOptimizedWait(driver, 3)
-                    email_input = wait.until(EC.presence_of_element_located((By.XPATH, selector)))
+                    email_input = wait.until(EC.element_to_be_clickable((By.XPATH, selector)))
                     print(f"[+] Found email field with selector: {selector}")
                     break
                 except TimeoutException:
