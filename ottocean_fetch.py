@@ -268,88 +268,52 @@ def wait_for_email_link(driver, max_wait=1800):  # Reduced from 3600
     return None
 
 def search_for_m3u_links(driver):
-    """Search for M3U links in current context - optimized"""
+    """Search for M3U or construct links from username/password in email"""
     try:
-        # Get page content more efficiently
-        try:
-            page_html = driver.execute_script("return document.body.innerHTML;")
-            page_text = driver.execute_script("return document.body.innerText;")
-            combined_content = page_html + " " + page_text
-        except Exception as e:
-            print(f"[{elapsed_time()}] Error reading page content: {e}")
-            return None
-        
+        page_text = driver.execute_script("return document.body.innerText;")
+
         print(f"[{elapsed_time()}] Searching email content...")
-        
-        m3u_url = None
-        epg_url = None
-        
-        # Method 1: Direct HTML search (most efficient)
-        m3u_selectors = [
-            (By.XPATH, "//a[contains(@href, 'get.php') and contains(@href, 'type=m3u')]"),
-            (By.CSS_SELECTOR, "a[href*='get.php'][href*='type=m3u']"),
+
+        # 1. Try normal M3U/EPG link detection first
+        m3u_patterns = [
+            r'https?://[^\s<>"\']+/get\.php\?username=[^&\s<>"\']+&password=[^&\s<>"\']+&type=m3u_plus[^\s<>"\']*',
+            r'https?://[^\s<>"\']+get\.php[^\s<>"\']*type=m3u[^\s<>"\']*',
+            r'https?://[^\s<>"\']+/playlist/[^\s<>"\']+/m3u_plus[^\s<>"\']*'
         ]
-        
-        for by, selector in m3u_selectors:
-            try:
-                m3u_elements = driver.find_elements(by, selector)
-                for elem in m3u_elements:
-                    href = elem.get_attribute("href")
-                    if href and ("get.php" in href and "type=m3u" in href):
-                        m3u_url = href.replace("&amp;", "&")
-                        print(f"[{elapsed_time()}] Found M3U link: {m3u_url}")
-                        break
-                if m3u_url:
-                    break
-            except Exception:
-                continue
-        
-        # Method 2: EPG links
-        if not epg_url:
-            epg_selectors = [
-                (By.XPATH, "//a[contains(@href, 'xmltv.php')]"),
-                (By.CSS_SELECTOR, "a[href*='xmltv.php']"),
-            ]
-            
-            for by, selector in epg_selectors:
-                try:
-                    epg_elements = driver.find_elements(by, selector)
-                    for elem in epg_elements:
-                        href = elem.get_attribute("href")
-                        if href and "xmltv.php" in href:
-                            epg_url = href.replace("&amp;", "&")
-                            print(f"[{elapsed_time()}] Found EPG link: {epg_url}")
-                            break
-                    if epg_url:
-                        break
-                except Exception:
-                    continue
-        
-        # Method 3: Regex fallback (only if needed)
-        if not m3u_url:
-            print(f"[{elapsed_time()}] Using regex fallback...")
-            m3u_patterns = [
-                r'https?://[^\s<>"\']+/get\.php\?username=[^&\s<>"\']+&password=[^&\s<>"\']+&type=m3u_plus[^\s<>"\']*',
-                r'https?://[^\s<>"\']+get\.php[^\s<>"\']*type=m3u[^\s<>"\']*',
-                r'https?://[^\s<>"\']+/playlist/[^\s<>"\']+/m3u_plus[^\s<>"\']*',  # NEW: KhabyHosting format
-            ]
-            
-            for pattern in m3u_patterns:
-                matches = re.findall(pattern, combined_content, re.IGNORECASE)
-                if matches:
-                    m3u_url = matches[0].replace("&amp;", "&")
-                    print(f"[{elapsed_time()}] Found M3U URL via regex: {m3u_url}")
-                    break
-        
-        # Return results
-        if m3u_url:
+        for pattern in m3u_patterns:
+            match = re.search(pattern, page_text, re.IGNORECASE)
+            if match:
+                m3u_url = match.group(0).replace("&amp;", "&")
+                print(f"[{elapsed_time()}] Found M3U URL: {m3u_url}")
+                # Try to find matching EPG
+                epg_match = re.search(r'https?://[^\s<>"\']+/xmltv\.php[^\s<>"\']*', page_text, re.IGNORECASE)
+                epg_url = epg_match.group(0).replace("&amp;", "&") if epg_match else None
+                return m3u_url, epg_url
+
+        # 2. If no link found, parse username/password/portal URL
+        username_match = re.search(r"Username:\s*([^\s]+)", page_text, re.IGNORECASE)
+        password_match = re.search(r"Password:\s*([^\s]+)", page_text, re.IGNORECASE)
+        portal_match = re.search(r"Portal URL:\s*(https?://[^\s/]+)", page_text, re.IGNORECASE)
+
+        if username_match and password_match and portal_match:
+            username = username_match.group(1)
+            password = password_match.group(1)
+            portal_url = portal_match.group(1).rstrip('/')
+
+            m3u_url = f"{portal_url}:80/get.php?username={username}&password={password}&type=m3u_plus&output=ts"
+            epg_url = f"{portal_url}:80/xmltv.php?username={username}&password={password}"
+
+            print(f"[{elapsed_time()}] Constructed M3U URL: {m3u_url}")
+            print(f"[{elapsed_time()}] Constructed EPG URL: {epg_url}")
             return m3u_url, epg_url
-        else:
-            return None
-        
+
+        print(f"[{elapsed_time()}] No M3U or credentials found in email")
+        return None
+
     except Exception as e:
         print(f"[{elapsed_time()}] Error in search_for_m3u_links: {e}")
         return None
+
 
 def download_m3u_file(url, save_path, max_retries=3, is_m3u=True):
     """Download file with adaptive timeout based on file type"""
