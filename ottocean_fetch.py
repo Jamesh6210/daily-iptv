@@ -510,37 +510,67 @@ def truncate_m3u_file(file_path, max_lines=92025):
 
 # === Main Workflow ===
 def main():
-    """Main execution function adapted for KhabyHosting"""
+    """Main execution function adapted for Flash4KIPTV"""
     try:
         with managed_driver() as driver:
             # Step 1: Get disposable email
             email = get_disposable_email(driver)
 
-            # Step 2: Go to KhabyHosting trial page
-            driver.get("https://khabyhosting.com/index.php/store/khaby-trial-plan")
+            # Step 2: Go to Flash4KIPTV trial page
+            driver.get("https://flash4kiptv.com/whmcs/index.php?rp=/store/free-trial")
             handle_cookies_and_popups(driver)
             time.sleep(2)
 
             # Step 3: Click Order button
             print("[+] Clicking Order button...")
-            js_click(driver, wait_for_element(driver, ['//*[@id="product1-order-button"]'], clickable=True))
+            js_click(driver, wait_for_element(driver, ['//*[@id="product5-order-button"]'], clickable=True))
             time.sleep(2)
 
-            # Step 4: Click Checkout button
+            # Step 4: Select Bouquets
+            print("[+] Selecting Bouquets...")
+            js_click(driver, wait_for_element(driver, ['//*[@id="selectbouquetsbtn"]'], clickable=True))
+            time.sleep(1)
+
+            # Tick USA, UK, NZ
+            driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div[2]/div/div/div[1]/div/div[2]/div/label/input').click()
+            driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div[2]/div/div/div[1]/div/div[3]/div/label/input').click()
+            driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div[2]/div/div/div[1]/div/div[57]/div/label/input').click()
+            time.sleep(1)
+
+            # Movies
+            print("[+] Selecting Movies...")
+            driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div[3]/button').click()
+            driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/div[2]/div/label/input').click()
+            time.sleep(1)
+
+            # Series (click but no specific checkbox given)
+            print("[+] Selecting Series...")
+            driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div[3]/button').click()
+            time.sleep(1)
+
+            # Save changes
+            print("[+] Saving Bouquets selection...")
+            js_click(driver, wait_for_element(driver, ['//*[@id="savebqbtn"]'], clickable=True))
+            time.sleep(2)
+
+            # Step 5: Click Continue button
+            print("[+] Clicking Continue button...")
+            js_click(driver, wait_for_element(driver, ['//*[@id="btnCompleteProductConfig"]'], clickable=True))
+            time.sleep(2)
+
+            # Step 6: Click Checkout button
             print("[+] Clicking Checkout button...")
             js_click(driver, wait_for_element(driver, ['//*[@id="checkout"]'], clickable=True))
             time.sleep(2)
 
-            # Step 5: Fill out checkout form
+            # Step 7: Fill out checkout form
             print("[+] Filling checkout form...")
             driver.find_element(By.XPATH, '//*[@id="inputFirstName"]').send_keys("John")
             driver.find_element(By.XPATH, '//*[@id="inputLastName"]').send_keys("Doe")
             driver.find_element(By.XPATH, '//*[@id="inputEmail"]').send_keys(email)
-            driver.find_element(By.XPATH, '//*[@id="inputPhone"]').send_keys("441234567890")
             driver.find_element(By.XPATH, '//*[@id="inputAddress1"]').send_keys("123 Main Street")
             driver.find_element(By.XPATH, '//*[@id="inputCity"]').send_keys("London")
 
-            # Handle state
             try:
                 from selenium.webdriver.support.ui import Select
                 Select(driver.find_element(By.XPATH, '//*[@id="stateselect"]')).select_by_visible_text("London")
@@ -548,15 +578,16 @@ def main():
                 driver.find_element(By.XPATH, '//*[@id="stateselect"]').send_keys("London")
 
             driver.find_element(By.XPATH, '//*[@id="inputPostcode"]').send_keys("W1A 1AA")
+            driver.find_element(By.XPATH, '//*[@id="inputPhone"]').send_keys("+441234567890")
             driver.find_element(By.XPATH, '//*[@id="inputNewPassword1"]').send_keys("StrongPassword123!")
             driver.find_element(By.XPATH, '//*[@id="inputNewPassword2"]').send_keys("StrongPassword123!")
 
-            # Step 6: Click Complete Order button
+            # Step 8: Click Complete Order button
             print("[+] Clicking Complete Order button...")
             js_click(driver, wait_for_element(driver, ['//*[@id="btnCompleteOrder"]'], clickable=True))
             time.sleep(3)
 
-            # Step 7: Wait for M3U email
+            # Step 9: Wait for M3U email
             result = wait_for_email_link(driver, max_wait=1800)
             if result:
                 if isinstance(result, tuple):
@@ -584,6 +615,7 @@ def main():
     finally:
         memory_cleanup()
         print("[+] Script completed.")
+
 
 
 
