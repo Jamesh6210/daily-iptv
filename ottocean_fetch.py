@@ -15,6 +15,10 @@ SAVE_FILE = "iptv_daily/iptvore_daily_update.m3u"
 EPG_SAVE_FILE = "iptv_daily/iptvore_daily_update_epg.xml"
 DRIVER_PATH = "/usr/bin/chromedriver"
 
+# SAVE_FILE = r"C:\Users\James\Documents\daily-iptv\iptv_daily/iptvore_daily_update.m3u"
+# EPG_SAVE_FILE = r"C:\Users\James\Documents\daily-iptv\iptv_daily/iptvore_daily_update_epg.xml"
+# DRIVER_PATH = r"C:\Users\James\Downloads\chromedriver-win64\chromedriver-win64\chromedriver.exe"
+
 # VPS-optimized Chrome options
 def get_vps_optimized_options():
     """Return Chrome options optimized for small VPS"""
