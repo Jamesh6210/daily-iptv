@@ -485,46 +485,46 @@ def main():
             email = get_disposable_email(driver)
 
             # Step 2: Go to Flash4KIPTV trial page
-            driver.get("https://flash4kiptv.com/whmcs/index.php?rp=/store/free-trial")
+            driver.get("https://krooztv.com/billing/store/trialiptv")
             handle_cookies_and_popups(driver)
             time.sleep(2)
 
             # Step 3: Click Order button
             print("[+] Clicking Order button...")
-            js_click(driver, wait_for_element(driver, ['//*[@id="product21-order-button"]'], clickable=True))
+            js_click(driver, wait_for_element(driver, ['//*[@id="product1-order-button"]'], clickable=True))
             time.sleep(2)
 
-            # Step 4: Select Bouquets
-            print("[+] Selecting Bouquets...")
-            js_click(driver, wait_for_element(driver, ['//*[@id="selectbouquetsbtn"]'], clickable=True))
-            time.sleep(1)
+            # # Step 4: Select Bouquets
+            # print("[+] Selecting Bouquets...")
+            # js_click(driver, wait_for_element(driver, ['//*[@id="selectbouquetsbtn"]'], clickable=True))
+            # time.sleep(1)
 
-            # Tick USA, UK, NZ
-            driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div[2]/div/div/div[1]/div/div[2]/div/label/input').click()
-            driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div[2]/div/div/div[1]/div/div[3]/div/label/input').click()
-            driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div[2]/div/div/div[1]/div/div[57]/div/label/input').click()
-            time.sleep(1)
+            # # Tick USA, UK, NZ
+            # driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div[2]/div/div/div[1]/div/div[2]/div/label/input').click()
+            # driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div[2]/div/div/div[1]/div/div[3]/div/label/input').click()
+            # driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div[2]/div/div/div[1]/div/div[57]/div/label/input').click()
+            # time.sleep(1)
 
-            # Movies
-            print("[+] Selecting Movies...")
-            driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div[3]/button').click()
-            driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/div[2]/div/label/input').click()
-            time.sleep(1)
+            # # Movies
+            # print("[+] Selecting Movies...")
+            # driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div[3]/button').click()
+            # driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/div[2]/div/label/input').click()
+            # time.sleep(1)
 
-            # Series (click but no specific checkbox given)
-            print("[+] Selecting Series...")
-            driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div[3]/button').click()
-            time.sleep(1)
+            # # Series (click but no specific checkbox given)
+            # print("[+] Selecting Series...")
+            # driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div[3]/button').click()
+            # time.sleep(1)
 
-            # Save changes
-            print("[+] Saving Bouquets selection...")
-            js_click(driver, wait_for_element(driver, ['//*[@id="savebqbtn"]'], clickable=True))
-            time.sleep(2)
+            # # Save changes
+            # print("[+] Saving Bouquets selection...")
+            # js_click(driver, wait_for_element(driver, ['//*[@id="savebqbtn"]'], clickable=True))
+            # time.sleep(2)
 
-            # Step 5: Click Continue button
-            print("[+] Clicking Continue button...")
-            js_click(driver, wait_for_element(driver, ['//*[@id="btnCompleteProductConfig"]'], clickable=True))
-            time.sleep(2)
+            # # Step 5: Click Continue button
+            # print("[+] Clicking Continue button...")
+            # js_click(driver, wait_for_element(driver, ['//*[@id="btnCompleteProductConfig"]'], clickable=True))
+            # time.sleep(2)
 
             # Step 6: Click Checkout button
             print("[+] Clicking Checkout button...")
