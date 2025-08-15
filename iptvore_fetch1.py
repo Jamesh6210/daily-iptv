@@ -510,32 +510,41 @@ def truncate_m3u_file(file_path, max_lines=92025):
         return False
 
 
-def merge_selected_countries(source_dir, output_file, allowed_prefixes):
-    """
-    Merge only .m3u files whose name starts with one of allowed_prefixes.
-    allowed_prefixes: list like ['UK_', 'US_', 'IE_', 'NZ_']
-    """
-    import glob, os
+def keep_only_and_merge(source_dir, output_file, keep_list):
+    import os, glob
 
+    # Step 1: Delete unwanted files
     all_files = glob.glob(os.path.join(source_dir, "*.m3u"))
-    selected_files = [
-        f for f in all_files
-        if os.path.basename(f).upper().startswith(tuple(p.upper() for p in allowed_prefixes))
+    for file_path in all_files:
+        if os.path.basename(file_path) not in keep_list:
+            try:
+                os.remove(file_path)
+                print(f"[–] Deleted: {os.path.basename(file_path)}")
+            except Exception as e:
+                print(f"[!] Could not delete {file_path}: {e}")
+        else:
+            print(f"[✓] Kept: {os.path.basename(file_path)}")
+
+    # Step 2: Merge kept files
+    kept_files = [
+        os.path.join(source_dir, f)
+        for f in keep_list
+        if os.path.exists(os.path.join(source_dir, f))
     ]
-    
-    if not selected_files:
-        print(f"[!] No matching M3U files found in {source_dir}")
+
+    if not kept_files:
+        print("[!] No matching M3U files found to merge.")
         return False
-    
+
     with open(output_file, "w", encoding="utf-8") as outfile:
         outfile.write("#EXTM3U\n")
-        for file in selected_files:
+        for file in kept_files:
             with open(file, "r", encoding="utf-8", errors="ignore") as infile:
                 for line in infile:
                     if not line.strip().startswith("#EXTM3U"):
                         outfile.write(line)
-    
-    print(f"[✓] Merged {len(selected_files)} files into {output_file}")
+
+    print(f"[✓] Merged {len(kept_files)} files into {output_file}")
     return True
 
 
@@ -679,14 +688,30 @@ def main():
                     if result.returncode == 0:
                         print("[✓] xtream2m3u completed successfully.")
 
+                        keep_list = [
+                            "UK_ DISCOVERY+ ᴴᴰ_ᴿᴬᵂ.m3u",
+                            "UK_ DOCUMENTARY ᴴᴰ_ᴿᴬᵂ.m3u",
+                            "UK_ EPL PREMIER LEAGUE PPV ⱽᴵᴾ ᴿᴬᵂ.m3u",
+                            "UK_ FA PLAYER PPV.m3u",
+                            "UK_ GENERAL ᴴᴰ_ᴿᴬᵂ.m3u",
+                            "UK_ MUSIC ᴴᴰ_ᴿᴬᵂ.m3u",
+                            "UK_ SKY CINEMA ᴴᴰ_ᴿᴬᵂ.m3u",
+                            "UK_ SPORT ᴿᴬᵂ ⱽᴵᴾ ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
+                            "UK_ SPORT ᴴᴰ.m3u",
+                            "UK_ TNT SPORT ᴴᴰ ⱽᴵᴾ.m3u",
+                            "UK_ TNT SPORT EVENT.m3u",
+                            "UK_ UEFA PPV.m3u",
+                            "US_ ENTERTAINMENT ᴴᴰ_ᴿᴬᵂ ⁶⁰ᶠᵖˢ.m3u",
+                            "US_ MOVIES ᴴᴰ_ᴿᴬᵂ ⁶⁰ᶠᵖˢ.m3u",
+                            "NZ_ NEW ZEALAND ᴴᴰ_ᴿᴬᵂ.m3u",
+                            "IE_ IRELAND ᴴᴰ_ᴿᴬᵂ.m3u",
+                            "IE_ LOI PPV.m3u"
+                        ]
+
                         live_m3u_dir = os.path.abspath("iptv_daily/live_m3u")
                         merged_file_path = os.path.abspath("iptv_daily/iptvore_daily_update.m3u")
-                        
-                        merge_selected_countries(
-                            source_dir=live_m3u_dir,
-                            output_file=merged_file_path,
-                            allowed_prefixes=["UK_", "US_", "IE_", "NZ_"]
-                        )
+
+                        keep_only_and_merge(live_m3u_dir, merged_file_path, keep_list)
                         print(result.stdout)
                     else:
                         print("[!] xtream2m3u failed:")
