@@ -485,13 +485,13 @@ def main():
             email = get_disposable_email(driver)
 
             # Step 2: Go to Flash4KIPTV trial page
-            driver.get("https://krooztv.com/billing/store/trialiptv")
+            driver.get("https://worthystream.com/myac/store/trial-subscription")
             handle_cookies_and_popups(driver)
             time.sleep(2)
 
             # Step 3: Click Order button
             print("[+] Clicking Order button...")
-            js_click(driver, wait_for_element(driver, ['//*[@id="product1-order-button"]'], clickable=True))
+            js_click(driver, wait_for_element(driver, ['//*[@id="product5-order-button"]'], clickable=True))
             time.sleep(2)
 
             # # Step 4: Select Bouquets
@@ -521,10 +521,10 @@ def main():
             # js_click(driver, wait_for_element(driver, ['//*[@id="savebqbtn"]'], clickable=True))
             # time.sleep(2)
 
-            # # Step 5: Click Continue button
-            # print("[+] Clicking Continue button...")
-            # js_click(driver, wait_for_element(driver, ['//*[@id="btnCompleteProductConfig"]'], clickable=True))
-            # time.sleep(2)
+            # Step 5: Click Continue button
+            print("[+] Clicking Continue button...")
+            js_click(driver, wait_for_element(driver, ['//*[@id="btnCompleteProductConfig"]'], clickable=True))
+            time.sleep(2)
 
             # Step 6: Click Checkout button
             print("[+] Clicking Checkout button...")
