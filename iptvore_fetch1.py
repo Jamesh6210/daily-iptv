@@ -9,15 +9,13 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException
 import time, re, random, string, os, gc
 import requests
 from contextlib import contextmanager
+import subprocess
+from urllib.parse import urlparse, parse_qs
 
 # === Settings ===
-# SAVE_FILE = "iptv_daily/iptvore_daily_update.m3u"
-# EPG_SAVE_FILE = "iptv_daily/iptvore_daily_update_epg.xml"
-# DRIVER_PATH = "/usr/bin/chromedriver"
-
-SAVE_FILE = r"C:\Users\James\Documents\daily-iptv\iptv_daily/iptvore_daily_update.m3u"
-EPG_SAVE_FILE = r"C:\Users\James\Documents\daily-iptv\iptv_daily/iptvore_daily_update_epg.xml"
-DRIVER_PATH = r"C:\Users\James\Downloads\chromedriver-win64\chromedriver-win64\chromedriver.exe"
+SAVE_FILE = "iptv_daily/iptvore_daily_update.m3u"
+EPG_SAVE_FILE = "iptv_daily/iptvore_daily_update_epg.xml"
+DRIVER_PATH = "/usr/bin/chromedriver"
 
 # VPS-optimized Chrome options
 def get_vps_optimized_options():
@@ -25,7 +23,7 @@ def get_vps_optimized_options():
     options = webdriver.ChromeOptions()
     
     # Essential headless settings
-    # options.add_argument("--headless=new")
+    options.add_argument("--headless=new")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
@@ -238,7 +236,7 @@ def wait_for_email_link(driver, max_wait=1800):  # Reduced from 3600
     
     while time.time() - start < max_wait:
         try:
-            driver.get("https://www.disposablemail.com/email/id/4")
+            driver.get("https://www.disposablemail.com/email/id/2")
             
             # Quick consent handling
             consent_selectors = [
@@ -272,52 +270,87 @@ def wait_for_email_link(driver, max_wait=1800):  # Reduced from 3600
     return None
 
 def search_for_m3u_links(driver):
-    """Search for M3U or construct links from username/password in email"""
+    """Search for M3U links in current context - optimized"""
     try:
-        page_text = driver.execute_script("return document.body.innerText;")
-
+        # Get page content more efficiently
+        try:
+            page_html = driver.execute_script("return document.body.innerHTML;")
+            page_text = driver.execute_script("return document.body.innerText;")
+            combined_content = page_html + " " + page_text
+        except Exception as e:
+            print(f"[{elapsed_time()}] Error reading page content: {e}")
+            return None
+        
         print(f"[{elapsed_time()}] Searching email content...")
-
-        # 1. Try normal M3U/EPG link detection first
-        m3u_patterns = [
-            r'https?://[^\s<>"\']+/get\.php\?username=[^&\s<>"\']+&password=[^&\s<>"\']+&type=m3u_plus[^\s<>"\']*',
-            r'https?://[^\s<>"\']+get\.php[^\s<>"\']*type=m3u[^\s<>"\']*',
-            r'https?://[^\s<>"\']+/playlist/[^\s<>"\']+/m3u_plus[^\s<>"\']*'
+        
+        m3u_url = None
+        epg_url = None
+        
+        # Method 1: Direct HTML search (most efficient)
+        m3u_selectors = [
+            (By.XPATH, "//a[contains(@href, 'get.php') and contains(@href, 'type=m3u')]"),
+            (By.CSS_SELECTOR, "a[href*='get.php'][href*='type=m3u']"),
         ]
-        for pattern in m3u_patterns:
-            match = re.search(pattern, page_text, re.IGNORECASE)
-            if match:
-                m3u_url = match.group(0).replace("&amp;", "&")
-                print(f"[{elapsed_time()}] Found M3U URL: {m3u_url}")
-                # Try to find matching EPG
-                epg_match = re.search(r'https?://[^\s<>"\']+/xmltv\.php[^\s<>"\']*', page_text, re.IGNORECASE)
-                epg_url = epg_match.group(0).replace("&amp;", "&") if epg_match else None
-                return m3u_url, epg_url
-
-        # 2. If no link found, parse username/password/portal URL
-        username_match = re.search(r"Username:\s*([^\s]+)", page_text, re.IGNORECASE)
-        password_match = re.search(r"Password:\s*([^\s]+)", page_text, re.IGNORECASE)
-        portal_match = re.search(r"Portal URL:\s*(https?://[^\s/]+)", page_text, re.IGNORECASE)
-
-        if username_match and password_match and portal_match:
-            username = username_match.group(1)
-            password = password_match.group(1)
-            portal_url = portal_match.group(1).rstrip('/')
-
-            m3u_url = f"{portal_url}:80/get.php?username={username}&password={password}&type=m3u_plus&output=ts"
-            epg_url = f"{portal_url}:80/xmltv.php?username={username}&password={password}"
-
-            print(f"[{elapsed_time()}] Constructed M3U URL: {m3u_url}")
-            print(f"[{elapsed_time()}] Constructed EPG URL: {epg_url}")
+        
+        for by, selector in m3u_selectors:
+            try:
+                m3u_elements = driver.find_elements(by, selector)
+                for elem in m3u_elements:
+                    href = elem.get_attribute("href")
+                    if href and ("get.php" in href and "type=m3u" in href):
+                        m3u_url = href.replace("&amp;", "&")
+                        print(f"[{elapsed_time()}] Found M3U link: {m3u_url}")
+                        break
+                if m3u_url:
+                    break
+            except Exception:
+                continue
+        
+        # Method 2: EPG links
+        if not epg_url:
+            epg_selectors = [
+                (By.XPATH, "//a[contains(@href, 'xmltv.php')]"),
+                (By.CSS_SELECTOR, "a[href*='xmltv.php']"),
+            ]
+            
+            for by, selector in epg_selectors:
+                try:
+                    epg_elements = driver.find_elements(by, selector)
+                    for elem in epg_elements:
+                        href = elem.get_attribute("href")
+                        if href and "xmltv.php" in href:
+                            epg_url = href.replace("&amp;", "&")
+                            print(f"[{elapsed_time()}] Found EPG link: {epg_url}")
+                            break
+                    if epg_url:
+                        break
+                except Exception:
+                    continue
+        
+        # Method 3: Regex fallback (only if needed)
+        if not m3u_url:
+            print(f"[{elapsed_time()}] Using regex fallback...")
+            m3u_patterns = [
+                r'https?://[^\s<>"\']+/get\.php\?username=[^&\s<>"\']+&password=[^&\s<>"\']+&type=m3u_plus[^\s<>"\']*',
+                r'https?://[^\s<>"\']+get\.php[^\s<>"\']*type=m3u[^\s<>"\']*',
+            ]
+            
+            for pattern in m3u_patterns:
+                matches = re.findall(pattern, combined_content, re.IGNORECASE)
+                if matches:
+                    m3u_url = matches[0].replace("&amp;", "&")
+                    print(f"[{elapsed_time()}] Found M3U URL via regex: {m3u_url}")
+                    break
+        
+        # Return results
+        if m3u_url:
             return m3u_url, epg_url
-
-        print(f"[{elapsed_time()}] No M3U or credentials found in email")
-        return None
-
+        else:
+            return None
+        
     except Exception as e:
         print(f"[{elapsed_time()}] Error in search_for_m3u_links: {e}")
         return None
-
 
 def download_m3u_file(url, save_path, max_retries=3, is_m3u=True):
     """Download file with adaptive timeout based on file type"""
@@ -478,97 +511,151 @@ def truncate_m3u_file(file_path, max_lines=92025):
 
 # === Main Workflow ===
 def main():
-    """Main execution function adapted for Flash4KIPTV"""
+    """Main execution function with proper resource management"""
     try:
         with managed_driver() as driver:
-            # Step 1: Get disposable email
+            # Get disposable email
             email = get_disposable_email(driver)
-
-            # Step 2: Go to Flash4KIPTV trial page
-            driver.get("https://worthystream.com/myac/store/trial-subscription")
+            
+            # Navigate to IPTVore
+            driver.get("https://iptvore.com/free-iptv-trial/#apply")
             handle_cookies_and_popups(driver)
-            time.sleep(2)
+            time.sleep(2)  # Reduced wait
 
-            # Step 3: Click Order button
-            print("[+] Clicking Order button...")
-            js_click(driver, wait_for_element(driver, ['//*[@id="product5-order-button"]'], clickable=True))
-            time.sleep(2)
+            print("[+] Filling out IPTVore form...")
 
-            # # Step 4: Select Bouquets
-            # print("[+] Selecting Bouquets...")
-            # js_click(driver, wait_for_element(driver, ['//*[@id="selectbouquetsbtn"]'], clickable=True))
-            # time.sleep(1)
-
-            # # Tick USA, UK, NZ
-            # driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div[2]/div/div/div[1]/div/div[2]/div/label/input').click()
-            # driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div[2]/div/div/div[1]/div/div[3]/div/label/input').click()
-            # driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div[2]/div/div/div[1]/div/div[57]/div/label/input').click()
-            # time.sleep(1)
-
-            # # Movies
-            # print("[+] Selecting Movies...")
-            # driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div[3]/button').click()
-            # driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div[2]/div/div/div[2]/div/div[2]/div/label/input').click()
-            # time.sleep(1)
-
-            # # Series (click but no specific checkbox given)
-            # print("[+] Selecting Series...")
-            # driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div[3]/button').click()
-            # time.sleep(1)
-
-            # # Save changes
-            # print("[+] Saving Bouquets selection...")
-            # js_click(driver, wait_for_element(driver, ['//*[@id="savebqbtn"]'], clickable=True))
-            # time.sleep(2)
-
-            # Step 5: Click Continue button
-            print("[+] Clicking Continue button...")
-            js_click(driver, wait_for_element(driver, ['//*[@id="btnCompleteProductConfig"]'], clickable=True))
-            time.sleep(2)
-
-            # Step 6: Click Checkout button
-            print("[+] Clicking Checkout button...")
-            js_click(driver, wait_for_element(driver, ['//*[@id="checkout"]'], clickable=True))
-            time.sleep(2)
-
-            # Step 7: Fill out checkout form
-            print("[+] Filling checkout form...")
-            driver.find_element(By.XPATH, '//*[@id="inputFirstName"]').send_keys("John")
-            driver.find_element(By.XPATH, '//*[@id="inputLastName"]').send_keys("Doe")
-            driver.find_element(By.XPATH, '//*[@id="inputEmail"]').send_keys(email)
-            driver.find_element(By.XPATH, '//*[@id="inputAddress1"]').send_keys("123 Main Street")
-            driver.find_element(By.XPATH, '//*[@id="inputCity"]').send_keys("London")
-
+            # Email input
+            email_selectors = [
+                "//input[@type='email']",
+                "//input[contains(@name, 'email')]",
+                "//input[contains(@id, 'email')]",
+                "//input[contains(@placeholder, 'email')]"
+            ]
+            
+            print("[+] Looking for email field...")
+            email_input = None
+            for selector in email_selectors:
+                try:
+                    wait = VPSOptimizedWait(driver, 3)
+                    email_input = wait.until(EC.element_to_be_clickable((By.XPATH, selector)))
+                    print(f"[+] Found email field with selector: {selector}")
+                    break
+                except TimeoutException:
+                    continue
+            
+            if not email_input:
+                email_input = wait_for_element(driver, ["//input[@type='text'][1]"])
+            
+            email_input.clear()
+            email_input.send_keys(email)
+            print(f"[+] Entered email: {email}")
+            
             try:
-                from selenium.webdriver.support.ui import Select
-                Select(driver.find_element(By.XPATH, '//*[@id="stateselect"]')).select_by_visible_text("London")
+                email_input.send_keys(Keys.TAB)
+                time.sleep(0.5)
+                driver.execute_script("document.activeElement.blur();")
             except:
-                driver.find_element(By.XPATH, '//*[@id="stateselect"]').send_keys("London")
+                pass
 
-            driver.find_element(By.XPATH, '//*[@id="inputPostcode"]').send_keys("W1A 1AA")
-            driver.find_element(By.XPATH, '//*[@id="inputPhone"]').send_keys("+441234567890")
-            driver.find_element(By.XPATH, '//*[@id="inputNewPassword1"]').send_keys("StrongPassword123!")
-            driver.find_element(By.XPATH, '//*[@id="inputNewPassword2"]').send_keys("StrongPassword123!")
+            # Country field
+            print("[+] Looking for country field...")
+            try:
+                wait = VPSOptimizedWait(driver, 5)
+                country_field = wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div/main/article/div/div/section[2]/div/div[1]/div/div[3]/div/div/form/div[2]/div[1]/div/div[2]/div/span")))
+                
+                driver.execute_script("arguments[0].scrollIntoView({behavior: 'instant', block: 'center'});", country_field)
+                time.sleep(1)
+                
+                country_field.click()
+                time.sleep(2)
+                
+                search_box = wait.until(EC.presence_of_element_located((By.XPATH, "//input[@class='select2-search__field']")))
+                search_box.clear()
+                search_box.send_keys("United Kingdom")
+                time.sleep(1)
+                search_box.send_keys(Keys.ENTER)
+                
+                print("[+] Successfully selected United Kingdom")
+                
+            except Exception as e:
+                print(f"[!] Error with country selection: {e}")
 
-            # Step 8: Click Complete Order button
-            print("[+] Clicking Complete Order button...")
-            js_click(driver, wait_for_element(driver, ['//*[@id="btnCompleteOrder"]'], clickable=True))
+            time.sleep(1)
+
+            # Submit form
+            print("[+] Submitting form...")
+            submit_button = wait_for_element(driver, [
+                "//*[@id='wpforms-submit-10636']",
+                "//button[@type='submit']",
+                "//input[@type='submit']",
+                "//button[contains(text(), 'Submit')]"
+            ], clickable=True)
+            
+            js_click(driver, submit_button)
+            print("[+] Form submitted!")
             time.sleep(3)
 
-            # Step 9: Wait for M3U email
-            result = wait_for_email_link(driver, max_wait=1800)
+            # Wait for email and download
+            result = wait_for_email_link(driver)
             if result:
                 if isinstance(result, tuple):
                     m3u_url, epg_url = result
                 else:
                     m3u_url, epg_url = result, None
-
+                
+                # Download M3U with extended timeout
                 if download_m3u_file(m3u_url, SAVE_FILE, max_retries=3, is_m3u=True):
                     truncate_m3u_file(SAVE_FILE, 92025)
                     print("[✓] M3U saved successfully.")
                 else:
                     print("[!] Failed to download M3U file.")
 
+                # === Extract Xtream Codes details from the M3U link ===
+                try:
+                    parsed_url = urlparse(m3u_url)
+                    server = f"{parsed_url.scheme}://{parsed_url.netloc}"
+                    query_params = parse_qs(parsed_url.query)
+                    username = query_params.get("username", [""])[0]
+                    password = query_params.get("password", [""])[0]
+
+                    if not server or not username or not password:
+                        raise ValueError("Could not parse server/username/password from M3U link")
+
+                    print(f"[+] Xtream Codes details extracted:")
+                    print(f"    Server:   {server}")
+                    print(f"    Username: {username}")
+                    print(f"    Password: {password}")
+
+                    # === Run xtream2m3u binary ===
+                    output_dir = os.path.abspath("iptv_daily")
+                    os.makedirs(output_dir, exist_ok=True)
+
+                    cmd = [
+                        "xtream2m3u",
+                        "-s", server,
+                        "-u", username,
+                        "-p", password,
+                        "-l",  # Live channels
+                        "-m",  # Generate M3U
+                        "-o", output_dir
+                    ]
+
+                    print(f"[+] Running xtream2m3u: {' '.join(cmd)}")
+                    result = subprocess.run(cmd, capture_output=True, text=True)
+
+                    if result.returncode == 0:
+                        print("[✓] xtream2m3u completed successfully.")
+                        print(result.stdout)
+                    else:
+                        print("[!] xtream2m3u failed:")
+                        print(result.stderr)
+
+                except Exception as e:
+                    print(f"[!] Error processing Xtream Codes credentials: {e}")
+
+
+                
+                # Download EPG if found
                 if epg_url:
                     epg_file = SAVE_FILE.replace('.m3u', '_epg.xml')
                     if download_m3u_file(epg_url, epg_file, max_retries=2, is_m3u=False):
@@ -581,11 +668,9 @@ def main():
     except Exception as e:
         print(f"[!] Error occurred: {e}")
     finally:
+        # Final cleanup
         memory_cleanup()
         print("[+] Script completed.")
-
-
-
 
 if __name__ == "__main__":
     main()
