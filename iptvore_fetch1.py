@@ -636,6 +636,7 @@ def main():
                         "-u", username,
                         "-p", password,
                         "-l",  # Live channels
+                        "-v",  # VOD
                         "-m",  # Generate M3U
                         "-o", output_dir
                     ]
