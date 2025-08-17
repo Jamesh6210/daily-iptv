@@ -700,9 +700,9 @@ def main():
                     if result.returncode == 0:
                         print("[✓] xtream2m3u completed successfully.")
 
-                            live_m3u_dir = os.path.abspath("iptv_daily/live_m3u")
-                            vod_m3u_dir  = os.path.abspath("iptv_daily/vod_m3u")
-                            merged_file_path = os.path.abspath("iptv_daily/iptvore_daily_update.m3u")
+                        live_m3u_dir = os.path.abspath("iptv_daily/live_m3u")
+                        vod_m3u_dir  = os.path.abspath("iptv_daily/vod_m3u")
+                        merged_file_path = os.path.abspath("iptv_daily/iptvore_daily_update.m3u")
 
                         keep_live = [
                             "UK_ GENERAL ᴴᴰ_ᴿᴬᵂ.m3u",
