@@ -270,7 +270,7 @@ def wait_for_email_link(driver, max_wait=1800):  # Reduced from 3600
     return None
 
 def search_for_m3u_links(driver):
-    """Search for M3U links in current context - optimized"""
+    """Search for M3U links in current context - optimized, with Xtream extraction"""
     try:
         # Get page content more efficiently
         try:
@@ -282,11 +282,21 @@ def search_for_m3u_links(driver):
             return None
         
         print(f"[{elapsed_time()}] Searching email content...")
-        
+
         m3u_url = None
         epg_url = None
-        
-        # Method 1: Direct HTML search (most efficient)
+        username = None
+        password = None
+        server = None
+
+        # === Method 1: Extract Xtream creds directly from email ===
+        username, password, servers = extract_xtream_from_email(combined_content)
+        if username and password and servers:
+            print(f"[{elapsed_time()}] Found Xtream credentials in email: {username}/{password}")
+            print(f"[{elapsed_time()}] Found {len(servers)} server options, testing...")
+            server = choose_working_server(servers, username, password)
+
+        # === Method 2: Look for M3U links in HTML ===
         m3u_selectors = [
             (By.XPATH, "//a[contains(@href, 'get.php') and contains(@href, 'type=m3u')]"),
             (By.CSS_SELECTOR, "a[href*='get.php'][href*='type=m3u']"),
@@ -305,31 +315,29 @@ def search_for_m3u_links(driver):
                     break
             except Exception:
                 continue
-        
-        # Method 2: EPG links
-        if not epg_url:
-            epg_selectors = [
-                (By.XPATH, "//a[contains(@href, 'xmltv.php')]"),
-                (By.CSS_SELECTOR, "a[href*='xmltv.php']"),
-            ]
-            
-            for by, selector in epg_selectors:
-                try:
-                    epg_elements = driver.find_elements(by, selector)
-                    for elem in epg_elements:
-                        href = elem.get_attribute("href")
-                        if href and "xmltv.php" in href:
-                            epg_url = href.replace("&amp;", "&")
-                            print(f"[{elapsed_time()}] Found EPG link: {epg_url}")
-                            break
-                    if epg_url:
+
+        # === Method 3: Look for EPG link ===
+        epg_selectors = [
+            (By.XPATH, "//a[contains(@href, 'xmltv.php')]"),
+            (By.CSS_SELECTOR, "a[href*='xmltv.php']"),
+        ]
+        for by, selector in epg_selectors:
+            try:
+                epg_elements = driver.find_elements(by, selector)
+                for elem in epg_elements:
+                    href = elem.get_attribute("href")
+                    if href and "xmltv.php" in href:
+                        epg_url = href.replace("&amp;", "&")
+                        print(f"[{elapsed_time()}] Found EPG link: {epg_url}")
                         break
-                except Exception:
-                    continue
-        
-        # Method 3: Regex fallback (only if needed)
+                if epg_url:
+                    break
+            except Exception:
+                continue
+
+        # === Method 4: Regex fallback if still no M3U ===
         if not m3u_url:
-            print(f"[{elapsed_time()}] Using regex fallback...")
+            print(f"[{elapsed_time()}] Using regex fallback for M3U...")
             m3u_patterns = [
                 r'https?://[^\s<>"\']+/get\.php\?username=[^&\s<>"\']+&password=[^&\s<>"\']+&type=m3u_plus[^\s<>"\']*',
                 r'https?://[^\s<>"\']+get\.php[^\s<>"\']*type=m3u[^\s<>"\']*',
@@ -341,16 +349,29 @@ def search_for_m3u_links(driver):
                     m3u_url = matches[0].replace("&amp;", "&")
                     print(f"[{elapsed_time()}] Found M3U URL via regex: {m3u_url}")
                     break
-        
-        # Return results
-        if m3u_url:
-            return m3u_url, epg_url
+
+        # === If no working server found in email, fallback to M3U link parse ===
+        if not server and m3u_url:
+            try:
+                parsed_url = urlparse(m3u_url)
+                server = f"{parsed_url.scheme}://{parsed_url.netloc}"
+                query_params = parse_qs(parsed_url.query)
+                username = query_params.get("username", [username])[0]
+                password = query_params.get("password", [password])[0]
+                print(f"[{elapsed_time()}] Fallback to server from M3U link: {server}")
+            except Exception as e:
+                print(f"[{elapsed_time()}] Could not fallback to M3U link: {e}")
+
+        # === Final return ===
+        if m3u_url or (server and username and password):
+            return m3u_url, epg_url, server, username, password
         else:
             return None
-        
+
     except Exception as e:
         print(f"[{elapsed_time()}] Error in search_for_m3u_links: {e}")
         return None
+
 
 def download_m3u_file(url, save_path, max_retries=3, is_m3u=True):
     """Download file with adaptive timeout based on file type"""
@@ -559,6 +580,65 @@ def keep_only_and_merge_multi(source_dirs, output_file, keep_map):
     return True
 
 
+def extract_xtream_from_email(content):
+    """
+    Extract Xtream Codes details (username, password, servers) from raw email text/HTML.
+    """
+    import re
+
+    username = None
+    password = None
+    servers = []
+
+    # Username
+    match_user = re.search(r"Username:\s*([^\s]+)", content, re.IGNORECASE)
+    if match_user:
+        username = match_user.group(1).strip()
+
+    # Password
+    match_pass = re.search(r"Password:\s*([^\s]+)", content, re.IGNORECASE)
+    if match_pass:
+        password = match_pass.group(1).strip()
+
+    # Servers (multiple options)
+    servers = re.findall(r"Server\s+(?:OPTION\s*\d+|[A-Z0-9]+):?\s*(https?://[^\s/]+/?).*", content, re.IGNORECASE)
+
+    return username, password, servers
+
+
+def choose_working_server(servers, username, password):
+    """
+    Test each server. Accepts HTTP 200 and 884 as valid.
+    """
+    import requests
+    for server in servers:
+        try:
+            test_url = f"{server.strip().rstrip('/')}/player_api.php?username={username}&password={password}"
+            resp = requests.get(test_url, timeout=5)
+
+            # Normal good response
+            if resp.status_code == 200:
+                if "user_info" in resp.text:
+                    print(f"[✓] Server working (200): {server}")
+                    return server
+                else:
+                    print(f"[–] Server {server} returned 200 but invalid response")
+
+            # Special IPTV error 884
+            elif resp.status_code == 884 or "884" in resp.text:
+                print(f"[✓] Server working (884 special code): {server}")
+                return server
+
+            else:
+                print(f"[–] Server {server} returned {resp.status_code}")
+
+        except Exception as e:
+            print(f"[!] Error testing server {server}: {e}")
+
+    print("[!] No working server found in email list")
+    return None
+
+
 
 
 
@@ -652,34 +732,31 @@ def main():
             result = wait_for_email_link(driver)
             if result:
                 if isinstance(result, tuple):
-                    m3u_url, epg_url = result
+                    # Now returns: m3u_url, epg_url, server, username, password
+                    if len(result) == 5:
+                        m3u_url, epg_url, server, username, password = result
+                    else:
+                        m3u_url, epg_url = result
+                        server = username = password = None
                 else:
                     m3u_url, epg_url = result, None
-                
-                # Download M3U with extended timeout
-                if download_m3u_file(m3u_url, SAVE_FILE, max_retries=3, is_m3u=True):
-                    truncate_m3u_file(SAVE_FILE, 92025)
-                    print("[✓] M3U saved successfully.")
-                else:
-                    print("[!] Failed to download M3U file.")
+                    server = username = password = None
 
-                # === Extract Xtream Codes details from the M3U link ===
-                try:
-                    parsed_url = urlparse(m3u_url)
-                    server = f"{parsed_url.scheme}://{parsed_url.netloc}"
-                    query_params = parse_qs(parsed_url.query)
-                    username = query_params.get("username", [""])[0]
-                    password = query_params.get("password", [""])[0]
+                # Optional: try downloading the raw M3U (if available)
+                if m3u_url:
+                    if download_m3u_file(m3u_url, SAVE_FILE, max_retries=3, is_m3u=True):
+                        truncate_m3u_file(SAVE_FILE, 92025)
+                        print("[✓] M3U saved successfully.")
+                    else:
+                        print("[!] Failed to download raw M3U file (continuing with Xtream API only).")
 
-                    if not server or not username or not password:
-                        raise ValueError("Could not parse server/username/password from M3U link")
-
-                    print(f"[+] Xtream Codes details extracted:")
+                # === Run xtream2m3u binary if creds available ===
+                if server and username and password:
+                    print(f"[+] Xtream Codes details ready:")
                     print(f"    Server:   {server}")
                     print(f"    Username: {username}")
                     print(f"    Password: {password}")
 
-                    # === Run xtream2m3u binary ===
                     output_dir = os.path.abspath("iptv_daily")
                     os.makedirs(output_dir, exist_ok=True)
 
@@ -774,13 +851,13 @@ def main():
                             output_file=merged_file_path,
                             keep_map=keep_map
                         )
+                        print(f"[✓] Final merged file created at {merged_file_path}")
                         print(result.stdout)
                     else:
                         print("[!] xtream2m3u failed:")
                         print(result.stderr)
-
-                except Exception as e:
-                    print(f"[!] Error processing Xtream Codes credentials: {e}")
+                else:
+                    print("[!] No valid Xtream credentials found (skipping xtream2m3u).")
 
 
                 
