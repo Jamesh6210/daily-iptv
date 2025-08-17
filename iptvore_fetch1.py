@@ -725,55 +725,55 @@ def main():
                         ]
 
                         keep_vod = [
-                                "EN - NEW RELEASE.m3u",
-                                "EN - IMDB TOP 250.m3u",
-                                "AMAZON DOCU-MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ ⁴ᴷ ³⁸⁴⁰ᴾ.m3u",
-                                "AMAZON DOCU-MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
-                                "AMAZON MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ ⁴ᴷ ³⁸⁴⁰ᴾ.m3u",
-                                "AMAZON MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
-                                "APPLE+ MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ ⁴ᴷ ³⁸⁴⁰ᴾ.m3u",
-                                "APPLE+ MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
-                                "DISCOVERY+ MOVIES.m3u",
-                                "DISNEY+ KIDS ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
-                                "DISNEY+ MOVIES EU ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
-                                "DREAMWORKS ANIMATION.m3u",
-                                "MARVEL MOVIES (MULTI).m3u",
-                                "MARVEL MOVIES 3840P (MULTI).m3u",
-                                "NETFLIX ANIMI.m3u",
-                                "NETFLIX DOCU-MOVIES.m3u",
-                                "NETFLIX MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
-                                "NETFLIX MOVIES ⁴ᴷ ³⁸⁴⁰ᴾ.m3u",
-                                "NETFLIX MOVIES.m3u",
-                                "EN - 2020 & OLD.m3u",
-                                "EN - ACTION.m3u",
-                                "EN - ADVENTURE.m3u",
-                                "EN - CHRISTMAS.m3u",
-                                "EN - COLLECTIONS.m3u",
-                                "EN - COMEDY.m3u",
-                                "EN - CONCERTS.m3u",
-                                "EN - DOCUMENTARIES.m3u",
-                                "EN - DRAMA.m3u",
-                                "EN - HORROR.m3u",
-                                "EN - KIDS ⁴ᴷ ³⁸⁴⁰ᴾ.m3u",
-                                "EN - KIDS.m3u",
-                                "EN - MOVIES ⁴ᴷ ³⁸⁴⁰ᴾ.m3u",
-                                "EN - MUSICAL.m3u",
-                                "EN - ROMANCE.m3u",
-                                "EN - SCIENCE FICTION.m3u",
-                                "EN - THRILLER.m3u",
-                                "EN - WESTERNS.m3u"
-                            ]
+                            "EN - NEW RELEASE.m3u",
+                            "EN - IMDB TOP 250.m3u",
+                            "AMAZON DOCU-MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ ⁴ᴷ ³⁸⁴⁰ᴾ.m3u",
+                            "AMAZON DOCU-MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
+                            "AMAZON MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ ⁴ᴷ ³⁸⁴⁰ᴾ.m3u",
+                            "AMAZON MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
+                            "APPLE+ MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ ⁴ᴷ ³⁸⁴⁰ᴾ.m3u",
+                            "APPLE+ MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
+                            "DISCOVERY+ MOVIES.m3u",
+                            "DISNEY+ KIDS ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
+                            "DISNEY+ MOVIES EU ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
+                            "DREAMWORKS ANIMATION.m3u",
+                            "MARVEL MOVIES (MULTI).m3u",
+                            "MARVEL MOVIES 3840P (MULTI).m3u",
+                            "NETFLIX ANIMI.m3u",
+                            "NETFLIX DOCU-MOVIES.m3u",
+                            "NETFLIX MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
+                            "NETFLIX MOVIES ⁴ᴷ ³⁸⁴⁰ᴾ.m3u",
+                            "NETFLIX MOVIES.m3u",
+                            "EN - 2020 & OLD.m3u",
+                            "EN - ACTION.m3u",
+                            "EN - ADVENTURE.m3u",
+                            "EN - CHRISTMAS.m3u",
+                            "EN - COLLECTIONS.m3u",
+                            "EN - COMEDY.m3u",
+                            "EN - CONCERTS.m3u",
+                            "EN - DOCUMENTARIES.m3u",
+                            "EN - DRAMA.m3u",
+                            "EN - HORROR.m3u",
+                            "EN - KIDS ⁴ᴷ ³⁸⁴⁰ᴾ.m3u",
+                            "EN - KIDS.m3u",
+                            "EN - MOVIES ⁴ᴷ ³⁸⁴⁰ᴾ.m3u",
+                            "EN - MUSICAL.m3u",
+                            "EN - ROMANCE.m3u",
+                            "EN - SCIENCE FICTION.m3u",
+                            "EN - THRILLER.m3u",
+                            "EN - WESTERNS.m3u"
+                        ]
 
-                            keep_map = {
-                                live_m3u_dir: keep_live,
-                                vod_m3u_dir: keep_vod
-                            }
+                        keep_map = {
+                            live_m3u_dir: keep_live,
+                            vod_m3u_dir: keep_vod
+                        }
 
-                            keep_only_and_merge_multi(
-                                source_dirs=[live_m3u_dir, vod_m3u_dir],
-                                output_file=merged_file_path,
-                                keep_map=keep_map
-                            )
+                        keep_only_and_merge_multi(
+                            source_dirs=[live_m3u_dir, vod_m3u_dir],
+                            output_file=merged_file_path,
+                            keep_map=keep_map
+                        )
                         print(result.stdout)
                     else:
                         print("[!] xtream2m3u failed:")
