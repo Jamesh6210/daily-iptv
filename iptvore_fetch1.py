@@ -510,42 +510,54 @@ def truncate_m3u_file(file_path, max_lines=92025):
         return False
 
 
-def keep_only_and_merge(source_dir, output_file, keep_list):
+def keep_only_and_merge_multi(source_dirs, output_file, keep_map):
+    """
+    Keep only specific .m3u files in each source_dir and merge them.
+    
+    source_dirs: list of folder paths (e.g. [live_m3u_dir, vod_m3u_dir])
+    keep_map: dict { "folder_path": [list of filenames to keep] }
+    """
     import os, glob
 
-    # Step 1: Delete unwanted files
-    all_files = glob.glob(os.path.join(source_dir, "*.m3u"))
-    for file_path in all_files:
-        if os.path.basename(file_path) not in keep_list:
-            try:
-                os.remove(file_path)
-                print(f"[–] Deleted: {os.path.basename(file_path)}")
-            except Exception as e:
-                print(f"[!] Could not delete {file_path}: {e}")
-        else:
-            print(f"[✓] Kept: {os.path.basename(file_path)}")
-
-    # Step 2: Merge kept files
-    kept_files = [
-        os.path.join(source_dir, f)
-        for f in keep_list
-        if os.path.exists(os.path.join(source_dir, f))
-    ]
-
-    if not kept_files:
-        print("[!] No matching M3U files found to merge.")
-        return False
+    merged_count = 0
 
     with open(output_file, "w", encoding="utf-8") as outfile:
         outfile.write("#EXTM3U\n")
-        for file in kept_files:
-            with open(file, "r", encoding="utf-8", errors="ignore") as infile:
-                for line in infile:
-                    if not line.strip().startswith("#EXTM3U"):
-                        outfile.write(line)
 
-    print(f"[✓] Merged {len(kept_files)} files into {output_file}")
+        for source_dir in source_dirs:
+            keep_list = keep_map.get(source_dir, [])
+            if not keep_list:
+                continue
+
+            # Delete unwanted files
+            all_files = glob.glob(os.path.join(source_dir, "*.m3u"))
+            for file_path in all_files:
+                if os.path.basename(file_path) not in keep_list:
+                    try:
+                        os.remove(file_path)
+                        print(f"[–] Deleted: {os.path.basename(file_path)}")
+                    except Exception as e:
+                        print(f"[!] Could not delete {file_path}: {e}")
+                else:
+                    print(f"[✓] Kept: {os.path.basename(file_path)}")
+
+            # Merge kept files into final output
+            kept_files = [
+                os.path.join(source_dir, f)
+                for f in keep_list
+                if os.path.exists(os.path.join(source_dir, f))
+            ]
+
+            for file in kept_files:
+                with open(file, "r", encoding="utf-8", errors="ignore") as infile:
+                    for line in infile:
+                        if not line.strip().startswith("#EXTM3U"):
+                            outfile.write(line)
+                merged_count += 1
+
+    print(f"[✓] Merged {merged_count} files into {output_file}")
     return True
+
 
 
 
@@ -688,30 +700,80 @@ def main():
                     if result.returncode == 0:
                         print("[✓] xtream2m3u completed successfully.")
 
-                        keep_list = [
-                            "UK_ DISCOVERY+ ᴴᴰ_ᴿᴬᵂ.m3u",
-                            "UK_ DOCUMENTARY ᴴᴰ_ᴿᴬᵂ.m3u",
-                            "UK_ EPL PREMIER LEAGUE PPV ⱽᴵᴾ ᴿᴬᵂ.m3u",
-                            "UK_ FA PLAYER PPV.m3u",
+                            live_m3u_dir = os.path.abspath("iptv_daily/live_m3u")
+                            vod_m3u_dir  = os.path.abspath("iptv_daily/vod_m3u")
+                            merged_file_path = os.path.abspath("iptv_daily/iptvore_daily_update.m3u")
+
+                        keep_live = [
                             "UK_ GENERAL ᴴᴰ_ᴿᴬᵂ.m3u",
-                            "UK_ MUSIC ᴴᴰ_ᴿᴬᵂ.m3u",
                             "UK_ SKY CINEMA ᴴᴰ_ᴿᴬᵂ.m3u",
+                            "US_ ENTERTAINMENT ᴴᴰ_ᴿᴬᵂ ⁶⁰ᶠᵖˢ.m3u",
+                            "US_ MOVIES ᴴᴰ_ᴿᴬᵂ ⁶⁰ᶠᵖˢ.m3u",
                             "UK_ SPORT ᴿᴬᵂ ⱽᴵᴾ ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
                             "UK_ SPORT ᴴᴰ.m3u",
                             "UK_ TNT SPORT ᴴᴰ ⱽᴵᴾ.m3u",
                             "UK_ TNT SPORT EVENT.m3u",
                             "UK_ UEFA PPV.m3u",
-                            "US_ ENTERTAINMENT ᴴᴰ_ᴿᴬᵂ ⁶⁰ᶠᵖˢ.m3u",
-                            "US_ MOVIES ᴴᴰ_ᴿᴬᵂ ⁶⁰ᶠᵖˢ.m3u",
                             "NZ_ NEW ZEALAND ᴴᴰ_ᴿᴬᵂ.m3u",
                             "IE_ IRELAND ᴴᴰ_ᴿᴬᵂ.m3u",
+                            "UK_ MUSIC ᴴᴰ_ᴿᴬᵂ.m3u",
+                            "UK_ DISCOVERY+ ᴴᴰ_ᴿᴬᵂ.m3u",
+                            "UK_ DOCUMENTARY ᴴᴰ_ᴿᴬᵂ.m3u",
+                            "UK_ EPL PREMIER LEAGUE PPV ⱽᴵᴾ ᴿᴬᵂ.m3u",
+                            "UK_ FA PLAYER PPV.m3u",
                             "IE_ LOI PPV.m3u"
                         ]
 
-                        live_m3u_dir = os.path.abspath("iptv_daily/live_m3u")
-                        merged_file_path = os.path.abspath("iptv_daily/iptvore_daily_update.m3u")
+                        keep_vod = [
+                                "EN - NEW RELEASE.m3u",
+                                "EN - IMDB TOP 250.m3u",
+                                "AMAZON DOCU-MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ ⁴ᴷ ³⁸⁴⁰ᴾ.m3u",
+                                "AMAZON DOCU-MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
+                                "AMAZON MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ ⁴ᴷ ³⁸⁴⁰ᴾ.m3u",
+                                "AMAZON MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
+                                "APPLE+ MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ ⁴ᴷ ³⁸⁴⁰ᴾ.m3u",
+                                "APPLE+ MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
+                                "DISCOVERY+ MOVIES.m3u",
+                                "DISNEY+ KIDS ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
+                                "DISNEY+ MOVIES EU ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
+                                "DREAMWORKS ANIMATION.m3u",
+                                "MARVEL MOVIES (MULTI).m3u",
+                                "MARVEL MOVIES 3840P (MULTI).m3u",
+                                "NETFLIX ANIMI.m3u",
+                                "NETFLIX DOCU-MOVIES.m3u",
+                                "NETFLIX MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
+                                "NETFLIX MOVIES ⁴ᴷ ³⁸⁴⁰ᴾ.m3u",
+                                "NETFLIX MOVIES.m3u",
+                                "EN - 2020 & OLD.m3u",
+                                "EN - ACTION.m3u",
+                                "EN - ADVENTURE.m3u",
+                                "EN - CHRISTMAS.m3u",
+                                "EN - COLLECTIONS.m3u",
+                                "EN - COMEDY.m3u",
+                                "EN - CONCERTS.m3u",
+                                "EN - DOCUMENTARIES.m3u",
+                                "EN - DRAMA.m3u",
+                                "EN - HORROR.m3u",
+                                "EN - KIDS ⁴ᴷ ³⁸⁴⁰ᴾ.m3u",
+                                "EN - KIDS.m3u",
+                                "EN - MOVIES ⁴ᴷ ³⁸⁴⁰ᴾ.m3u",
+                                "EN - MUSICAL.m3u",
+                                "EN - ROMANCE.m3u",
+                                "EN - SCIENCE FICTION.m3u",
+                                "EN - THRILLER.m3u",
+                                "EN - WESTERNS.m3u"
+                            ]
 
-                        keep_only_and_merge(live_m3u_dir, merged_file_path, keep_list)
+                            keep_map = {
+                                live_m3u_dir: keep_live,
+                                vod_m3u_dir: keep_vod
+                            }
+
+                            keep_only_and_merge_multi(
+                                source_dirs=[live_m3u_dir, vod_m3u_dir],
+                                output_file=merged_file_path,
+                                keep_map=keep_map
+                            )
                         print(result.stdout)
                     else:
                         print("[!] xtream2m3u failed:")
