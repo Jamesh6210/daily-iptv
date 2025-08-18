@@ -766,7 +766,7 @@ def main():
 
                         keep_map = {
                             live_m3u_dir: keep_live,
-                            vod_m3u_dir: keep_vod
+                            # vod_m3u_dir: keep_vod
                         }
 
                         keep_only_and_merge_multi(
