@@ -614,13 +614,6 @@ def main():
             except Exception as e:
                 print(f"[!] Could not find free trial link: {e}")
 
-            # Step 8: Wait for email with trial info
-            result = wait_for_email_link(driver)
-            if result:
-                print(f"[✓] Trial details received: {result}")
-            else:
-                print("[!] No trial email received.")
-
     except Exception as e:
         print(f"[!] Error occurred: {e}")
     finally:
