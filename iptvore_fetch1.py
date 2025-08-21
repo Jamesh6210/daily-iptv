@@ -590,48 +590,52 @@ def main():
 
             print(f"[+] Using password: {password}")
 
-            # Step 5: Handle reCAPTCHA (⚠️ this part is tricky — needs manual solve or captcha service)
+            # Step 5: Handle reCAPTCHA (manual or service)
             try:
-                captcha_box = wait_for_element(driver, ["/html/body/div[2]/div[3]/div[1]/div/div/span/div[1]"], wait_time=15)
+                captcha_box = wait_for_element(
+                    driver,
+                    ["/html/body/div[2]/div[3]/div[1]/div/div/span/div[1]"],
+                    wait_time=15
+                )
                 print("[!] reCAPTCHA detected — requires manual solving or third-party solver.")
                 driver.execute_script("arguments[0].scrollIntoView(true);", captcha_box)
-                time.sleep(15)  # give time for manual solve
+                time.sleep(15)  # allow manual solve
             except Exception as e:
                 print(f"[!] Could not handle reCAPTCHA automatically: {e}")
 
             # Step 6: Click Create Account
-            create_button = wait_for_element(driver, ["/html/body/div[1]/div[2]/div/div[2]/div/form/div[3]/button"], clickable=True)
+            create_button = wait_for_element(
+                driver,
+                ["/html/body/div[1]/div[2]/div/div[2]/div/form/div[3]/button"],
+                clickable=True
+            )
             js_click(driver, create_button)
             print("[+] Submitted signup form.")
 
             time.sleep(5)
 
-            # Step 7: Click Request Free Trial (after login)
+            # Step 7: Click Request Free Trial
             try:
-                trial_link = wait_for_element(driver, ["/html/body/div[2]/div/nav/ul/li[2]/ul/li[3]/a"], clickable=True)
+                trial_link = wait_for_element(
+                    driver,
+                    ["/html/body/div[2]/div/nav/ul/li[2]/ul/li[3]/a"],
+                    clickable=True
+                )
                 js_click(driver, trial_link)
                 print("[+] Navigated to Request Free Trial page.")
             except Exception as e:
                 print(f"[!] Could not find free trial link: {e}")
 
-                # Wait for trial email
-                result = wait_for_email_link(driver)
-                if result:
-                    if isinstance(result, tuple):
-                        m3u_url, epg_url = result
-                    else:
-                        m3u_url, epg_url = result, None
-                    print(f"[✓] Got trial details: {m3u_url}, {epg_url}")
+            # Step 8: Wait for trial email
+            result = wait_for_email_link(driver)
+            if result:
+                if isinstance(result, tuple):
+                    m3u_url, epg_url = result
                 else:
-                    print("[!] No trial email received.")
+                    m3u_url, epg_url = result, None
 
-        except Exception as e:
-            print(f"[!] Error occurred: {e}")
-        finally:
-            memory_cleanup()
-            print("[+] Script completed.")
+                print(f"[✓] Got trial details: {m3u_url}, {epg_url}")
 
-                
                 # Download M3U with extended timeout
                 if download_m3u_file(m3u_url, SAVE_FILE, max_retries=3, is_m3u=True):
                     truncate_m3u_file(SAVE_FILE, 92025)
@@ -680,69 +684,27 @@ def main():
                         vod_m3u_dir  = os.path.abspath("iptv_daily/vod_m3u")
                         merged_file_path = os.path.abspath("iptv_daily/iptvore_daily_update.m3u")
 
-                        keep_live = [
-                            "UK_ GENERAL ᴴᴰ_ᴿᴬᵂ.m3u",
-                            "UK_ SKY CINEMA ᴴᴰ_ᴿᴬᵂ.m3u",
-                            "US_ ENTERTAINMENT ᴴᴰ_ᴿᴬᵂ ⁶⁰ᶠᵖˢ.m3u",
-                            "US_ MOVIES ᴴᴰ_ᴿᴬᵂ ⁶⁰ᶠᵖˢ.m3u",
-                            "UK_ SPORT ᴿᴬᵂ ⱽᴵᴾ ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
-                            "UK_ SPORT ᴴᴰ.m3u",
-                            "UK_ TNT SPORT ᴴᴰ ⱽᴵᴾ.m3u",
-                            "UK_ TNT SPORT EVENT.m3u",
-                            "UK_ UEFA PPV.m3u",
-                            "NZ_ NEW ZEALAND ᴴᴰ_ᴿᴬᵂ.m3u",
-                            "IE_ IRELAND ᴴᴰ_ᴿᴬᵂ.m3u",
-                            "UK_ MUSIC ᴴᴰ_ᴿᴬᵂ.m3u",
-                            "UK_ DISCOVERY+ ᴴᴰ_ᴿᴬᵂ.m3u",
-                            "UK_ DOCUMENTARY ᴴᴰ_ᴿᴬᵂ.m3u",
-                            "UK_ EPL PREMIER LEAGUE PPV ⱽᴵᴾ ᴿᴬᵂ.m3u",
-                            "UK_ FA PLAYER PPV.m3u",
-                            "IE_ LOI PPV.m3u"
-                        ]
-
-                        keep_vod = [
-                            "EN - NEW RELEASE.m3u",
-                            "EN - IMDB TOP 250.m3u",
-                            "AMAZON DOCU-MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ ⁴ᴷ ³⁸⁴⁰ᴾ.m3u",
-                            "AMAZON DOCU-MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
-                            "AMAZON MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ ⁴ᴷ ³⁸⁴⁰ᴾ.m3u",
-                            "AMAZON MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
-                            "APPLE+ MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ ⁴ᴷ ³⁸⁴⁰ᴾ.m3u",
-                            "APPLE+ MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
-                            "DISCOVERY+ MOVIES.m3u",
-                            "DISNEY+ KIDS ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
-                            "DISNEY+ MOVIES EU ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
-                            "DREAMWORKS ANIMATION.m3u",
-                            "MARVEL MOVIES (MULTI).m3u",
-                            "MARVEL MOVIES 3840P (MULTI).m3u",
-                            "NETFLIX ANIMI.m3u",
-                            "NETFLIX DOCU-MOVIES.m3u",
-                            "NETFLIX MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
-                            "NETFLIX MOVIES ⁴ᴷ ³⁸⁴⁰ᴾ.m3u",
-                            "NETFLIX MOVIES.m3u",
-                            "EN - 2020 & OLD.m3u",
-                            "EN - ACTION.m3u",
-                            "EN - ADVENTURE.m3u",
-                            "EN - CHRISTMAS.m3u",
-                            "EN - COLLECTIONS.m3u",
-                            "EN - COMEDY.m3u",
-                            "EN - CONCERTS.m3u",
-                            "EN - DOCUMENTARIES.m3u",
-                            "EN - DRAMA.m3u",
-                            "EN - HORROR.m3u",
-                            "EN - KIDS ⁴ᴷ ³⁸⁴⁰ᴾ.m3u",
-                            "EN - KIDS.m3u",
-                            "EN - MOVIES ⁴ᴷ ³⁸⁴⁰ᴾ.m3u",
-                            "EN - MUSICAL.m3u",
-                            "EN - ROMANCE.m3u",
-                            "EN - SCIENCE FICTION.m3u",
-                            "EN - THRILLER.m3u",
-                            "EN - WESTERNS.m3u"
-                        ]
-
                         keep_map = {
-                            live_m3u_dir: keep_live,
-                            # vod_m3u_dir: keep_vod
+                            live_m3u_dir: [
+                                "UK_ GENERAL ᴴᴰ_ᴿᴬᵂ.m3u",
+                                "UK_ SKY CINEMA ᴴᴰ_ᴿᴬᵂ.m3u",
+                                "US_ ENTERTAINMENT ᴴᴰ_ᴿᴬᵂ ⁶⁰ᶠᵖˢ.m3u",
+                                "US_ MOVIES ᴴᴰ_ᴿᴬᵂ ⁶⁰ᶠᵖˢ.m3u",
+                                "UK_ SPORT ᴿᴬᵂ ⱽᴵᴾ ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
+                                "UK_ SPORT ᴴᴰ.m3u",
+                                "UK_ TNT SPORT ᴴᴰ ⱽᴵᴾ.m3u",
+                                "UK_ TNT SPORT EVENT.m3u",
+                                "UK_ UEFA PPV.m3u",
+                                "NZ_ NEW ZEALAND ᴴᴰ_ᴿᴬᵂ.m3u",
+                                "IE_ IRELAND ᴴᴰ_ᴿᴬᵂ.m3u",
+                                "UK_ MUSIC ᴴᴰ_ᴿᴬᵂ.m3u",
+                                "UK_ DISCOVERY+ ᴴᴰ_ᴿᴬᵂ.m3u",
+                                "UK_ DOCUMENTARY ᴴᴰ_ᴿᴬᵂ.m3u",
+                                "UK_ EPL PREMIER LEAGUE PPV ⱽᴵᴾ ᴿᴬᵂ.m3u",
+                                "UK_ FA PLAYER PPV.m3u",
+                                "IE_ LOI PPV.m3u"
+                            ],
+                            # vod_m3u_dir: keep_vod  # enable if needed
                         }
 
                         keep_only_and_merge_multi(
@@ -758,8 +720,6 @@ def main():
                 except Exception as e:
                     print(f"[!] Error processing Xtream Codes credentials: {e}")
 
-
-                
                 # Download EPG if found
                 if epg_url:
                     epg_file = SAVE_FILE.replace('.m3u', '_epg.xml')
@@ -773,9 +733,9 @@ def main():
     except Exception as e:
         print(f"[!] Error occurred: {e}")
     finally:
-        # Final cleanup
         memory_cleanup()
         print("[+] Script completed.")
+
 
 if __name__ == "__main__":
     main()
