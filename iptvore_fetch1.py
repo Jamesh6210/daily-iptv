@@ -564,89 +564,68 @@ def keep_only_and_merge_multi(source_dirs, output_file, keep_map):
 
 # === Main Workflow ===
 def main():
-    """Main execution function with proper resource management"""
+    """Main execution for LayerSeven signup"""
     try:
         with managed_driver() as driver:
-            # Get disposable email
+            # Step 1: Get disposable email
             email = get_disposable_email(driver)
-            
-            # Navigate to IPTVore
-            driver.get("https://iptvore.com/free-iptv-trial/#apply")
+
+            # Step 2: Navigate to LayerSeven sign-up
+            driver.get("https://panel.layerseven.ai/sign-up")
             handle_cookies_and_popups(driver)
-            time.sleep(2)  # Reduced wait
+            time.sleep(2)
 
-            print("[+] Filling out IPTVore form...")
+            print("[+] Filling out LayerSeven signup form...")
 
-            # Email input
-            email_selectors = [
-                "//input[@type='email']",
-                "//input[contains(@name, 'email')]",
-                "//input[contains(@id, 'email')]",
-                "//input[contains(@placeholder, 'email')]"
-            ]
-            
-            print("[+] Looking for email field...")
-            email_input = None
-            for selector in email_selectors:
-                try:
-                    wait = VPSOptimizedWait(driver, 3)
-                    email_input = wait.until(EC.element_to_be_clickable((By.XPATH, selector)))
-                    print(f"[+] Found email field with selector: {selector}")
-                    break
-                except TimeoutException:
-                    continue
-            
-            if not email_input:
-                email_input = wait_for_element(driver, ["//input[@type='text'][1]"])
-            
+            # Step 3: Fill email
+            email_input = wait_for_element(driver, ["//*[@id='email']"], wait_time=10)
             email_input.clear()
             email_input.send_keys(email)
-            print(f"[+] Entered email: {email}")
-            
-            try:
-                email_input.send_keys(Keys.TAB)
-                time.sleep(0.5)
-                driver.execute_script("document.activeElement.blur();")
-            except:
-                pass
 
-            # Country field
-            print("[+] Looking for country field...")
+            # Step 4: Fill password (random strong password)
+            password = ''.join(random.choices(string.ascii_letters + string.digits, k=12))
+            password_input = wait_for_element(driver, ["//*[@id='password']"], wait_time=10)
+            password_input.clear()
+            password_input.send_keys(password)
+
+            print(f"[+] Using password: {password}")
+
+            # Step 5: Handle reCAPTCHA (⚠️ this part is tricky — needs manual solve or captcha service)
             try:
-                wait = VPSOptimizedWait(driver, 5)
-                country_field = wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div/main/article/div/div/section[2]/div/div[1]/div/div[3]/div/div/form/div[2]/div[1]/div/div[2]/div/span")))
-                
-                driver.execute_script("arguments[0].scrollIntoView({behavior: 'instant', block: 'center'});", country_field)
-                time.sleep(1)
-                
-                country_field.click()
-                time.sleep(2)
-                
-                search_box = wait.until(EC.presence_of_element_located((By.XPATH, "//input[@class='select2-search__field']")))
-                search_box.clear()
-                search_box.send_keys("United Kingdom")
-                time.sleep(1)
-                search_box.send_keys(Keys.ENTER)
-                
-                print("[+] Successfully selected United Kingdom")
-                
+                captcha_box = wait_for_element(driver, ["/html/body/div[2]/div[3]/div[1]/div/div/span/div[1]"], wait_time=15)
+                print("[!] reCAPTCHA detected — requires manual solving or third-party solver.")
+                driver.execute_script("arguments[0].scrollIntoView(true);", captcha_box)
+                time.sleep(15)  # give time for manual solve
             except Exception as e:
-                print(f"[!] Error with country selection: {e}")
+                print(f"[!] Could not handle reCAPTCHA automatically: {e}")
 
-            time.sleep(1)
+            # Step 6: Click Create Account
+            create_button = wait_for_element(driver, ["/html/body/div[1]/div[2]/div/div[2]/div/form/div[3]/button"], clickable=True)
+            js_click(driver, create_button)
+            print("[+] Submitted signup form.")
 
-            # Submit form
-            print("[+] Submitting form...")
-            submit_button = wait_for_element(driver, [
-                "//*[@id='wpforms-submit-10636']",
-                "//button[@type='submit']",
-                "//input[@type='submit']",
-                "//button[contains(text(), 'Submit')]"
-            ], clickable=True)
-            
-            js_click(driver, submit_button)
-            print("[+] Form submitted!")
-            time.sleep(3)
+            time.sleep(5)
+
+            # Step 7: Click Request Free Trial (after login)
+            try:
+                trial_link = wait_for_element(driver, ["/html/body/div[2]/div/nav/ul/li[2]/ul/li[3]/a"], clickable=True)
+                js_click(driver, trial_link)
+                print("[+] Navigated to Request Free Trial page.")
+            except Exception as e:
+                print(f"[!] Could not find free trial link: {e}")
+
+            # Step 8: Wait for email with trial info
+            result = wait_for_email_link(driver)
+            if result:
+                print(f"[✓] Trial details received: {result}")
+            else:
+                print("[!] No trial email received.")
+
+    except Exception as e:
+        print(f"[!] Error occurred: {e}")
+    finally:
+        memory_cleanup()
+        print("[+] Script completed.")
 
             # Wait for email and download
             result = wait_for_email_link(driver)
