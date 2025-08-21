@@ -614,19 +614,23 @@ def main():
             except Exception as e:
                 print(f"[!] Could not find free trial link: {e}")
 
-    except Exception as e:
-        print(f"[!] Error occurred: {e}")
-    finally:
-        memory_cleanup()
-        print("[+] Script completed.")
-
-            # Wait for email and download
-            result = wait_for_email_link(driver)
-            if result:
-                if isinstance(result, tuple):
-                    m3u_url, epg_url = result
+                # Wait for trial email
+                result = wait_for_email_link(driver)
+                if result:
+                    if isinstance(result, tuple):
+                        m3u_url, epg_url = result
+                    else:
+                        m3u_url, epg_url = result, None
+                    print(f"[✓] Got trial details: {m3u_url}, {epg_url}")
                 else:
-                    m3u_url, epg_url = result, None
+                    print("[!] No trial email received.")
+
+        except Exception as e:
+            print(f"[!] Error occurred: {e}")
+        finally:
+            memory_cleanup()
+            print("[+] Script completed.")
+
                 
                 # Download M3U with extended timeout
                 if download_m3u_file(m3u_url, SAVE_FILE, max_retries=3, is_m3u=True):
