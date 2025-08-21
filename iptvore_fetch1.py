@@ -614,16 +614,33 @@ def main():
 
             time.sleep(5)
 
-            # Step 7: Click Request Free Trial
+            # Step 7: Open side menu and click Request Free Trial
             try:
-                trial_link = try_find_element(driver, [
-                    (By.XPATH, "//a[contains(text(),'Free Trial')]"),
-                    (By.LINK_TEXT, "Request Free Trial")
-                ], timeout=10)
+                # First, open the side menu
+                menu_button = wait_for_element(
+                    driver,
+                    ["/html/body/div[3]/button"],  # target the <button>, not <svg>/<path>
+                    clickable=True
+                )
+                js_click(driver, menu_button)
+                print("[+] Side menu opened.")
+
+                time.sleep(2)
+
+                # Now click the Request Free Trial link inside the menu
+                trial_link = wait_for_element(
+                    driver,
+                    [
+                        "//a[contains(text(),'Free Trial')]",
+                        "/html/body/div[2]/div/nav/ul/li[2]/ul/li[3]/a"
+                    ],
+                    clickable=True
+                )
                 js_click(driver, trial_link)
                 print("[+] Navigated to Request Free Trial page.")
+
             except Exception as e:
-                print(f"[!] Could not find free trial link: {e}")
+                print(f"[!] Could not open side menu or free trial link: {e}")
 
             # Step 8: Wait for trial email
             result = wait_for_email_link(driver)
