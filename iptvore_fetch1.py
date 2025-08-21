@@ -616,11 +616,10 @@ def main():
 
             # Step 7: Click Request Free Trial
             try:
-                trial_link = wait_for_element(
-                    driver,
-                    ["/html/body/div[2]/div/nav/ul/li[2]/ul/li[3]/a"],
-                    clickable=True
-                )
+                trial_link = try_find_element(driver, [
+                    (By.XPATH, "//a[contains(text(),'Free Trial')]"),
+                    (By.LINK_TEXT, "Request Free Trial")
+                ], timeout=10)
                 js_click(driver, trial_link)
                 print("[+] Navigated to Request Free Trial page.")
             except Exception as e:
