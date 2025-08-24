@@ -271,87 +271,73 @@ def wait_for_email_link(driver, max_wait=1800):  # Reduced from 3600
     return None
 
 def search_for_m3u_links(driver):
-    """Search for M3U links in current context - optimized"""
+    """Search LayerSeven emails for IPTV details (M3U + EPG + Xtream fallback)."""
     try:
-        # Get page content more efficiently
-        try:
-            page_html = driver.execute_script("return document.body.innerHTML;")
-            page_text = driver.execute_script("return document.body.innerText;")
-            combined_content = page_html + " " + page_text
-        except Exception as e:
-            print(f"[{elapsed_time()}] Error reading page content: {e}")
-            return None
-        
+        # Grab page text + HTML
+        page_html = driver.execute_script("return document.body.innerHTML;")
+        page_text = driver.execute_script("return document.body.innerText;")
+        combined_content = page_html + " " + page_text
+
         print(f"[{elapsed_time()}] Searching email content...")
-        
-        m3u_url = None
-        epg_url = None
-        
-        # Method 1: Direct HTML search (most efficient)
-        m3u_selectors = [
-            (By.XPATH, "//a[contains(@href, 'get.php') and contains(@href, 'type=m3u')]"),
-            (By.CSS_SELECTOR, "a[href*='get.php'][href*='type=m3u']"),
-        ]
-        
-        for by, selector in m3u_selectors:
-            try:
-                m3u_elements = driver.find_elements(by, selector)
-                for elem in m3u_elements:
-                    href = elem.get_attribute("href")
-                    if href and ("get.php" in href and "type=m3u" in href):
-                        m3u_url = href.replace("&amp;", "&")
-                        print(f"[{elapsed_time()}] Found M3U link: {m3u_url}")
-                        break
-                if m3u_url:
+
+        m3u_url, epg_url = None, None
+
+        # === Direct HTML link search (existing method) ===
+        try:
+            m3u_elements = driver.find_elements(By.XPATH, "//a[contains(@href, 'get.php')]")
+            for elem in m3u_elements:
+                href = elem.get_attribute("href")
+                if href and "get.php" in href:
+                    m3u_url = href.replace("&amp;", "&")
+                    print(f"[{elapsed_time()}] Found M3U link: {m3u_url}")
                     break
-            except Exception:
-                continue
-        
-        # Method 2: EPG links
-        if not epg_url:
-            epg_selectors = [
-                (By.XPATH, "//a[contains(@href, 'xmltv.php')]"),
-                (By.CSS_SELECTOR, "a[href*='xmltv.php']"),
-            ]
-            
-            for by, selector in epg_selectors:
-                try:
-                    epg_elements = driver.find_elements(by, selector)
-                    for elem in epg_elements:
-                        href = elem.get_attribute("href")
-                        if href and "xmltv.php" in href:
-                            epg_url = href.replace("&amp;", "&")
-                            print(f"[{elapsed_time()}] Found EPG link: {epg_url}")
-                            break
-                    if epg_url:
-                        break
-                except Exception:
-                    continue
-        
-        # Method 3: Regex fallback (only if needed)
+        except:
+            pass
+
+        try:
+            epg_elements = driver.find_elements(By.XPATH, "//a[contains(@href, 'xmltv.php')]")
+            for elem in epg_elements:
+                href = elem.get_attribute("href")
+                if href and "xmltv.php" in href:
+                    epg_url = href.replace("&amp;", "&")
+                    print(f"[{elapsed_time()}] Found EPG link: {epg_url}")
+                    break
+        except:
+            pass
+
+        # === Plain text fallback parsing ===
         if not m3u_url:
-            print(f"[{elapsed_time()}] Using regex fallback...")
-            m3u_patterns = [
-                r'https?://[^\s<>"\']+/get\.php\?username=[^&\s<>"\']+&password=[^&\s<>"\']+&type=m3u_plus[^\s<>"\']*',
-                r'https?://[^\s<>"\']+get\.php[^\s<>"\']*type=m3u[^\s<>"\']*',
-            ]
-            
-            for pattern in m3u_patterns:
-                matches = re.findall(pattern, combined_content, re.IGNORECASE)
-                if matches:
-                    m3u_url = matches[0].replace("&amp;", "&")
-                    print(f"[{elapsed_time()}] Found M3U URL via regex: {m3u_url}")
-                    break
-        
-        # Return results
-        if m3u_url:
-            return m3u_url, epg_url
-        else:
-            return None
-        
+            match = re.search(r'M3U:\s*(https?://\S+)', combined_content, re.IGNORECASE)
+            if match:
+                m3u_url = match.group(1).strip()
+                print(f"[{elapsed_time()}] Found M3U link in text: {m3u_url}")
+
+        if not epg_url:
+            match = re.search(r'EPG:\s*(https?://\S+)', combined_content, re.IGNORECASE)
+            if match:
+                epg_url = match.group(1).strip()
+                print(f"[{elapsed_time()}] Found EPG link in text: {epg_url}")
+
+        # === Xtream Codes fallback (server + user + pass) ===
+        if not m3u_url:
+            host = re.search(r'Hostname.*?:\s*(https?://[^\s]+)', combined_content, re.IGNORECASE)
+            user = re.search(r'Username:\s*([A-Za-z0-9]+)', combined_content)
+            passwd = re.search(r'Password:\s*([A-Za-z0-9]+)', combined_content)
+
+            if host and user and passwd:
+                server = host.group(1).strip()
+                username = user.group(1).strip()
+                password = passwd.group(1).strip()
+                m3u_url = f"{server}/get.php?username={username}&password={password}&type=m3u_plus&output=ts"
+                epg_url = f"{server}/xmltv.php?username={username}&password={password}"
+                print(f"[{elapsed_time()}] Built M3U + EPG from Xtream details")
+
+        return (m3u_url, epg_url) if m3u_url else None
+
     except Exception as e:
         print(f"[{elapsed_time()}] Error in search_for_m3u_links: {e}")
         return None
+
 
 def download_m3u_file(url, save_path, max_retries=3, is_m3u=True):
     """Download file with adaptive timeout based on file type"""
