@@ -11,6 +11,7 @@ import requests
 from contextlib import contextmanager
 import subprocess
 from urllib.parse import urlparse, parse_qs
+from selenium.webdriver.common.action_chains import ActionChains
 
 # === Settings ===
 SAVE_FILE = "iptv_daily/iptvore_daily_update.m3u"
@@ -592,16 +593,26 @@ def main():
 
             # Step 5: Handle reCAPTCHA (manual or service)
             try:
-                captcha_box = wait_for_element(
-                    driver,
-                    ["/html/body/div[2]/div[3]/div[1]/div/div/span/div[1]"],
-                    wait_time=15
-                )
-                print("[!] reCAPTCHA detected — requires manual solving or third-party solver.")
-                driver.execute_script("arguments[0].scrollIntoView(true);", captcha_box)
-                time.sleep(15)  # allow manual solve
+                # Switch to the reCAPTCHA iframe
+                iframe = driver.find_element(By.XPATH, "//iframe[contains(@src,'recaptcha')]")
+                driver.switch_to.frame(iframe)
+
+                # Find the checkbox
+                checkbox = driver.find_element(By.CSS_SELECTOR, "div.recaptcha-checkbox-border")
+
+                # Scroll to checkbox and click
+                actions = ActionChains(driver)
+                actions.move_to_element(checkbox).click().perform()
+
+                print("[+] Clicked reCAPTCHA checkbox")
+
+                # Switch back to main content
+                driver.switch_to.default_content()
+
+                time.sleep(10)  # wait in case puzzle appears
+
             except Exception as e:
-                print(f"[!] Could not handle reCAPTCHA automatically: {e}")
+                print(f"[!] Could not click captcha checkbox: {e}")
 
             # Step 6: Click Create Account
             create_button = wait_for_element(
