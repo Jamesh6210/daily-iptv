@@ -561,6 +561,45 @@ def keep_only_and_merge_multi(source_dirs, output_file, keep_map):
 
 
 
+# === Captcha Solver (2Captcha) ===
+def solve_recaptcha(api_key, site_url, site_key, max_wait=180):
+    """
+    Solve reCAPTCHA v2 (checkbox + image puzzle) using 2Captcha
+    Returns the g-recaptcha-response token
+    """
+    import requests, time
+
+    print("[+] Sending captcha to 2Captcha...")
+
+    # Step 1: submit captcha
+    r = requests.post("http://2captcha.com/in.php", data={
+        "key": api_key,
+        "method": "userrecaptcha",
+        "googlekey": site_key,
+        "pageurl": site_url,
+        "json": 1
+    })
+    result = r.json()
+    if result.get("status") != 1:
+        raise Exception(f"2Captcha error: {result}")
+
+    request_id = result["request"]
+
+    # Step 2: poll for solution
+    result_url = f"http://2captcha.com/res.php?key={api_key}&action=get&id={request_id}&json=1"
+    start = time.time()
+    while time.time() - start < max_wait:
+        res = requests.get(result_url).json()
+        if res.get("status") == 1:
+            print("[✓] Captcha solved by 2Captcha")
+            return res.get("request")
+        print("[...] Waiting for captcha solution...")
+        time.sleep(5)
+
+    raise TimeoutError("Timed out waiting for captcha solution")
+
+
+
 
 
 # === Main Workflow ===
@@ -591,28 +630,37 @@ def main():
 
             print(f"[+] Using password: {password}")
 
-            # Step 5: Handle reCAPTCHA (manual or service)
+            # Step 5: Solve reCAPTCHA automatically with 2Captcha
             try:
-                # Switch to the reCAPTCHA iframe
+                # Find sitekey from page
                 iframe = driver.find_element(By.XPATH, "//iframe[contains(@src,'recaptcha')]")
-                driver.switch_to.frame(iframe)
+                site_key = iframe.get_attribute("src").split("k=")[1].split("&")[0]
 
-                # Find the checkbox
-                checkbox = driver.find_element(By.CSS_SELECTOR, "div.recaptcha-checkbox-border")
+                API_KEY = os.getenv("TWOCAPTCHA_KEY", "YOUR_2CAPTCHA_API_KEY")
+                token = solve_recaptcha(API_KEY, "https://panel.layerseven.ai/sign-up", site_key)
 
-                # Scroll to checkbox and click
-                actions = ActionChains(driver)
-                actions.move_to_element(checkbox).click().perform()
+                # Inject token into the correct form field
+                driver.execute_script("""
+                    let form = document.querySelector("form"); 
+                    let textarea = document.getElementById("g-recaptcha-response");
+                    if (!textarea) {
+                        textarea = document.createElement("textarea");
+                        textarea.id = "g-recaptcha-response";
+                        textarea.name = "g-recaptcha-response";
+                        textarea.style.display = "none";
+                        form.appendChild(textarea);  // attach inside form
+                    }
+                    textarea.value = arguments[0];
+                """, token)
 
-                print("[+] Clicked reCAPTCHA checkbox")
+                print("[+] Injected captcha token successfully")
 
-                # Switch back to main content
-                driver.switch_to.default_content()
+                # Give site time to register it
+                time.sleep(5)
 
-                time.sleep(10)  # wait in case puzzle appears
 
             except Exception as e:
-                print(f"[!] Could not click captcha checkbox: {e}")
+                print(f"[!] reCAPTCHA solving failed: {e}")
 
             # Step 6: Click Create Account
             create_button = wait_for_element(
