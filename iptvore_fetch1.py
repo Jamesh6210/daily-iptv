@@ -690,8 +690,8 @@ def main():
                 trial_link = wait_for_element(
                     driver,
                     [
-                        "//a[contains(text(),'Free Trial')]",
-                        "/html/body/div[2]/div/nav/ul/li[2]/ul/li[3]/a"
+                        "//a[contains(text(),'Request free trial')]",
+                        "/html/body/div[1]/div[2]/div/div[2]/nav/ul/li[2]/ul/li[3]/a"
                     ],
                     clickable=True
                 )
