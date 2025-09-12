@@ -509,7 +509,7 @@ def keep_only_and_merge_multi(source_dirs, output_file, keep_map):
     merged_count = 0
 
     with open(output_file, "w", encoding="utf-8") as outfile:
-        outfile.write("#EXTM3U\n")
+        outfile.write('#EXTM3U url-tvg="https://bit.ly/epgore"\n')
 
         for source_dir in source_dirs:
             keep_list = keep_map.get(source_dir, [])
@@ -765,7 +765,36 @@ def main():
                                 "UK_ FA PLAYER PPV.m3u",
                                 "IE_ LOI PPV.m3u"
                             ],
-                            # vod_m3u_dir: keep_vod  # enable if needed
+                            vod_m3u_dir: [
+                                "EN - NEW RELEASE.m3u",
+                                "AMAZON MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
+                                "APPLE+ MOVIES ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
+                                "DISCOVERY+ MOVIES.m3u",
+                                "DISNEY+ KIDS ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
+                                "DISNEY+ MOVIES EU ᴰᴼᴸᴮʸ ᴬᵁᴰᴵᴼ.m3u",
+                                "DREAMWORKS ANIMATION.m3u",
+                                "MARVEL MOVIES (MULTI).m3u",
+                                "NETFLIX DOCU-MOVIES.m3u",
+                                "NETFLIX KIDS.m3u",
+                                "NETFLIX MOVIES.m3u",
+                                "UNIVERSAL.m3u",
+                                "EN - 2020 & OLD.m3u",
+                                "EN - ACTION.m3u",
+                                "EN - ADVENTURE.m3u",
+                                "EN - COLLECTIONS.m3u",
+                                "EN - COMEDY.m3u",
+                                "EN - CONCERTS.m3u",
+                                "EN - DOCUMENTARIES.m3u",
+                                "EN - DRAMA.m3u",
+                                "EN - HORROR.m3u",
+                                "EN - IMDB TOP 250.m3u",
+                                "EN - KIDS.m3u",
+                                "EN - MUSICAL.m3u",
+                                "EN - ROMANCE.m3u",
+                                "EN - SCIENCE FICTION.m3u",
+                                "EN - THRILLER.m3u",
+                                "EN - WESTERNS.m3u"
+                            ]
                         }
 
                         keep_only_and_merge_multi(
