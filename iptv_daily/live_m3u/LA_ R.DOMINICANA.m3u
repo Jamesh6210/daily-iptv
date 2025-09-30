@@ -1,0 +1,25 @@
+#EXTM3U
+#EXTINF:-1 tvg-name=RD: CDN HD tgv-logo="http://logo.protv.cc/picons/logos/LATINO/CDN.png" group-title="LA| R.DOMINICANA",RD: CDN HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609690
+#EXTINF:-1 tvg-name=RD: COLORVISION HD tgv-logo="http://logo.protv.cc/picons/logos/LATINO/COLORVISION.png" group-title="LA| R.DOMINICANA",RD: COLORVISION HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609689
+#EXTINF:-1 tvg-name=RD: SUPER CANAL 33 HD tgv-logo="http://logo.protv.cc/picons/logos/SUPER-CANAL.jpeg" group-title="LA| R.DOMINICANA",RD: SUPER CANAL 33 HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609688
+#EXTINF:-1 tvg-name=RD: RNN CANAL 27 tgv-logo="http://logo.protv.cc/picons/logos/RNN-CANAL-27.png" group-title="LA| R.DOMINICANA",RD: RNN CANAL 27
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609687
+#EXTINF:-1 tvg-name=RD: CANAL 5 tgv-logo="http://logo.protv.cc/picons/logos/CANAL-5-DOMINICAN.jpeg" group-title="LA| R.DOMINICANA",RD: CANAL 5
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609686
+#EXTINF:-1 tvg-name=RD: MICROVISION tgv-logo="http://logo.protv.cc/picons/logos/microvision.jpg" group-title="LA| R.DOMINICANA",RD: MICROVISION
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609685
+#EXTINF:-1 tvg-name=RD: ANTENA LATINA R.D tgv-logo="http://logo.protv.cc/picons/logos/laz.antena_latina7.png" group-title="LA| R.DOMINICANA",RD: ANTENA LATINA R.D
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609684
+#EXTINF:-1 tvg-name=RD: ONDA TV CANAL 10 tgv-logo="http://logo.protv.cc/picons/logos/laz.ondatv.png" group-title="LA| R.DOMINICANA",RD: ONDA TV CANAL 10
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609683
+#EXTINF:-1 tvg-name=RD: TELEMICRO 5 HD tgv-logo="http://logo.protv.cc/picons/logos/telemicro5.jpg" group-title="LA| R.DOMINICANA",RD: TELEMICRO 5 HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609682
+#EXTINF:-1 tvg-name=RD: TELEUNIVERSO tgv-logo="http://logo.protv.cc/picons/logos/teleuniverso.jpg" group-title="LA| R.DOMINICANA",RD: TELEUNIVERSO
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609681
+#EXTINF:-1 tvg-name=RD: TELEUNION tgv-logo="http://logo.protv.cc/picons/logos/laz.teleunion.png" group-title="LA| R.DOMINICANA",RD: TELEUNION
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609680
+#EXTINF:-1 tvg-name=RD: TELECENTRO 13 tgv-logo="http://logo.protv.cc/picons/logos/laz.telecentro13.png" group-title="LA| R.DOMINICANA",RD: TELECENTRO 13
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609679

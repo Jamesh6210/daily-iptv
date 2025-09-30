@@ -1,0 +1,23 @@
+#EXTM3U
+#EXTINF:-1 tvg-name=#### SINGAPORE VIP #### tgv-logo="https://upload.wikimedia.org/wikipedia/commons/d/d9/Animated-Flag-Singapore.gif" group-title="SG| SINGAPORE VIP",#### SINGAPORE VIP ####
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/1573406
+#EXTINF:-1 tvg-name=SG: CHANNEL 5 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13637.png?ver=50717" group-title="SG| SINGAPORE VIP",SG: CHANNEL 5
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/494891
+#EXTINF:-1 tvg-name=SG: CHANNEL 8 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13637.png?ver=50717" group-title="SG| SINGAPORE VIP",SG: CHANNEL 8
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/494892
+#EXTINF:-1 tvg-name=SG: CHANNEL U tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13637.png?ver=50717" group-title="SG| SINGAPORE VIP",SG: CHANNEL U
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/494893
+#EXTINF:-1 tvg-name=SG: CNA tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13637.png?ver=50717" group-title="SG| SINGAPORE VIP",SG: CNA
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/494896
+#EXTINF:-1 tvg-name=SG: EGG NETWORK tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13637.png?ver=50717" group-title="SG| SINGAPORE VIP",SG: EGG NETWORK
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/494899
+#EXTINF:-1 tvg-name=SG: LIVE 1 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13637.png?ver=50717" group-title="SG| SINGAPORE VIP",SG: LIVE 1
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/494897
+#EXTINF:-1 tvg-name=SG: LIVE 2 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13637.png?ver=50717" group-title="SG| SINGAPORE VIP",SG: LIVE 2
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/494898
+#EXTINF:-1 tvg-name=SG: LIVE+ tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13637.png?ver=50717" group-title="SG| SINGAPORE VIP",SG: LIVE+
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/494900
+#EXTINF:-1 tvg-name=SG: SURIA tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13637.png?ver=50717" group-title="SG| SINGAPORE VIP",SG: SURIA
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/494894
+#EXTINF:-1 tvg-name=SG: VASANTHAM tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13637.png?ver=50717" group-title="SG| SINGAPORE VIP",SG: VASANTHAM
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/494895

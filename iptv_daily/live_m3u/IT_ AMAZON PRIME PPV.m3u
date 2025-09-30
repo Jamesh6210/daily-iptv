@@ -1,0 +1,13 @@
+#EXTM3U
+#EXTINF:-1 tvg-name=#### AMAZON PRIME PPV #### tgv-logo="https://i.ibb.co/prQGp2k4/Prime-Video-GIF.gif" group-title="IT| AMAZON PRIME PPV",#### AMAZON PRIME PPV ####
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/296087
+#EXTINF:-1 tvg-name=IT: PRIM 1 4K [LIVE-EVENT] tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13797.png?ver=39230" group-title="IT| AMAZON PRIME PPV",IT: PRIM 1 4K [LIVE-EVENT]
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/296086
+#EXTINF:-1 tvg-name=IT: PRIM 1 HD [LIVE-EVENT] tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13797.png?ver=39230" group-title="IT| AMAZON PRIME PPV",IT: PRIM 1 HD [LIVE-EVENT]
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/296085
+#EXTINF:-1 tvg-name=IT: SKY SPORT BAR PRIMEVIDEO 4K tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13797.png?ver=39230" group-title="IT| AMAZON PRIME PPV",IT: SKY SPORT BAR PRIMEVIDEO 4K
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/287863
+#EXTINF:-1 tvg-name=IT: SKY SPORT BAR PRIMEVIDEO HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13797.png?ver=39230" group-title="IT| AMAZON PRIME PPV",IT: SKY SPORT BAR PRIMEVIDEO HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/287864
+#EXTINF:-1 tvg-name=IT: SKY SPORT BAR PRIMEVIDEO SD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13797.png?ver=39230" group-title="IT| AMAZON PRIME PPV",IT: SKY SPORT BAR PRIMEVIDEO SD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/287865

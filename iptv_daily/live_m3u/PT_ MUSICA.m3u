@@ -1,0 +1,25 @@
+#EXTM3U
+#EXTINF:-1 tvg-name=#### MUSICA #### tgv-logo="https://upload.wikimedia.org/wikipedia/commons/e/e5/Animated-Flag-Portugal.gif" group-title="PT| MUSICA",#### MUSICA ####
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/647698
+#EXTINF:-1 tvg-name=PT: AFRO TV tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/11273.jpg?96362" group-title="PT| MUSICA",PT: AFRO TV
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/386499
+#EXTINF:-1 tvg-name=PT: MCM POP tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/11274.jpg?81198" group-title="PT| MUSICA",PT: MCM POP
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/386427
+#EXTINF:-1 tvg-name=PT: MEZZO tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/649.png?729923" group-title="PT| MUSICA",PT: MEZZO
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/386426
+#EXTINF:-1 tvg-name=PT: MTV tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/656.png?56867" group-title="PT| MUSICA",PT: MTV
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/386424
+#EXTINF:-1 tvg-name=PT: MTV 80s tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/3189.png?49587" group-title="PT| MUSICA",PT: MTV 80s
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/386422
+#EXTINF:-1 tvg-name=PT: MTV HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/656.png?91481" group-title="PT| MUSICA",PT: MTV HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/386421
+#EXTINF:-1 tvg-name=PT: MTV 00s tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/3189.png?49587" group-title="PT| MUSICA",PT: MTV 00s
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/386423
+#EXTINF:-1 tvg-name=PT: TRACE TOCA tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/11277.png?33576" group-title="PT| MUSICA",PT: TRACE TOCA
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/386363
+#EXTINF:-1 tvg-name=PT: TRACE URBAN tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/4757.jpg?55045" group-title="PT| MUSICA",PT: TRACE URBAN
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/386362
+#EXTINF:-1 tvg-name=PT: VH1 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/767.png?44856" group-title="PT| MUSICA",PT: VH1
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/386344
+#EXTINF:-1 tvg-name=PT: ZAP VIVA HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/11192.jpg?61530" group-title="PT| MUSICA",PT: ZAP VIVA HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/386343

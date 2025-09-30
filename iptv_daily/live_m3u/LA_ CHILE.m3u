@@ -1,0 +1,23 @@
+#EXTM3U
+#EXTINF:-1 tvg-name=CHL: 24 HOURS tgv-logo="http://logo.protv.cc/picons/logos/laz.cdf.png" group-title="LA| CHILE",CHL: 24 HOURS
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609671
+#EXTINF:-1 tvg-name=CHL: CHV NOTICIAS tgv-logo="http://logo.protv.cc/picons/logos/laz.Chilevisiontv.png" group-title="LA| CHILE",CHL: CHV NOTICIAS
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609670
+#EXTINF:-1 tvg-name=CHL: CNN HD tgv-logo="http://logo.protv.cc/picons/logos/cnnhd.png" group-title="LA| CHILE",CHL: CNN HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609669
+#EXTINF:-1 tvg-name=CHL: FOX SPORTS CHILE HD tgv-logo="http://logo.protv.cc/picons/logos/foxsportshd.png" group-title="LA| CHILE",CHL: FOX SPORTS CHILE HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609668
+#EXTINF:-1 tvg-name=CHL: M NOTICIAS tgv-logo="http://logo.protv.cc/picons/logos/MEGA-TV-.jpg" group-title="LA| CHILE",CHL: M NOTICIAS
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609666
+#EXTINF:-1 tvg-name=CHL: REC TV tgv-logo="http://logo.protv.cc/picons/logos/REC-TV.png" group-title="LA| CHILE",CHL: REC TV
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609665
+#EXTINF:-1 tvg-name=CHL: T13 MOVIL tgv-logo="http://logo.protv.cc/picons/logos/T13-MOVIL.png" group-title="LA| CHILE",CHL: T13 MOVIL
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609664
+#EXTINF:-1 tvg-name=CHL: TELETRAK tgv-logo="http://logo.protv.cc/picons/logos/TELETRAK.png" group-title="LA| CHILE",CHL: TELETRAK
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609663
+#EXTINF:-1 tvg-name=CHL: TV CHILE HD tgv-logo="http://logo.protv.cc/picons/logos/tvchile.png" group-title="LA| CHILE",CHL: TV CHILE HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609662
+#EXTINF:-1 tvg-name=CHL: TNT SPORT HD tgv-logo="http://logo.protv.cc/picons/logos/france/VIA-X.png" group-title="LA| CHILE",CHL: TNT SPORT HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609659
+#EXTINF:-1 tvg-name=CHL: TNT SPORT tgv-logo="http://logo.protv.cc/picons/logos/france/ZONA-LATINA.png" group-title="LA| CHILE",CHL: TNT SPORT
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609658

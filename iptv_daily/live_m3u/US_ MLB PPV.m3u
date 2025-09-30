@@ -1,0 +1,43 @@
+#EXTM3U
+#EXTINF:-1 tvg-name=###### MLB -1 PPV ###### tgv-logo="https://upload.wikimedia.org/wikipedia/commons/4/42/Animated-Flag-USA.gif" group-title="US| MLB PPV",###### MLB -1 PPV ######
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/431199
+#EXTINF:-1 tvg-name=MLB: MLB NETWORK tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8211.png?ver=9960" group-title="US| MLB PPV",MLB: MLB NETWORK
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/431198
+#EXTINF:-1 tvg-name=MLB: MLB NETWORK (US) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8211.png?ver=9960" group-title="US| MLB PPV",MLB: MLB NETWORK (US)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/431197
+#EXTINF:-1 tvg-name=MLB 1 | Tigers x Red Sox start:2025-09-28 20:05:00 stop:2025-09-29 03:18:20 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8211.png?ver=9960" group-title="US| MLB PPV",MLB 1 | Tigers x Red Sox start:2025-09-28 20:05:00 stop:2025-09-29 03:18:20
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/762779
+#EXTINF:-1 tvg-name=MLB 2 | Royals x Athletics start:2025-09-28 20:05:00 stop:2025-09-29 03:18:20 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8211.png?ver=9960" group-title="US| MLB PPV",MLB 2 | Royals x Athletics start:2025-09-28 20:05:00 stop:2025-09-29 03:18:20
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/762778
+#EXTINF:-1 tvg-name=MLB 3 | Rockies x Giants start:2025-09-28 20:05:00 stop:2025-09-29 03:18:20 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8211.png?ver=9960" group-title="US| MLB PPV",MLB 3 | Rockies x Giants start:2025-09-28 20:05:00 stop:2025-09-29 03:18:20
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/762777
+#EXTINF:-1 tvg-name=MLB 4 | Twins x Phillies start:2025-09-28 20:05:00 stop:2025-09-29 03:18:20 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8211.png?ver=9960" group-title="US| MLB PPV",MLB 4 | Twins x Phillies start:2025-09-28 20:05:00 stop:2025-09-29 03:18:20
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/762776
+#EXTINF:-1 tvg-name=MLB 5 | White Sox x Nationals start:2025-09-28 20:05:00 stop:2025-09-29 03:18:20 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8211.png?ver=9960" group-title="US| MLB PPV",MLB 5 | White Sox x Nationals start:2025-09-28 20:05:00 stop:2025-09-29 03:18:20
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/762775
+#EXTINF:-1 tvg-name=MLB 6 | Orioles x Yankees start:2025-09-28 20:05:00 stop:2025-09-29 03:18:20 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8211.png?ver=9960" group-title="US| MLB PPV",MLB 6 | Orioles x Yankees start:2025-09-28 20:05:00 stop:2025-09-29 03:18:20
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/762774
+#EXTINF:-1 tvg-name=MLB 7 | Astros x Angels start:2025-09-28 20:07:00 stop:2025-09-29 03:20:20 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8211.png?ver=9960" group-title="US| MLB PPV",MLB 7 | Astros x Angels start:2025-09-28 20:07:00 stop:2025-09-29 03:20:20
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/762773
+#EXTINF:-1 tvg-name=MLB 8 | Rays x Blue Jays start:2025-09-28 20:07:00 stop:2025-09-29 03:20:20 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8211.png?ver=9960" group-title="US| MLB PPV",MLB 8 | Rays x Blue Jays start:2025-09-28 20:07:00 stop:2025-09-29 03:20:20
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/762772
+#EXTINF:-1 tvg-name=MLB 9 | D-backs x Padres start:2025-09-28 20:10:00 stop:2025-09-29 03:23:20 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8211.png?ver=9960" group-title="US| MLB PPV",MLB 9 | D-backs x Padres start:2025-09-28 20:10:00 stop:2025-09-29 03:23:20
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/762771
+#EXTINF:-1 tvg-name=MLB 10 | Dodgers x Mariners start:2025-09-28 20:10:00 stop:2025-09-29 03:23:20 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8211.png?ver=9960" group-title="US| MLB PPV",MLB 10 | Dodgers x Mariners start:2025-09-28 20:10:00 stop:2025-09-29 03:23:20
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/762770
+#EXTINF:-1 tvg-name=MLB 11 | Rangers x Guardians start:2025-09-28 20:10:00 stop:2025-09-29 03:23:20 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8211.png?ver=9960" group-title="US| MLB PPV",MLB 11 | Rangers x Guardians start:2025-09-28 20:10:00 stop:2025-09-29 03:23:20
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/762769
+#EXTINF:-1 tvg-name=MLB 12 | Mets x Marlins start:2025-09-28 20:10:00 stop:2025-09-29 03:23:20 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8211.png?ver=9960" group-title="US| MLB PPV",MLB 12 | Mets x Marlins start:2025-09-28 20:10:00 stop:2025-09-29 03:23:20
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/762768
+#EXTINF:-1 tvg-name=MLB 13 | Reds x Brewers start:2025-09-28 20:10:00 stop:2025-09-29 03:23:20 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8211.png?ver=9960" group-title="US| MLB PPV",MLB 13 | Reds x Brewers start:2025-09-28 20:10:00 stop:2025-09-29 03:23:20
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/762767
+#EXTINF:-1 tvg-name=MLB 14 | Pirates x Braves start:2025-09-28 20:15:00 stop:2025-09-29 03:28:20 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8211.png?ver=9960" group-title="US| MLB PPV",MLB 14 | Pirates x Braves start:2025-09-28 20:15:00 stop:2025-09-29 03:28:20
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/762766
+#EXTINF:-1 tvg-name=MLB 15 |  Cardinals x Cubs start:2025-09-28 20:20:00 stop:2025-09-29 03:33:20 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8211.png?ver=9960" group-title="US| MLB PPV",MLB 15 |  Cardinals x Cubs start:2025-09-28 20:20:00 stop:2025-09-29 03:33:20
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/762765
+#EXTINF:-1 tvg-name=MLB 16 | Marlins x Rockies start:2025-09-17 01:40:00 stop:2025-09-17 08:53:20 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8211.png?ver=9960" group-title="US| MLB PPV",MLB 16 | Marlins x Rockies start:2025-09-17 01:40:00 stop:2025-09-17 08:53:20
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/762764
+#EXTINF:-1 tvg-name=MLB 17 | tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8211.png?ver=9960" group-title="US| MLB PPV",MLB 17 |
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/762763
+#EXTINF:-1 tvg-name=MLB 18: tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8211.png?ver=9960" group-title="US| MLB PPV",MLB 18:
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/762762

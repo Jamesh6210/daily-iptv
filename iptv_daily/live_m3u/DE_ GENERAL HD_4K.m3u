@@ -1,0 +1,259 @@
+#EXTM3U
+#EXTINF:-1 tvg-name=##### GENERAL HD/4K ##### tgv-logo="https://upload.wikimedia.org/wikipedia/commons/f/f6/Animated-Flag-Germany.gif" group-title="DE| GENERAL HD/4K",##### GENERAL HD/4K #####
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/221563
+#EXTINF:-1 tvg-name=DE: DAS ERSTE HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6593.jpg?37400" group-title="DE| GENERAL HD/4K",DE: DAS ERSTE HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480063
+#EXTINF:-1 tvg-name=DE: DAS ERSTE HD (LOW BIT) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6593.jpg?37400" group-title="DE| GENERAL HD/4K",DE: DAS ERSTE HD (LOW BIT)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480062
+#EXTINF:-1 tvg-name=DE: ZDF ᴴᴰ tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/775.jpg?71322" group-title="DE| GENERAL HD/4K",DE: ZDF ᴴᴰ
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/871799
+#EXTINF:-1 tvg-name=DE: ZDF ᴴᴰ ᵃᵐᶻ tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/775.jpg?71322" group-title="DE| GENERAL HD/4K",DE: ZDF ᴴᴰ ᵃᵐᶻ
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/866823
+#EXTINF:-1 tvg-name=DE: ZDF RAW tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/775.jpg?71322" group-title="DE| GENERAL HD/4K",DE: ZDF RAW
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480061
+#EXTINF:-1 tvg-name=DE: ZDF RAW ᵃᵐᶻ tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/775.jpg?71322" group-title="DE| GENERAL HD/4K",DE: ZDF RAW ᵃᵐᶻ
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/866878
+#EXTINF:-1 tvg-name=DE: ZDF HD (LOW BIT) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/775.jpg?71322" group-title="DE| GENERAL HD/4K",DE: ZDF HD (LOW BIT)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480060
+#EXTINF:-1 tvg-name=DE: ZDF NEO HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/774.png?70802" group-title="DE| GENERAL HD/4K",DE: ZDF NEO HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480012
+#EXTINF:-1 tvg-name=DE: ZDFINFO HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/776.png?97009" group-title="DE| GENERAL HD/4K",DE: ZDFINFO HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480013
+#EXTINF:-1 tvg-name=DE: RTL HD (720P) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/799.jpg?8611" group-title="DE| GENERAL HD/4K",DE: RTL HD (720P)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480058
+#EXTINF:-1 tvg-name=DE: RTL HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/799.jpg?8611" group-title="DE| GENERAL HD/4K",DE: RTL HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480059
+#EXTINF:-1 tvg-name=DE: RTL ᵁᴴᴰ 3840P tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/799.jpg?8611" group-title="DE| GENERAL HD/4K",DE: RTL ᵁᴴᴰ 3840P
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480057
+#EXTINF:-1 tvg-name=DE: RTL LIVING 4K tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/3774.png?42550" group-title="DE| GENERAL HD/4K",DE: RTL LIVING 4K
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479892
+#EXTINF:-1 tvg-name=DE: RTL LIVING HD (720P) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/3774.png?42550" group-title="DE| GENERAL HD/4K",DE: RTL LIVING HD (720P)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479891
+#EXTINF:-1 tvg-name=DE: RTL PASSION HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/3773.png?38228" group-title="DE| GENERAL HD/4K",DE: RTL PASSION HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479890
+#EXTINF:-1 tvg-name=DE: RTL PASSION HD (720P) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/3773.png?38228" group-title="DE| GENERAL HD/4K",DE: RTL PASSION HD (720P)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479889
+#EXTINF:-1 tvg-name=DE: RTL CRIME HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/5987.png?81985" group-title="DE| GENERAL HD/4K",DE: RTL CRIME HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479894
+#EXTINF:-1 tvg-name=DE: RTL CRIME (720P) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/5987.png?81985" group-title="DE| GENERAL HD/4K",DE: RTL CRIME (720P)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479893
+#EXTINF:-1 tvg-name=DE: RTL UP HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6399.png?97438" group-title="DE| GENERAL HD/4K",DE: RTL UP HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479975
+#EXTINF:-1 tvg-name=DE: RTL ZWEI HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/799.jpg?25742" group-title="DE| GENERAL HD/4K",DE: RTL ZWEI HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480044
+#EXTINF:-1 tvg-name=DE: RTL ZWEI HD (720P) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/799.jpg?25742" group-title="DE| GENERAL HD/4K",DE: RTL ZWEI HD (720P)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480043
+#EXTINF:-1 tvg-name=DE: SAT.1 GOLD HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/782.jpg?ver=25816" group-title="DE| GENERAL HD/4K",DE: SAT.1 GOLD HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479972
+#EXTINF:-1 tvg-name=DE: SAT.1 EMOTIONS HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/782.jpg?83235" group-title="DE| GENERAL HD/4K",DE: SAT.1 EMOTIONS HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479973
+#EXTINF:-1 tvg-name=DE: SAT.1 HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/782.jpg?3152" group-title="DE| GENERAL HD/4K",DE: SAT.1 HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480056
+#EXTINF:-1 tvg-name=DE: SAT.1 HD (720P) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/782.jpg?3152" group-title="DE| GENERAL HD/4K",DE: SAT.1 HD (720P)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480055
+#EXTINF:-1 tvg-name=DE: 3SAT HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/801.jpg?32315" group-title="DE| GENERAL HD/4K",DE: 3SAT HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480011
+#EXTINF:-1 tvg-name=DE: KABEL 1 HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6543.jpg?69680" group-title="DE| GENERAL HD/4K",DE: KABEL 1 HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480052
+#EXTINF:-1 tvg-name=DE: KABEL 1 HD (720P) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6543.jpg?69680" group-title="DE| GENERAL HD/4K",DE: KABEL 1 HD (720P)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480051
+#EXTINF:-1 tvg-name=DE: SERVUS TV DE.tsCHLAND HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6445.png?17921" group-title="DE| GENERAL HD/4K",DE: SERVUS TV DE.tsCHLAND HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479960
+#EXTINF:-1 tvg-name=DE: SILVERLINE HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/7678.png?51590" group-title="DE| GENERAL HD/4K",DE: SILVERLINE HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479888
+#EXTINF:-1 tvg-name=DE: SIXX HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/789.jpg?ver=11270" group-title="DE| GENERAL HD/4K",DE: SIXX HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480039
+#EXTINF:-1 tvg-name=DE: SIXX HD (720P) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/789.jpg?ver=11270" group-title="DE| GENERAL HD/4K",DE: SIXX HD (720P)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480038
+#EXTINF:-1 tvg-name=DE: ANIXE SERIE HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6596.jpg?ver=69598" group-title="DE| GENERAL HD/4K",DE: ANIXE SERIE HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479977
+#EXTINF:-1 tvg-name=DE: ARD-ALPHA HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/2377.jpg?32303" group-title="DE| GENERAL HD/4K",DE: ARD-ALPHA HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480014
+#EXTINF:-1 tvg-name=DE: ARTE HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6348.jpg?49850" group-title="DE| GENERAL HD/4K",DE: ARTE HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480010
+#EXTINF:-1 tvg-name=DE: BIBEL TV HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/2352.jpg?80766" group-title="DE| GENERAL HD/4K",DE: BIBEL TV HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479958
+#EXTINF:-1 tvg-name=DE: RTL NITRO 4K tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6544.png?96569" group-title="DE| GENERAL HD/4K",DE: RTL NITRO 4K
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/590913
+#EXTINF:-1 tvg-name=DE: BERGBLICK HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/7828.png?53857" group-title="DE| GENERAL HD/4K",DE: BERGBLICK HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479867
+#EXTINF:-1 tvg-name=DE: 25 K.TV HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/2266.png?48686" group-title="DE| GENERAL HD/4K",DE: 25 K.TV HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480023
+#EXTINF:-1 tvg-name=DE: BON GUSTO HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/2307.png?24914" group-title="DE| GENERAL HD/4K",DE: BON GUSTO HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479868
+#EXTINF:-1 tvg-name=DE: BR FERNSEHEN HD NORD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/792.jpg?73771" group-title="DE| GENERAL HD/4K",DE: BR FERNSEHEN HD NORD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480009
+#EXTINF:-1 tvg-name=DE: BR FERNSEHEN HD SÜD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/792.jpg?73771" group-title="DE| GENERAL HD/4K",DE: BR FERNSEHEN HD SÜD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480008
+#EXTINF:-1 tvg-name=DE: CLIPMYHORSE.TV HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/10605.png?29606" group-title="DE| GENERAL HD/4K",DE: CLIPMYHORSE.TV HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479978
+#EXTINF:-1 tvg-name=DE: CURIOSITY CHANNEL POWERED BY SPIEGEL (SAT) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6412.png?30079" group-title="DE| GENERAL HD/4K",DE: CURIOSITY CHANNEL POWERED BY SPIEGEL (SAT)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479838
+#EXTINF:-1 tvg-name=DE: CURIOSITY CHANNEL POWERED BY SPIEGEL HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6409.jpg?79257" group-title="DE| GENERAL HD/4K",DE: CURIOSITY CHANNEL POWERED BY SPIEGEL HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479839
+#EXTINF:-1 tvg-name=DE: DMAX HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6563.jpg?38283" group-title="DE| GENERAL HD/4K",DE: DMAX HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480037
+#EXTINF:-1 tvg-name=DE: DMAX HD (720P) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6563.jpg?38283" group-title="DE| GENERAL HD/4K",DE: DMAX HD (720P)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480036
+#EXTINF:-1 tvg-name=DE: EURONEWS tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/12044.jpg?ver=73854" group-title="DE| GENERAL HD/4K",DE: EURONEWS
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479981
+#EXTINF:-1 tvg-name=DE: FIX & FOXI tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/1972.png?70545" group-title="DE| GENERAL HD/4K",DE: FIX & FOXI
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479951
+#EXTINF:-1 tvg-name=DE: FOCUS TV REPORTAGE tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/12346.jpg?60785" group-title="DE| GENERAL HD/4K",DE: FOCUS TV REPORTAGE
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480022
+#EXTINF:-1 tvg-name=DE: GEO HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/3183.jpg?22135" group-title="DE| GENERAL HD/4K",DE: GEO HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479860
+#EXTINF:-1 tvg-name=DE: HEIMATKANAL tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6546.png?96731" group-title="DE| GENERAL HD/4K",DE: HEIMATKANAL
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479959
+#EXTINF:-1 tvg-name=DE: HGTV HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8224.png?87607" group-title="DE| GENERAL HD/4K",DE: HGTV HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479858
+#EXTINF:-1 tvg-name=DE: HOME GARTEN TV HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/12211.jpg?84385" group-title="DE| GENERAL HD/4K",DE: HOME GARTEN TV HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479859
+#EXTINF:-1 tvg-name=DE: HR HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/11030.jpg?31454" group-title="DE| GENERAL HD/4K",DE: HR HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480006
+#EXTINF:-1 tvg-name=DE: HSE 24 HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13113.jpg?59069" group-title="DE| GENERAL HD/4K",DE: HSE 24 HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479968
+#EXTINF:-1 tvg-name=DE: INSIGHT HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6607.jpg?8916" group-title="DE| GENERAL HD/4K",DE: INSIGHT HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480035
+#EXTINF:-1 tvg-name=DE: JUKE BOX tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6522.png?84540" group-title="DE| GENERAL HD/4K",DE: JUKE BOX
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479697
+#EXTINF:-1 tvg-name=DE: KABEL 1 CLASSICS HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6543.jpg?34179" group-title="DE| GENERAL HD/4K",DE: KABEL 1 CLASSICS HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479976
+#EXTINF:-1 tvg-name=DE: KINOWELT HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6542.png?81828" group-title="DE| GENERAL HD/4K",DE: KINOWELT HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479895
+#EXTINF:-1 tvg-name=DE: MARCO POLO TV HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/11444.png?36536" group-title="DE| GENERAL HD/4K",DE: MARCO POLO TV HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479857
+#EXTINF:-1 tvg-name=DE: MDR HD S-ANHALT tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/811.jpg?21951" group-title="DE| GENERAL HD/4K",DE: MDR HD S-ANHALT
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480001
+#EXTINF:-1 tvg-name=DE: MDR HD SACHSEN tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/811.jpg?21951" group-title="DE| GENERAL HD/4K",DE: MDR HD SACHSEN
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479999
+#EXTINF:-1 tvg-name=DE: MDR HD THÜRINGEN tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/811.jpg?21951" group-title="DE| GENERAL HD/4K",DE: MDR HD THÜRINGEN
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480000
+#EXTINF:-1 tvg-name=DE: MTV HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/656.png?64938" group-title="DE| GENERAL HD/4K",DE: MTV HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479971
+#EXTINF:-1 tvg-name=DE: MTV HD (720P) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/656.png?64938" group-title="DE| GENERAL HD/4K",DE: MTV HD (720P)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479970
+#EXTINF:-1 tvg-name=DE: N-TV HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/12353.jpg?16373" group-title="DE| GENERAL HD/4K",DE: N-TV HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480020
+#EXTINF:-1 tvg-name=DE: N-TV HD (720P) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/12353.jpg?16373" group-title="DE| GENERAL HD/4K",DE: N-TV HD (720P)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480019
+#EXTINF:-1 tvg-name=DE: NDR HD HAMBURG tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6526.jpg?97652" group-title="DE| GENERAL HD/4K",DE: NDR HD HAMBURG
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480005
+#EXTINF:-1 tvg-name=DE: NDR HD MECKLENBURG V. tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6526.jpg?97652" group-title="DE| GENERAL HD/4K",DE: NDR HD MECKLENBURG V.
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480004
+#EXTINF:-1 tvg-name=DE: NDR HD NIEDERSACHSEN tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6526.jpg?97652" group-title="DE| GENERAL HD/4K",DE: NDR HD NIEDERSACHSEN
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480003
+#EXTINF:-1 tvg-name=DE: NDR HD SCHLESWIG-HOLSTEIN tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6526.jpg?97652" group-title="DE| GENERAL HD/4K",DE: NDR HD SCHLESWIG-HOLSTEIN
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480002
+#EXTINF:-1 tvg-name=DE: NITRO HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6520.jpg?32440" group-title="DE| GENERAL HD/4K",DE: NITRO HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480034
+#EXTINF:-1 tvg-name=DE: NITRO HD (720P) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6520.jpg?32440" group-title="DE| GENERAL HD/4K",DE: NITRO HD (720P)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480033
+#EXTINF:-1 tvg-name=DE: ONE HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6279.jpg?96363" group-title="DE| GENERAL HD/4K",DE: ONE HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479969
+#EXTINF:-1 tvg-name=DE: PHOENIX HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6519.jpg?8851" group-title="DE| GENERAL HD/4K",DE: PHOENIX HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480018
+#EXTINF:-1 tvg-name=DE: PHOENIX HD (LOWBIT) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6519.jpg?8851" group-title="DE| GENERAL HD/4K",DE: PHOENIX HD (LOWBIT)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480017
+#EXTINF:-1 tvg-name=DE: PROSIEBEN FUN HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6506.jpg?46459" group-title="DE| GENERAL HD/4K",DE: PROSIEBEN FUN HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480048
+#EXTINF:-1 tvg-name=DE: PROSIEBEN HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6506.jpg?46459" group-title="DE| GENERAL HD/4K",DE: PROSIEBEN HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480050
+#EXTINF:-1 tvg-name=DE: PROSIEBEN HD (720P) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6506.jpg?46459" group-title="DE| GENERAL HD/4K",DE: PROSIEBEN HD (720P)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480049
+#EXTINF:-1 tvg-name=DE: PROSIEBEN MAXX HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6509.png?28254" group-title="DE| GENERAL HD/4K",DE: PROSIEBEN MAXX HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480047
+#EXTINF:-1 tvg-name=DE: PROSIEBEN MAXX HD (720P) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6509.png?28254" group-title="DE| GENERAL HD/4K",DE: PROSIEBEN MAXX HD (720P)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480046
+#EXTINF:-1 tvg-name=DE: PROSIEBENSAT.1 UHD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6509.png?28254" group-title="DE| GENERAL HD/4K",DE: PROSIEBENSAT.1 UHD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480045
+#EXTINF:-1 tvg-name=DE: QVC 2 HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/12189.jpg?ver=76533" group-title="DE| GENERAL HD/4K",DE: QVC 2 HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479965
+#EXTINF:-1 tvg-name=DE: QVC HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/12189.jpg?ver=76533" group-title="DE| GENERAL HD/4K",DE: QVC HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479966
+#EXTINF:-1 tvg-name=DE: QVC UHD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/12189.jpg?ver=76533" group-title="DE| GENERAL HD/4K",DE: QVC UHD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479964
+#EXTINF:-1 tvg-name=DE: QVC ZWEI UHD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/782.jpg?83235" group-title="DE| GENERAL HD/4K",DE: QVC ZWEI UHD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479963
+#EXTINF:-1 tvg-name=DE: DF1 ᵁᴴᴰ tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8309.png?43287" group-title="DE| GENERAL HD/4K",DE: DF1 ᵁᴴᴰ
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/939014
+#EXTINF:-1 tvg-name=DE: RADIO BREMEN TV tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/11413.png?22260" group-title="DE| GENERAL HD/4K",DE: RADIO BREMEN TV
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480007
+#EXTINF:-1 tvg-name=DE: RBB HD BERLIN tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/808.jpg?901" group-title="DE| GENERAL HD/4K",DE: RBB HD BERLIN
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479998
+#EXTINF:-1 tvg-name=DE: RBB HD BRANDENBURG tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/808.jpg?901" group-title="DE| GENERAL HD/4K",DE: RBB HD BRANDENBURG
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479997
+#EXTINF:-1 tvg-name=DE: REDBULLTV tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/12576.jpg?ver=17761" group-title="DE| GENERAL HD/4K",DE: REDBULLTV
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479980
+#EXTINF:-1 tvg-name=DE: RIC tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8412.jpg?31818" group-title="DE| GENERAL HD/4K",DE: RIC
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479948
+#EXTINF:-1 tvg-name=DE: ROMANCE TV HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/9862.jpg?81272" group-title="DE| GENERAL HD/4K",DE: ROMANCE TV HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479961
+#EXTINF:-1 tvg-name=DE: SONNENKLAR TV HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13008.jpg?35917" group-title="DE| GENERAL HD/4K",DE: SONNENKLAR TV HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479967
+#EXTINF:-1 tvg-name=DE: SONY AXN HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/9346.jpg?8581" group-title="DE| GENERAL HD/4K",DE: SONY AXN HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479887
+#EXTINF:-1 tvg-name=DE: SONY CHANNEL HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/9346.jpg?8581" group-title="DE| GENERAL HD/4K",DE: SONY CHANNEL HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479886
+#EXTINF:-1 tvg-name=DE: SPIEGEL TV GESCHICHTE HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6409.jpg?79257" group-title="DE| GENERAL HD/4K",DE: SPIEGEL TV GESCHICHTE HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479841
+#EXTINF:-1 tvg-name=DE: SPIEGEL TV GESCHICHTE HD (720P) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6409.jpg?79257" group-title="DE| GENERAL HD/4K",DE: SPIEGEL TV GESCHICHTE HD (720P)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479840
+#EXTINF:-1 tvg-name=DE: SR HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8356.png?75502" group-title="DE| GENERAL HD/4K",DE: SR HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479994
+#EXTINF:-1 tvg-name=DE: SWR HD BADEN-WÜRTTEMBERG tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6405.jpg?22541" group-title="DE| GENERAL HD/4K",DE: SWR HD BADEN-WÜRTTEMBERG
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479996
+#EXTINF:-1 tvg-name=DE: SWR HD RHEINLAND-PFALZ tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6405.jpg?22541" group-title="DE| GENERAL HD/4K",DE: SWR HD RHEINLAND-PFALZ
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479995
+#EXTINF:-1 tvg-name=DE: TAGESSCHAU24 HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6394.jpg?ver=19545" group-title="DE| GENERAL HD/4K",DE: TAGESSCHAU24 HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479982
+#EXTINF:-1 tvg-name=DE: TELE 5 HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/806.jpg?40470" group-title="DE| GENERAL HD/4K",DE: TELE 5 HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480028
+#EXTINF:-1 tvg-name=DE: TELE 5 HD (720P) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/806.jpg?40470" group-title="DE| GENERAL HD/4K",DE: TELE 5 HD (720P)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480027
+#EXTINF:-1 tvg-name=DE: TRAVELXP 4K tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/9841.png?22029" group-title="DE| GENERAL HD/4K",DE: TRAVELXP 4K
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479957
+#EXTINF:-1 tvg-name=DE: UHD1 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6094.png?49677" group-title="DE| GENERAL HD/4K",DE: UHD1
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479962
+#EXTINF:-1 tvg-name=DE: UNIVERSAL TV HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8318.jpg?ver=12462" group-title="DE| GENERAL HD/4K",DE: UNIVERSAL TV HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479872
+#EXTINF:-1 tvg-name=DE: UNIVERSAL TV HD (720P) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8318.jpg?ver=12462" group-title="DE| GENERAL HD/4K",DE: UNIVERSAL TV HD (720P)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479871
+#EXTINF:-1 tvg-name=DE: UNIVERSAL TV HD (SAT) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/8318.jpg?ver=12462" group-title="DE| GENERAL HD/4K",DE: UNIVERSAL TV HD (SAT)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479873
+#EXTINF:-1 tvg-name=DE: VOX HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6378.png?48786" group-title="DE| GENERAL HD/4K",DE: VOX HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480042
+#EXTINF:-1 tvg-name=DE: VOX HD (720P) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6378.png?48786" group-title="DE| GENERAL HD/4K",DE: VOX HD (720P)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480041
+#EXTINF:-1 tvg-name=DE: VOXUP HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/9799.jpg?67156" group-title="DE| GENERAL HD/4K",DE: VOXUP HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480040
+#EXTINF:-1 tvg-name=DE: WAIDWERK HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/7711.png?89607" group-title="DE| GENERAL HD/4K",DE: WAIDWERK HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479848
+#EXTINF:-1 tvg-name=DE: WDR HD AACHEN tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6388.jpg?20053" group-title="DE| GENERAL HD/4K",DE: WDR HD AACHEN
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479992
+#EXTINF:-1 tvg-name=DE: WDR HD BIELEFELD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6388.jpg?75101" group-title="DE| GENERAL HD/4K",DE: WDR HD BIELEFELD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479991
+#EXTINF:-1 tvg-name=DE: WDR HD BONN tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6388.jpg?ver=12324" group-title="DE| GENERAL HD/4K",DE: WDR HD BONN
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479990
+#EXTINF:-1 tvg-name=DE: WDR HD DORTMUND tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6388.jpg?20053" group-title="DE| GENERAL HD/4K",DE: WDR HD DORTMUND
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479993
+#EXTINF:-1 tvg-name=DE: WDR HD DUISBURG tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6388.jpg?ver=12324" group-title="DE| GENERAL HD/4K",DE: WDR HD DUISBURG
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479989
+#EXTINF:-1 tvg-name=DE: WDR HD DÜSSELDORF tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6388.jpg?ver=12324" group-title="DE| GENERAL HD/4K",DE: WDR HD DÜSSELDORF
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479988
+#EXTINF:-1 tvg-name=DE: WDR HD ESSEN tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6388.jpg?ver=12324" group-title="DE| GENERAL HD/4K",DE: WDR HD ESSEN
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479987
+#EXTINF:-1 tvg-name=DE: WDR HD KÖLN tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6388.jpg?ver=12324" group-title="DE| GENERAL HD/4K",DE: WDR HD KÖLN
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479986
+#EXTINF:-1 tvg-name=DE: WDR HD MÜNSTER tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6388.jpg?ver=12324" group-title="DE| GENERAL HD/4K",DE: WDR HD MÜNSTER
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479985
+#EXTINF:-1 tvg-name=DE: WDR HD SIEGEN tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6388.jpg?ver=12324" group-title="DE| GENERAL HD/4K",DE: WDR HD SIEGEN
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479984
+#EXTINF:-1 tvg-name=DE: WDR HD WUPPERTAL tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6388.jpg?ver=12324" group-title="DE| GENERAL HD/4K",DE: WDR HD WUPPERTAL
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479983
+#EXTINF:-1 tvg-name=DE: WELT DER WUNDER tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6538.jpg?44401" group-title="DE| GENERAL HD/4K",DE: WELT DER WUNDER
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/479849
+#EXTINF:-1 tvg-name=DE: WELT HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6538.jpg?72474" group-title="DE| GENERAL HD/4K",DE: WELT HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480016
+#EXTINF:-1 tvg-name=DE: WELT HD (720P) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6538.jpg?72474" group-title="DE| GENERAL HD/4K",DE: WELT HD (720P)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/480015

@@ -1,0 +1,23 @@
+#EXTM3U
+#EXTINF:-1 tvg-name=#### CRIANCAS #### tgv-logo="https://upload.wikimedia.org/wikipedia/commons/e/e5/Animated-Flag-Portugal.gif" group-title="PT| CRIANCAS",#### CRIANCAS ####
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/647697
+#EXTINF:-1 tvg-name=PT: BABY TV tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/631.jpg?11360" group-title="PT| CRIANCAS",PT: BABY TV
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/386489
+#EXTINF:-1 tvg-name=PT: CANAL PANDA tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/11204.jpg?97825" group-title="PT| CRIANCAS",PT: CANAL PANDA
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/386480
+#EXTINF:-1 tvg-name=PT: CARTOON NETWORK tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/633.png?16463" group-title="PT| CRIANCAS",PT: CARTOON NETWORK
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/386477
+#EXTINF:-1 tvg-name=PT: DISNEY CHANNEL tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/628.jpg?60791" group-title="PT| CRIANCAS",PT: DISNEY CHANNEL
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/386465
+#EXTINF:-1 tvg-name=PT: NICK JR. tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/746.png?50281" group-title="PT| CRIANCAS",PT: NICK JR.
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/386416
+#EXTINF:-1 tvg-name=PT: NICKELODEON tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/743.png?5170" group-title="PT| CRIANCAS",PT: NICKELODEON
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/386415
+#EXTINF:-1 tvg-name=PT: CARTOONITO tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/14303.png?25244" group-title="PT| CRIANCAS",PT: CARTOONITO
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/386484
+#EXTINF:-1 tvg-name=PT: DISNEY JUNIOR tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/748.png?14232" group-title="PT| CRIANCAS",PT: DISNEY JUNIOR
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/386464
+#EXTINF:-1 tvg-name=PT: SIC K HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/11168.jpg?74158" group-title="PT| CRIANCAS",PT: SIC K HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/386390
+#EXTINF:-1 tvg-name=PT: BIGGS tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/14305.png?43372" group-title="PT| CRIANCAS",PT: BIGGS
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/386410

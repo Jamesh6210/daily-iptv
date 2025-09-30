@@ -1,0 +1,17 @@
+#EXTM3U
+#EXTINF:-1 tvg-name=#### ES| COPA DEL REY VIP #### tgv-logo="https://upload.wikimedia.org/wikipedia/commons/d/da/Animated-Flag-Spain.gif" group-title="ES| COPA DEL REY VIP",#### ES| COPA DEL REY VIP ####
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/1157841
+#EXTINF:-1 tvg-name=ES: COPA DEL REY SD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/10049.png?62921" group-title="ES| COPA DEL REY VIP",ES: COPA DEL REY SD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/1157840
+#EXTINF:-1 tvg-name=ES: COPA DEL REY SD (BK1) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/10049.png?62921" group-title="ES| COPA DEL REY VIP",ES: COPA DEL REY SD (BK1)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/1315045
+#EXTINF:-1 tvg-name=ES: COPA DEL REY HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/10049.png?62921" group-title="ES| COPA DEL REY VIP",ES: COPA DEL REY HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/1157839
+#EXTINF:-1 tvg-name=ES: COPA DEL REY HD (BK1) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/10049.png?62921" group-title="ES| COPA DEL REY VIP",ES: COPA DEL REY HD (BK1)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/1315046
+#EXTINF:-1 tvg-name=ES: COPA DEL REY HEVC tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/10049.png?62921" group-title="ES| COPA DEL REY VIP",ES: COPA DEL REY HEVC
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/1314579
+#EXTINF:-1 tvg-name=ES: COPA DEL REY 4K tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/10049.png?62921" group-title="ES| COPA DEL REY VIP",ES: COPA DEL REY 4K
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/1157838
+#EXTINF:-1 tvg-name=ES: COPA DEL REY 4K (BK1) tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/10049.png?62921" group-title="ES| COPA DEL REY VIP",ES: COPA DEL REY 4K (BK1)
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/1315044

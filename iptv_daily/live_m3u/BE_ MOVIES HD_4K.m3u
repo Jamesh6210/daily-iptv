@@ -1,0 +1,37 @@
+#EXTM3U
+#EXTINF:-1 tvg-name=BE: BE 1 4K ◉ tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/new38178.jpg?31360" group-title="BE| MOVIES HD/4K",BE: BE 1 4K ◉
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/368605
+#EXTINF:-1 tvg-name=BE: BE 1 +1 4K ◉ tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/new38178.jpg?31360" group-title="BE| MOVIES HD/4K",BE: BE 1 +1 4K ◉
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/368606
+#EXTINF:-1 tvg-name=BE: Tipik 4K tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13222.png?20256" group-title="BE| MOVIES HD/4K",BE: Tipik 4K
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/368588
+#EXTINF:-1 tvg-name=BE: TIPIK HD. tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13222.png?77519" group-title="BE| MOVIES HD/4K",BE: TIPIK HD.
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/368649
+#EXTINF:-1 tvg-name=BE: ECLIPS HD ◉ tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/12727.jpg?98277" group-title="BE| MOVIES HD/4K",BE: ECLIPS HD ◉
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/368564
+#EXTINF:-1 tvg-name=BE: ECLIPS TV ◉ tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/12727.jpg?1442" group-title="BE| MOVIES HD/4K",BE: ECLIPS TV ◉
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/368538
+#EXTINF:-1 tvg-name=BE: PLAY MORE KICKS HD ◉ tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/6048.png?22585" group-title="BE| MOVIES HD/4K",BE: PLAY MORE KICKS HD ◉
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/688290
+#EXTINF:-1 tvg-name=BE: TCM CINEMA 4K tgv-logo="https://icon-tmdb.me/stalker_portal/misc/logos/320/6242.png?18335" group-title="BE| MOVIES HD/4K",BE: TCM CINEMA 4K
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/1492164
+#EXTINF:-1 tvg-name=BE: WARNER TV 4K tgv-logo="https://icon-tmdb.me/stalker_portal/misc/logos/320/9673.jpg?12736" group-title="BE| MOVIES HD/4K",BE: WARNER TV 4K
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/1492156
+#EXTINF:-1 tvg-name=BE: CINE+ C HD tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/1017.jpg?ver=39605" group-title="BE| MOVIES HD/4K",BE: CINE+ C HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/985082
+#EXTINF:-1 tvg-name=BE: CANAL+ CINEMA 4K tgv-logo="https://icon-tmdb.me/stalker_portal/misc/logos/320/10026.jpg?74468" group-title="BE| MOVIES HD/4K",BE: CANAL+ CINEMA 4K
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/1492171
+#EXTINF:-1 tvg-name=BE: CANAL+ GRAND ÉCRAN 4K tgv-logo="https://icon-tmdb.me/stalker_portal/misc/logos/320/14396.jpg?61782" group-title="BE| MOVIES HD/4K",BE: CANAL+ GRAND ÉCRAN 4K
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/1492170
+#EXTINF:-1 tvg-name=BE: CANAL BOX OFFICE 4K tgv-logo="https://icon-tmdb.me/stalker_portal/misc/logos/320/13011.png?61561" group-title="BE| MOVIES HD/4K",BE: CANAL BOX OFFICE 4K
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/1492169
+#EXTINF:-1 tvg-name=BE: CANAL+ DOCS 4K tgv-logo="https://icon-tmdb.me/stalker_portal/misc/logos/320/14397.jpg?5863" group-title="BE| MOVIES HD/4K",BE: CANAL+ DOCS 4K
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/1492168
+#EXTINF:-1 tvg-name=BE: CANAL+ SERIES 4K tgv-logo="https://icon-tmdb.me/stalker_portal/misc/logos/320/10024.png?22453" group-title="BE| MOVIES HD/4K",BE: CANAL+ SERIES 4K
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/1492167
+#EXTINF:-1 tvg-name=BE: CINE+ EMOTION 4K tgv-logo="https://icon-tmdb.me/stalker_portal/misc/logos/320/2268.jpg?59733" group-title="BE| MOVIES HD/4K",BE: CINE+ EMOTION 4K
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/1492177
+#EXTINF:-1 tvg-name=BE: CINE+ FAMILY 4K tgv-logo="https://icon-tmdb.me/stalker_portal/misc/logos/320/14393.jpg?88500" group-title="BE| MOVIES HD/4K",BE: CINE+ FAMILY 4K
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/1492176
+#EXTINF:-1 tvg-name=BE: CINE+ FESTIVAL 4K tgv-logo="https://icon-tmdb.me/stalker_portal/misc/logos/320/14394.jpg?84043" group-title="BE| MOVIES HD/4K",BE: CINE+ FESTIVAL 4K
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/1492175

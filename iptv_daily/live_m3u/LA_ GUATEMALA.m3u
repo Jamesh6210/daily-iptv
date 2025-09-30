@@ -1,0 +1,15 @@
+#EXTM3U
+#EXTINF:-1 tvg-name=GT: TV AZTECA HD tgv-logo="http://logo.protv.cc/picons/logos/AZTECA.png" group-title="LA| GUATEMALA",GT: TV AZTECA HD
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609616
+#EXTINF:-1 tvg-name=GT: CANAL 11 tgv-logo="http://logo.protv.cc/picons/logos/CANAL-11.jpeg" group-title="LA| GUATEMALA",GT: CANAL 11
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609615
+#EXTINF:-1 tvg-name=GT: CANAL 13 tgv-logo="http://logo.protv.cc/picons/logos/CANAL-13.png" group-title="LA| GUATEMALA",GT: CANAL 13
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609614
+#EXTINF:-1 tvg-name=GT: CANAL 3 tgv-logo="http://logo.protv.cc/picons/logos/CANAL-3-HD.jpeg" group-title="LA| GUATEMALA",GT: CANAL 3
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609613
+#EXTINF:-1 tvg-name=GT: CANAL 7 tgv-logo="http://logo.protv.cc/picons/logos/CANAL-7.jpeg" group-title="LA| GUATEMALA",GT: CANAL 7
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609612
+#EXTINF:-1 tvg-name=GT: CANAL ANTIGUA tgv-logo="http://logo.protv.cc/picons/logos/laz.canal-antigua.png" group-title="LA| GUATEMALA",GT: CANAL ANTIGUA
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609611
+#EXTINF:-1 tvg-name=GT: GUATEVISION tgv-logo="http://logo.protv.cc/picons/logos/laz.guatevision.png" group-title="LA| GUATEMALA",GT: GUATEVISION
+http://cf.shark-cdn.me/141d3dfc9a/5810d3653f/609610
