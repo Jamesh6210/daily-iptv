@@ -10,7 +10,7 @@ LOGFILE="/root/daily-iptv/daily.log"
     echo "===== Run started at $(date) ====="
 
     echo "[+] Running Python script..."
-    /usr/bin/python3 -u iptvore_fetch1.py
+    /usr/bin/python3 -u layerseven.py
 
     echo "[+] Staging files for commit..."
     git add iptv_daily/*

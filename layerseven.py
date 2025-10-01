@@ -14,8 +14,8 @@ from urllib.parse import urlparse, parse_qs
 from selenium.webdriver.common.action_chains import ActionChains
 
 # === Settings ===
-SAVE_FILE = "iptv_daily/iptvore_daily_update.m3u"
-EPG_SAVE_FILE = "iptv_daily/iptvore_daily_update_epg.xml"
+SAVE_FILE = "iptv_daily/iptv_daily_update.m3u"
+EPG_SAVE_FILE = "iptv_daily/iptv_daily_update_epg.xml"
 DRIVER_PATH = "/usr/bin/chromedriver"
 
 # VPS-optimized Chrome options
@@ -745,7 +745,7 @@ def main():
 
                         live_m3u_dir = os.path.abspath("iptv_daily/live_m3u")
                         vod_m3u_dir  = os.path.abspath("iptv_daily/vod_m3u")
-                        merged_file_path = os.path.abspath("iptv_daily/iptvore_daily_update.m3u")
+                        merged_file_path = os.path.abspath("iptv_daily/iptv_daily_update.m3u")
 
                         keep_map = {
                             live_m3u_dir: [
