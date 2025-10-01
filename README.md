@@ -1,4 +1,4 @@
-# IPTVore Fetch Script (`iptvore_fetch1.py`)
+# IPTVore Fetch Script
 
 ## Overview
 This script automates the process of signing up for a LayerSeven IPTV free trial, retrieving the IPTV playlist (M3U), extracting Xtream Codes details, and generating a cleaned, merged playlist on a VPS.  
@@ -24,8 +24,8 @@ The script is optimized for use on low-resource VPS environments.
 ---
 
 ## Output Files
-- `iptv_daily/iptvore_daily_update.m3u` – final merged playlist  
-- `iptv_daily/iptvore_daily_update_epg.xml` – EPG file (if available)  
+- `iptv_daily/iptv_daily_update.m3u` – final merged playlist  
+- `iptv_daily/iptv_daily_update_epg.xml` – EPG file (if available)  
 - `iptv_daily/live_m3u/` – generated live category playlists  
 - `iptv_daily/vod_m3u/` – generated VOD category playlists  
 
