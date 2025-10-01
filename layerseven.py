@@ -509,7 +509,7 @@ def keep_only_and_merge_multi(source_dirs, output_file, keep_map):
     merged_count = 0
 
     with open(output_file, "w", encoding="utf-8") as outfile:
-        outfile.write('#EXTM3U url-tvg="https://bit.ly/epgore"\n')
+        outfile.write('#EXTM3U url-tvg="https://raw.githubusercontent.com/Jamesh6210/daily-iptv/refs/heads/main/iptv_daily/iptv_daily_update_epg.xml"\n')
 
         for source_dir in source_dirs:
             keep_list = keep_map.get(source_dir, [])
