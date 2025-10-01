@@ -1,4 +1,4 @@
-#EXTM3U url-tvg="https://bit.ly/epgore"
+#EXTM3U url-tvg="https://raw.githubusercontent.com/Jamesh6210/daily-iptv/refs/heads/main/iptv_daily/iptv_daily_update_epg.xml"
 #EXTINF:-1 tvg-name=#### GENERAL HD/4K #### tgv-logo="https://upload.wikimedia.org/wikipedia/commons/2/2d/Animated-Flag-United-Kingdom.gif" group-title="UK| GENERAL ᴴᴰ/ᴿᴬᵂ",#### GENERAL HD/4K ####
 http://cf.shark-cdn.me/5190f7911a/0f6db8080d73611d/1015349
 #EXTINF:-1 tvg-name=UK: BBC ONE LONDON 4K ◉ tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/11987.jpg?90172" group-title="UK| GENERAL ᴴᴰ/ᴿᴬᵂ",UK: BBC ONE LONDON 4K ◉
