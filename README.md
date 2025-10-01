@@ -1,4 +1,4 @@
-# IPTVore Fetch Script
+# IPTV Fetch Script
 
 ## Overview
 This script automates the process of signing up for a LayerSeven IPTV free trial, retrieving the IPTV playlist (M3U), extracting Xtream Codes details, and generating a cleaned, merged playlist on a VPS.  
