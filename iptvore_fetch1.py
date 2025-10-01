@@ -704,18 +704,20 @@ def main():
                 else:
                     print("[!] Failed to download M3U file.")
 
-                # === Extract Xtream Codes details from the M3U link ===
+                # === Extract Xtream Codes details directly from email (Hostname/Username/Password) ===
                 try:
-                    parsed_url = urlparse(m3u_url)
-                    server = f"{parsed_url.scheme}://{parsed_url.netloc}"
-                    query_params = parse_qs(parsed_url.query)
-                    username = query_params.get("username", [""])[0]
-                    password = query_params.get("password", [""])[0]
+                    host = re.search(r'Hostname.*?:\s*(https?://[^\s]+)', combined_content, re.IGNORECASE)
+                    user = re.search(r'Username:\s*([A-Za-z0-9]+)', combined_content)
+                    passwd = re.search(r'Password:\s*([A-Za-z0-9]+)', combined_content)
 
-                    if not server or not username or not password:
-                        raise ValueError("Could not parse server/username/password from M3U link")
+                    if not (host and user and passwd):
+                        raise ValueError("Xtream details missing in email")
 
-                    print(f"[+] Xtream Codes details extracted:")
+                    server = host.group(1).strip().rstrip('/')
+                    username = user.group(1).strip()
+                    password = passwd.group(1).strip()
+
+                    print(f"[+] Xtream Codes details extracted from email:")
                     print(f"    Server:   {server}")
                     print(f"    Username: {username}")
                     print(f"    Password: {password}")
