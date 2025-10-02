@@ -171,27 +171,6 @@ def try_find_element(driver, selectors, timeout=5):  # Reduced timeout
             continue
     return None
 
-def handle_cookies_and_popups(driver):
-    """Try to accept cookies or close modals - optimized"""
-    print("[+] Handling cookies/popups...")
-    selectors = [
-        (By.XPATH, "//button[contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'),'accept')]"),
-        (By.XPATH, "//button[contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'),'agree')]"),
-        (By.XPATH, "//button[contains(text(),'OK')]"),
-        (By.CSS_SELECTOR, "button#onetrust-accept-btn-handler"),
-    ]
-    try_find_click(driver, selectors, timeout=2)  # Reduced timeout
-    
-    # Simplified popup removal
-    try:
-        driver.execute_script("""
-            var popups = document.querySelectorAll('div[class*="cookie"],div[class*="modal"],div[class*="overlay"]');
-            popups.forEach(e => e.remove());
-            document.body.style.overflow = 'auto';
-        """)
-    except:
-        pass
-
 def get_disposable_email(driver):
     """Fetch a disposable email address - optimized"""
     print("[+] Fetching disposable email...")
@@ -202,7 +181,6 @@ def get_disposable_email(driver):
     driver.execute_script("window.open('https://www.disposablemail.com/', '_blank');")
     driver.switch_to.window(driver.window_handles[1])
     
-    handle_cookies_and_popups(driver)
     
     try:
         wait = VPSOptimizedWait(driver, 15)
@@ -239,12 +217,6 @@ def wait_for_email_link(driver, max_wait=1800):  # Reduced from 3600
         try:
             driver.get("https://www.disposablemail.com/email/id/2")
             
-            # Quick consent handling
-            consent_selectors = [
-                (By.XPATH, "//button[contains(text(), 'Accept')]"),
-                (By.XPATH, "//button[contains(text(), 'OK')]"),
-            ]
-            try_find_click(driver, consent_selectors, timeout=1)
 
             print(f"[{elapsed_time()}] Searching for M3U links...")
             
@@ -339,124 +311,6 @@ def search_for_m3u_links(driver):
         return None
 
 
-def download_m3u_file(url, save_path, max_retries=3, is_m3u=True):
-    """Download file with adaptive timeout based on file type"""
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept': 'text/plain, application/x-mpegURL, */*',
-        'Accept-Language': 'en-US,en;q=0.9',
-        'Connection': 'keep-alive',
-        'Accept-Encoding': 'gzip, deflate',
-    }
-    
-    # Adaptive timeout based on file type
-    if is_m3u:
-        connect_timeout = 10
-        read_timeout = 120  # Much longer for large M3U files
-        chunk_size = 8192   # Larger chunks for M3U
-        print(f"[{elapsed_time()}] Using extended timeout for M3U file (120s read timeout)")
-    else:
-        connect_timeout = 5
-        read_timeout = 30   # Shorter for EPG files
-        chunk_size = 4096
-        print(f"[{elapsed_time()}] Using standard timeout for EPG file (30s read timeout)")
-    
-    for attempt in range(max_retries):
-        try:
-            print(f"[{elapsed_time()}] Download attempt {attempt + 1}/{max_retries}")
-            
-            with requests.Session() as session:
-                session.headers.update(headers)
-                
-                # Start the request
-                response = session.get(
-                    url, 
-                    timeout=(connect_timeout, read_timeout), 
-                    allow_redirects=True, 
-                    stream=True
-                )
-                response.raise_for_status()
-                
-                print(f"[{elapsed_time()}] Response status: {response.status_code}")
-                
-                # Get content length if available
-                content_length = response.headers.get('content-length')
-                if content_length:
-                    total_expected = int(content_length)
-                    print(f"[{elapsed_time()}] Expected file size: {total_expected:,} bytes")
-                else:
-                    total_expected = None
-                    print(f"[{elapsed_time()}] File size unknown, downloading...")
-                
-                total_downloaded = 0
-                last_progress_time = time.time()
-                
-                with open(save_path, 'wb') as f:
-                    for chunk in response.iter_content(chunk_size=chunk_size):
-                        if chunk:
-                            f.write(chunk)
-                            total_downloaded += len(chunk)
-                            
-                            # Progress reporting every 10 seconds for large files
-                            current_time = time.time()
-                            if current_time - last_progress_time >= 10:
-                                if total_expected:
-                                    progress = (total_downloaded / total_expected) * 100
-                                    print(f"[{elapsed_time()}] Progress: {total_downloaded:,}/{total_expected:,} bytes ({progress:.1f}%)")
-                                else:
-                                    print(f"[{elapsed_time()}] Downloaded: {total_downloaded:,} bytes")
-                                last_progress_time = current_time
-                
-                print(f"[{elapsed_time()}] Download completed: {total_downloaded:,} bytes")
-                
-                # Verify file was saved correctly
-                if os.path.exists(save_path) and os.path.getsize(save_path) > 0:
-                    file_size = os.path.getsize(save_path)
-                    print(f"[{elapsed_time()}] File saved successfully: {save_path} ({file_size:,} bytes)")
-                    
-                    # Additional verification for M3U files
-                    if is_m3u:
-                        try:
-                            with open(save_path, 'r', encoding='utf-8') as f:
-                                first_line = f.readline().strip()
-                                if first_line.startswith('#EXTM3U'):
-                                    print(f"[{elapsed_time()}] M3U file format verified")
-                                else:
-                                    print(f"[{elapsed_time()}] Warning: File may not be valid M3U format")
-                        except Exception as e:
-                            print(f"[{elapsed_time()}] Warning: Could not verify M3U format: {e}")
-                    
-                    return True
-                else:
-                    raise Exception("File was not saved or is empty")
-                    
-        except requests.exceptions.ReadTimeout as e:
-            print(f"[!] Download attempt {attempt + 1} failed: Read timeout after {read_timeout}s")
-            if attempt < max_retries - 1:
-                wait_time = (attempt + 1) * 5
-                print(f"[{elapsed_time()}] Retrying in {wait_time} seconds...")
-                time.sleep(wait_time)
-            
-        except requests.exceptions.ConnectTimeout as e:
-            print(f"[!] Download attempt {attempt + 1} failed: Connection timeout")
-            if attempt < max_retries - 1:
-                wait_time = (attempt + 1) * 3
-                print(f"[{elapsed_time()}] Retrying in {wait_time} seconds...")
-                time.sleep(wait_time)
-                
-        except Exception as e:
-            print(f"[!] Download attempt {attempt + 1} failed: {e}")
-            if attempt < max_retries - 1:
-                wait_time = (attempt + 1) * 3
-                print(f"[{elapsed_time()}] Retrying in {wait_time} seconds...")
-                time.sleep(wait_time)
-        finally:
-            # Cleanup
-            memory_cleanup()
-    
-    print(f"[!] All download attempts failed for {url}")
-    return False
-
 def wait_for_element(driver, xpaths, wait_time=5, clickable=False):  # Reduced timeout
     """Try multiple XPaths and return the first one that works"""
     wait = VPSOptimizedWait(driver, wait_time)
@@ -471,30 +325,6 @@ def wait_for_element(driver, xpaths, wait_time=5, clickable=False):  # Reduced t
         except TimeoutException:
             continue
     raise Exception("[-] None of the XPaths worked for this element")
-
-def truncate_m3u_file(file_path, max_lines=92025):
-    """Truncate M3U file - memory efficient version"""
-    print(f"[+] Truncating {file_path} to {max_lines} lines...")
-    
-    temp_path = file_path + ".tmp"
-    
-    try:
-        with open(file_path, 'r', encoding='utf-8', buffering=8192) as infile:
-            with open(temp_path, 'w', encoding='utf-8', buffering=8192) as outfile:
-                for i, line in enumerate(infile):
-                    if i >= max_lines:
-                        break
-                    outfile.write(line)
-        
-        os.replace(temp_path, file_path)
-        print(f"[✓] File truncated to {max_lines} lines")
-        return True
-        
-    except Exception as e:
-        print(f"[!] Error truncating file: {e}")
-        if os.path.exists(temp_path):
-            os.remove(temp_path)
-        return False
 
 
 def keep_only_and_merge_multi(source_dirs, output_file, keep_map):
@@ -598,7 +428,6 @@ def main():
 
             # Step 2: Navigate to LayerSeven sign-up
             driver.get("https://panel.layerseven.ai/sign-up")
-            handle_cookies_and_popups(driver)
             time.sleep(2)
 
             print("[+] Filling out LayerSeven signup form...")
@@ -696,13 +525,6 @@ def main():
                     m3u_url, epg_url = result, None
 
                 print(f"[✓] Got trial details: {m3u_url}, {epg_url}")
-
-                # Download M3U with extended timeout
-                if download_m3u_file(m3u_url, SAVE_FILE, max_retries=3, is_m3u=True):
-                    truncate_m3u_file(SAVE_FILE, 92025)
-                    print("[✓] M3U saved successfully.")
-                else:
-                    print("[!] Failed to download M3U file.")
 
                 # === Extract Xtream Codes details from the M3U link ===
                 try:
