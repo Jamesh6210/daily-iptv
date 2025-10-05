@@ -1,14 +1,14 @@
 # IPTV Fetch Script
 
 ## Overview
-This script automates the process of signing up for a LayerSeven IPTV free trial, retrieving the IPTV playlist (M3U), extracting Xtream Codes details, and generating a cleaned, merged playlist on a VPS.  
+This script automates the process of signing up for a IPTV free trial, retrieving the IPTV playlist (M3U), extracting Xtream Codes details, and generating a cleaned, merged playlist on a VPS.  
 
 The script is optimized for use on low-resource VPS environments.
 
 ---
 
 ## Features
-- Automated LayerSeven signup using a disposable email address  
+- Automated signup using a disposable email address  
 - Automatic handling of cookies and popups  
 - Google reCAPTCHA solving via 2Captcha  
 - Waits for the IPTV trial email and extracts:
