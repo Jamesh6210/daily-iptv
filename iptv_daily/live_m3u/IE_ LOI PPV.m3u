@@ -1,33 +1,33 @@
 #EXTM3U
 #EXTINF:-1 tvg-name=###### LOI PPV ###### tgv-logo="https://upload.wikimedia.org/wikipedia/commons/9/91/Animated-Flag-Ireland.gif" group-title="IE| LOI PPV",###### LOI PPV ######
-http://cf.shark-cdn.me/09188f5518/28136061150eb01a/607055
-#EXTINF:-1 tvg-name=LOI 1 | Cork City v St. Patricks Athl... start:2025-10-03 19:15:00 stop:2025-10-03 22:15:00 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13717.png?ver=64330" group-title="IE| LOI PPV",LOI 1 | Cork City v St. Patricks Athl... start:2025-10-03 19:15:00 stop:2025-10-03 22:15:00
-http://cf.shark-cdn.me/09188f5518/28136061150eb01a/607070
-#EXTINF:-1 tvg-name=LOI 2 | Waterford v Drogheda United start:2025-10-03 19:30:00 stop:2025-10-03 22:30:00 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13717.png?ver=64330" group-title="IE| LOI PPV",LOI 2 | Waterford v Drogheda United start:2025-10-03 19:30:00 stop:2025-10-03 22:30:00
-http://cf.shark-cdn.me/09188f5518/28136061150eb01a/607069
-#EXTINF:-1 tvg-name=LOI 3 | Derry City v Sligo Rovers start:2025-10-03 19:30:00 stop:2025-10-03 22:30:00 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13717.png?ver=64330" group-title="IE| LOI PPV",LOI 3 | Derry City v Sligo Rovers start:2025-10-03 19:30:00 stop:2025-10-03 22:30:00
-http://cf.shark-cdn.me/09188f5518/28136061150eb01a/607068
-#EXTINF:-1 tvg-name=LOI 4 | Athlone Town v Dundalk start:2025-10-03 19:35:00 stop:2025-10-03 22:35:00 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13717.png?ver=64330" group-title="IE| LOI PPV",LOI 4 | Athlone Town v Dundalk start:2025-10-03 19:35:00 stop:2025-10-03 22:35:00
-http://cf.shark-cdn.me/09188f5518/28136061150eb01a/607067
-#EXTINF:-1 tvg-name=LOI 5 | Cobh Ramblers v Bray Wanderers start:2025-10-03 19:35:00 stop:2025-10-03 22:35:00 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13717.png?ver=64330" group-title="IE| LOI PPV",LOI 5 | Cobh Ramblers v Bray Wanderers start:2025-10-03 19:35:00 stop:2025-10-03 22:35:00
-http://cf.shark-cdn.me/09188f5518/28136061150eb01a/607066
-#EXTINF:-1 tvg-name=LOI 06 | Treaty United v Longford Town start:2025-10-03 19:35:00 stop:2025-10-03 22:35:00 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13717.png?ver=64330" group-title="IE| LOI PPV",LOI 06 | Treaty United v Longford Town start:2025-10-03 19:35:00 stop:2025-10-03 22:35:00
-http://cf.shark-cdn.me/09188f5518/28136061150eb01a/607065
+http://cf.shark-cdn.me/fed19ab4c6/fa8399c7606cb5d0/607055
+#EXTINF:-1 tvg-name=LOI 1 | Derry City v Sligo Rovers start:2025-10-05 15:45:00 stop:2025-10-05 18:45:00 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13717.png?ver=64330" group-title="IE| LOI PPV",LOI 1 | Derry City v Sligo Rovers start:2025-10-05 15:45:00 stop:2025-10-05 18:45:00
+http://cf.shark-cdn.me/fed19ab4c6/fa8399c7606cb5d0/607070
+#EXTINF:-1 tvg-name=LOI 2 | Treaty United v Longford Town start:2025-10-05 15:45:00 stop:2025-10-05 18:45:00 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13717.png?ver=64330" group-title="IE| LOI PPV",LOI 2 | Treaty United v Longford Town start:2025-10-05 15:45:00 stop:2025-10-05 18:45:00
+http://cf.shark-cdn.me/fed19ab4c6/fa8399c7606cb5d0/607069
+#EXTINF:-1 tvg-name=LOI 3 | Wexford v UCD start:2025-10-05 15:45:00 stop:2025-10-05 18:45:00 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13717.png?ver=64330" group-title="IE| LOI PPV",LOI 3 | Wexford v UCD start:2025-10-05 15:45:00 stop:2025-10-05 18:45:00
+http://cf.shark-cdn.me/fed19ab4c6/fa8399c7606cb5d0/607068
+#EXTINF:-1 tvg-name=LOI 4 | Waterford v Drogheda United start:2025-10-05 15:45:00 stop:2025-10-05 18:45:00 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13717.png?ver=64330" group-title="IE| LOI PPV",LOI 4 | Waterford v Drogheda United start:2025-10-05 15:45:00 stop:2025-10-05 18:45:00
+http://cf.shark-cdn.me/fed19ab4c6/fa8399c7606cb5d0/607067
+#EXTINF:-1 tvg-name=LOI 5 | Shamrock Rovers v Kerry start:2025-10-05 17:45:00 stop:2025-10-05 20:45:00 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13717.png?ver=64330" group-title="IE| LOI PPV",LOI 5 | Shamrock Rovers v Kerry start:2025-10-05 17:45:00 stop:2025-10-05 20:45:00
+http://cf.shark-cdn.me/fed19ab4c6/fa8399c7606cb5d0/607066
+#EXTINF:-1 tvg-name=LOI 06 | Galway United v Waterford start:2025-10-04 16:45:00 stop:2025-10-04 19:45:00 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13717.png?ver=64330" group-title="IE| LOI PPV",LOI 06 | Galway United v Waterford start:2025-10-04 16:45:00 stop:2025-10-04 19:45:00
+http://cf.shark-cdn.me/fed19ab4c6/fa8399c7606cb5d0/607065
 #EXTINF:-1 tvg-name=LOI 07 | Wexford v UCD start:2025-10-03 19:35:00 stop:2025-10-03 22:35:00 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13717.png?ver=64330" group-title="IE| LOI PPV",LOI 07 | Wexford v UCD start:2025-10-03 19:35:00 stop:2025-10-03 22:35:00
-http://cf.shark-cdn.me/09188f5518/28136061150eb01a/607064
+http://cf.shark-cdn.me/fed19ab4c6/fa8399c7606cb5d0/607064
 #EXTINF:-1 tvg-name=LOI 08 | Athlone Town v Wexford start:2025-09-26 19:35:00 stop:2025-09-26 22:35:00 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13717.png?ver=64330" group-title="IE| LOI PPV",LOI 08 | Athlone Town v Wexford start:2025-09-26 19:35:00 stop:2025-09-26 22:35:00
-http://cf.shark-cdn.me/09188f5518/28136061150eb01a/607063
+http://cf.shark-cdn.me/fed19ab4c6/fa8399c7606cb5d0/607063
 #EXTINF:-1 tvg-name=LOI 09 | Bray Wanderers v Longford Town start:2025-09-26 19:35:00 stop:2025-09-26 22:35:00 tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13717.png?ver=64330" group-title="IE| LOI PPV",LOI 09 | Bray Wanderers v Longford Town start:2025-09-26 19:35:00 stop:2025-09-26 22:35:00
-http://cf.shark-cdn.me/09188f5518/28136061150eb01a/607062
+http://cf.shark-cdn.me/fed19ab4c6/fa8399c7606cb5d0/607062
 #EXTINF:-1 tvg-name=LOI 10 | tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13717.png?ver=64330" group-title="IE| LOI PPV",LOI 10 |
-http://cf.shark-cdn.me/09188f5518/28136061150eb01a/607061
+http://cf.shark-cdn.me/fed19ab4c6/fa8399c7606cb5d0/607061
 #EXTINF:-1 tvg-name=LOI 11: UCD V Treaty United Live 7:30pm tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13717.png?ver=64330" group-title="IE| LOI PPV",LOI 11: UCD V Treaty United Live 7:30pm
-http://cf.shark-cdn.me/09188f5518/28136061150eb01a/607060
+http://cf.shark-cdn.me/fed19ab4c6/fa8399c7606cb5d0/607060
 #EXTINF:-1 tvg-name=LOI 12: Dundalk V Longford Town Live 7:30pm tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13717.png?ver=64330" group-title="IE| LOI PPV",LOI 12: Dundalk V Longford Town Live 7:30pm
-http://cf.shark-cdn.me/09188f5518/28136061150eb01a/607059
+http://cf.shark-cdn.me/fed19ab4c6/fa8399c7606cb5d0/607059
 #EXTINF:-1 tvg-name=LOI 13: Cork City FC (W) vs Shamrock Rovers FC (W) // UK Sun 17 Sep 2:00pm // ET Sun 17 Sep 9:00am tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13717.png?ver=64330" group-title="IE| LOI PPV",LOI 13: Cork City FC (W) vs Shamrock Rovers FC (W) // UK Sun 17 Sep 2:00pm // ET Sun 17 Sep 9:00am
-http://cf.shark-cdn.me/09188f5518/28136061150eb01a/607058
+http://cf.shark-cdn.me/fed19ab4c6/fa8399c7606cb5d0/607058
 #EXTINF:-1 tvg-name=LOI 14: Sligo Rovers FC (w) vs Wexford Youths Womens FC // UK Sat 2 Sep 7:35pm // ET Sat 2 Sep 2:35pm tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13717.png?ver=64330" group-title="IE| LOI PPV",LOI 14: Sligo Rovers FC (w) vs Wexford Youths Womens FC // UK Sat 2 Sep 7:35pm // ET Sat 2 Sep 2:35pm
-http://cf.shark-cdn.me/09188f5518/28136061150eb01a/607057
+http://cf.shark-cdn.me/fed19ab4c6/fa8399c7606cb5d0/607057
 #EXTINF:-1 tvg-name=LOI 15: DLR Waves FC vs Peamount United FC // UK Sat 2 Sep 4:00pm // ET Sat 2 Sep 11:00am tgv-logo="http://icon-tmdb.me/stalker_portal/misc/logos/320/13717.png?ver=64330" group-title="IE| LOI PPV",LOI 15: DLR Waves FC vs Peamount United FC // UK Sat 2 Sep 4:00pm // ET Sat 2 Sep 11:00am
-http://cf.shark-cdn.me/09188f5518/28136061150eb01a/607056
+http://cf.shark-cdn.me/fed19ab4c6/fa8399c7606cb5d0/607056
